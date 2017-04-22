@@ -12,8 +12,8 @@ Class Assets
 	
 	
 	Method New()
-		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 0.1))
-		graphics.Add(GFX_SURVIVOR, Image.Load(GFX_SURVIVOR, 0.0, 0.1))
+		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
+		graphics.Add(GFX_SURVIVOR, Image.Load(GFX_SURVIVOR, 1.0, 0.5))
 	End Method
 	
 End Class
