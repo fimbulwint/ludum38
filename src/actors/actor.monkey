@@ -10,11 +10,11 @@ Class Actor
 	Method New()
 	End Method
 	
-	Method Update():Void
+	Method Update:Void()
 		behavior.Update()
 	End Method
 	
-	Method Draw(canvas:Canvas):Void
+	Method Draw:Void(canvas:Canvas)
 	End Method
 
 End Class
