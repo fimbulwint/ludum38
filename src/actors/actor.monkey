@@ -14,7 +14,6 @@ Class Actor
 	Field r:Float = 1.0
 	Field g:Float = 1.0
 	Field b:Float = 1.0
-	Field x:Float, y:Float, z:Float
 	Field angle:Float
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0

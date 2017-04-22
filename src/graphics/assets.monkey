@@ -10,7 +10,6 @@ Class Assets
 	
 	Field graphics:Map<String, Image> = New StringMap<Image>
 	
-	
 	Method New()
 		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
 		graphics.Add(GFX_SURVIVOR, Image.Load(GFX_SURVIVOR, 1.0, 0.5))

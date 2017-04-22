@@ -9,29 +9,35 @@ Import actors.survivor
 
 
 Class World
-	Field ground:Ground
-	Field train:Train
 
 	Field actors:Actors
 	
 	Method New()
-		ground = New Ground()
-		train = New Train()
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
-		'TODO: More actors here
+		actors.AddLast(New Ground())
 		actors.Sort()
 	End Method
 	
 	Method Update:Void()
-		ground.Update()
-		train.Update()
+		For Local actor:Actor = EachIn actors
+			actor.Update()
+		Next
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
-		ground.Draw(canvas)
-		train.Draw(canvas)
+		canvas.PushMatrix()
+		canvas.SetAlpha(1.0)
+		canvas.SetBlendMode(BlendMode.Alpha)
+		canvas.SetColor(0.0, 0.6, 0.0)
+		canvas.DrawRect(0.0, Screen.GroundHeight, Screen.Width, Screen.Height - Screen.GroundHeight)
+		
+		For Local actor:Actor = EachIn actors
+			actor.Draw(canvas)
+		Next
+		
+		canvas.PopMatrix()
 	End Method
 	
 End Class
