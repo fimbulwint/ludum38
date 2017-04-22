@@ -3,11 +3,14 @@ Strict
 
 Import mojo2 
 Import sound.dj
+Import scenes.game
+Import scenes.scene
 Import system.time
 
 
 Class Ludum38 Extends App
 	Method OnCreate:Int()
+		Time.instance.Update()
 		Return 0
 	End Method
 
@@ -16,6 +19,7 @@ Class Ludum38 Extends App
 	End Method
 	
 	Method OnUpdate:Int()
+		Time.instance.Update()
 		Return 0
 	End Method
 
