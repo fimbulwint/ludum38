@@ -2,20 +2,21 @@ Strict
 
 Import graphics.screen
 Import mojo2
+Import world.ground
 Import world.train
 Import actors.actor
 Import actors.survivor
+
 
 Class World
 
 	Field actors:Actors
 	
 	Method New()
-		train = New Train()
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
-		'TODO: More actors here
+		actors.AddLast(New Ground())
 		actors.Sort()
 	End Method
 	
