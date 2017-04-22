@@ -8,8 +8,11 @@ Class Actor
 	Field behavior:Behavior
 	
 	' Drawing parameters
-	Field blend:BlendMode = BlendMode.Alpha
+	Field blend:Int = BlendMode.Alpha
 	Field alpha:Float = 1.0
+	Field r:Float = 1.0
+	Field g:Float = 1.0
+	Field b:Float = 1.0
 	Field x:Float, y:Float 
 	Field angle:Float
 	Field sizeX:Float = 1.0
@@ -28,6 +31,7 @@ Class Actor
 			canvas.PushMatrix()
 			canvas.SetBlendMode(blend)
 			canvas.SetAlpha(alpha)
+			canvas.SetColor(r, g, b)
 			canvas.DrawImage(image, x, y, angle, sizeX, sizeY)
 			canvas.PopMatrix()
 		End If
