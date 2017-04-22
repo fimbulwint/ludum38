@@ -4,6 +4,7 @@ Import graphics.screen
 Import mojo2
 Import world.ground
 Import world.train
+Import world.worldmap
 Import actors.actor
 Import actors.survivor
 
@@ -11,8 +12,10 @@ Import actors.survivor
 Class World
 
 	Field actors:Actors
+	Field worldMap:WorldMap
 	
 	Method New()
+		worldMap = New WorldMap()
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())

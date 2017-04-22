@@ -10,6 +10,7 @@ Import scenes.scene
 Import system.time
 Import world.train
 Import world.world
+Import world.worldmap
 
 
 Class Ludum38 Extends App
