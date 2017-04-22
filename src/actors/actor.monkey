@@ -14,7 +14,6 @@ Class Actor
 	End Method
 	
 	Method Draw(canvas:Canvas):Void
-		behavior.Draw(canvas)
 	End Method
 
 End Class
@@ -22,7 +21,5 @@ End Class
 Interface Behavior
 	
 	Method Update():Void
-	
-	Method Draw(canvas:Canvas):Void
 
 End
