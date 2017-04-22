@@ -16,7 +16,7 @@ Class World
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
-		actors.AddLast(New Ground())
+'		actors.AddLast(New Ground())
 		actors.Sort()
 	End Method
 	
@@ -27,17 +27,9 @@ Class World
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
-		canvas.PushMatrix()
-		canvas.SetAlpha(1.0)
-		canvas.SetBlendMode(BlendMode.Alpha)
-		canvas.SetColor(0.0, 0.6, 0.0)
-		canvas.DrawRect(0.0, Screen.GroundHeight, Screen.Width, Screen.Height - Screen.GroundHeight)
-		
 		For Local actor:Actor = EachIn actors
 			actor.Draw(canvas)
-		Next
-		
-		canvas.PopMatrix()
+		Next		
 	End Method
 	
 End Class
