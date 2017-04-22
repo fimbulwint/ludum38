@@ -1,16 +1,16 @@
 Strict
 
+Import mojo2 
+
 Class World
 	
 	Method New()
 	End Method
 	
 	Method OnUpdate:Void()
-		Print("meadadanu")
 	End Method
 	
-	Method OnRender:Void()
-		Print("rad.ad")
+	Method OnRender:Void(canvas:Canvas)
 	End Method
 	
 End Class

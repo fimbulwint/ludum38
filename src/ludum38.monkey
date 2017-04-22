@@ -11,10 +11,16 @@ Import world.world
 
 
 Class Ludum38 Extends App
-	
+	Field screen:Canvas
+	Const CanvasWidth:Float = 1024.0
+	Const CanvasHeight:Float = 768.0
+
 	Field currentScene:Scene
 
 	Method OnCreate:Int()
+		screen = New Canvas()
+		screen.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
+	
 		Time.instance.Update()
 		currentScene = New Game()
 		Return 0
@@ -41,9 +47,11 @@ Class Ludum38 Extends App
 		
 		Return 0
 	End Method
-
+ 
 	Method OnRender:Int()
-		currentScene.OnRender()
+		screen.Clear(1.0, 0.0, 0.0)
+		currentScene.OnRender(screen)
+		
 		Return 0
 	End Method
 End Class
