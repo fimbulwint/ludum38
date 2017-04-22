@@ -16,7 +16,7 @@ Class World
 	Field worldMap:WorldMap
 	
 	Method New()
-		worldMap = New WorldMap()
+		worldMap = New WorldMap(Self)
 		InitActors()
 		InitDrawables()
 	End Method
@@ -36,6 +36,7 @@ Class World
 	End Method
 	
 	Method Update:Void()
+		worldMap.Update()
 		For Local actor:Actor = EachIn actors
 			actor.Update()
 			'check for collisions and other env data
@@ -44,10 +45,11 @@ Class World
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
+		worldMap.Draw(canvas)
 		drawables.Sort()
 		For Local drawable:Drawable = EachIn drawables
 			drawable.Draw(canvas)
-		Next		
+		Next
 	End Method
 	
 End Class
