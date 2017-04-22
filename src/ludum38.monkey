@@ -9,7 +9,6 @@ Import system.time
 Import world.world
 
 
-
 Class Ludum38 Extends App
 	Field screen:Canvas
 	Const CanvasWidth:Float = 1024.0
