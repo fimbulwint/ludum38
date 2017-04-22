@@ -43,14 +43,14 @@ Class Ludum38 Extends App
 				'for now nothing else
 		End Select
 		
-		currentScene.OnUpdate()
+		currentScene.Update()
 		
 		Return 0
 	End Method
  
 	Method OnRender:Int()
 		screen.Clear(1.0, 0.0, 0.0)
-		currentScene.OnRender(screen)
+		currentScene.Draw(screen)
 		
 		Return 0
 	End Method

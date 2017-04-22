@@ -8,11 +8,11 @@ Class Game Implements Scene
 
 	Field world:World = New World()
 
-	Method OnUpdate:Void()
+	Method Update:Void()
 		world.Update()
 	End Method
 	
-	Method OnRender:Void(canvas:Canvas)
+	Method Draw:Void(canvas:Canvas)
 		world.Draw(canvas)
 	End Method
 	

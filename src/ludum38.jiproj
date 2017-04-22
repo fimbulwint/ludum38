@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <JiProj xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" EntryPoint=".\ludum38.monkey" Name="ludum38">
   <Files>
+    <Document Filename=".\actors\behaviors\behavior.monkey" Open="false" SplitView="false" SplitIsVertical="false" SplitSize="150">
+      <DocGUID />
+      <CursorPos>
+        <X>0</X>
+        <Y>0</Y>
+      </CursorPos>
+    </Document>
     <Document Filename=".\actors\actor.monkey" Open="false" SplitView="false" SplitIsVertical="false" SplitSize="150">
       <DocGUID />
       <CursorPos>
@@ -8,7 +15,7 @@
         <Y>0</Y>
       </CursorPos>
     </Document>
-    <Document Filename=".\graphics\assets.monkey" Open="false" SplitView="false" SplitIsVertical="false" SplitSize="150">
+    <Document Filename=".\actors\survivor.monkey" Open="false" SplitView="false" SplitIsVertical="false" SplitSize="150">
       <DocGUID />
       <CursorPos>
         <X>0</X>

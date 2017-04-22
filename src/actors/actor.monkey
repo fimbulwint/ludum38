@@ -1,6 +1,7 @@
 Strict
 
-Import mojo2 
+Import mojo2
+Import actors.behaviors.behavior
 
 Class Actor
 
@@ -33,9 +34,3 @@ Class Actor
 	End Method
 
 End Class
-
-Interface Behavior
-	
-	Method Update:Void()
-
-End
