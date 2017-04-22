@@ -1,6 +1,9 @@
 Strict
 
 Interface Scene
+
+	Const RESULT_END:String = "RESULT_END"
+
 	Method OnUpdate:Void()
 	Method OnRender:Void()
 	
@@ -8,6 +11,3 @@ Interface Scene
 	
 	Method Finish:Void()
 End Interface
-
-
-Const RESULT_END:String = "RESULT_END"
