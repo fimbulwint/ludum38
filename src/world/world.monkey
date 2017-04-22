@@ -2,7 +2,7 @@ Strict
 
 Class World
 	
-	Method New
+	Method New()
 	End Method
 	
 End Class
