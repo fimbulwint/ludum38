@@ -2,24 +2,23 @@ Strict
 
 
 Import graphics.assets
+Import graphics.screen
 Import mojo2 
 Import sound.dj
 Import scenes.game
 Import scenes.scene
 Import system.time
+Import world.train
 Import world.world
 
 
 Class Ludum38 Extends App
 	Field screen:Canvas
-	Const CanvasWidth:Float = 1024.0
-	Const CanvasHeight:Float = 768.0
-
 	Field currentScene:Scene
 
 	Method OnCreate:Int()
 		screen = New Canvas()
-		screen.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
+		screen.SetProjection2d(0.0, Screen.Width, 0.0, Screen.Height)
 		Local assets:Assets = Assets.instance ' init
 			
 		Time.instance.Update()
