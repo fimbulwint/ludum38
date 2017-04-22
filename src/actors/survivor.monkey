@@ -14,6 +14,8 @@ Class Survivor Extends Actor
 		y = Screen.GroundHeight - 60.0
 		z = 0.0
 		image = Assets.instance.graphics.Get(Assets.GFX_SURVIVOR)
+		
+		Super.PostConstruct()
 	End Method
 
 End Class

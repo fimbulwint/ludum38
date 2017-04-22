@@ -7,19 +7,32 @@ Import world.train
 Import world.worldmap
 Import actors.actor
 Import actors.survivor
-
+Import drawable
 
 Class World
 
-	Field actors:Actors
+	Field actors:List<Actor>
+	Field drawables:Drawables
 	Field worldMap:WorldMap
 	
 	Method New()
 		worldMap = New WorldMap()
-		actors = New Actors()
+		InitActors()
+		InitDrawables()
+	End Method
+	
+	Method InitActors:Void()
+		actors = New List<Actor>()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
-		actors.AddLast(New Ground())
+	End Method
+	
+	Method InitDrawables:Void()
+		drawables = New Drawables()
+		For Local actor:Actor = EachIn actors
+			drawables.AddLast(actor)
+		Next
+		drawables.AddLast(New Ground())
 	End Method
 	
 	Method Update:Void()
@@ -31,17 +44,17 @@ Class World
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
-		actors.Sort()
-		For Local actor:Actor = EachIn actors
-			actor.Draw(canvas)
+		drawables.Sort()
+		For Local drawable:Drawable = EachIn drawables
+			drawable.Draw(canvas)
 		Next		
 	End Method
 	
 End Class
 
-Class Actors Extends List<Actor>
+Class Drawables Extends List<Drawable>
 	
-	Method Compare:Int(left:Actor, right:Actor)
+	Method Compare:Int(left:Drawable, right:Drawable)
 		If (left.z > right.z) Then Return - 1
 		If (left.z < right.z) Then Return 1
 		Return 0
