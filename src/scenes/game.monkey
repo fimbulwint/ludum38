@@ -9,11 +9,11 @@ Class Game Implements Scene
 	Field world:World = New World()
 
 	Method OnUpdate:Void()
-		world.OnUpdate()
+		world.Update()
 	End Method
 	
 	Method OnRender:Void(canvas:Canvas)
-		world.OnRender(canvas)
+		world.Draw(canvas)
 	End Method
 	
 	Method GetSceneResult:String()
