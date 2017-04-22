@@ -23,13 +23,13 @@ Class Assets
 		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
 		graphics.Add(GFX_SURVIVOR, Image.Load(GFX_SURVIVOR, 0.5, 0.0))
 		
-		graphics.Add(GFX_BD_MOUNTAINS_0101, Image.Load(GFX_BD_MOUNTAINS_0101, 0.0, 0.0))
-		graphics.Add(GFX_BD_MOUNTAINS_0102, Image.Load(GFX_BD_MOUNTAINS_0102, 0.0, 0.0))
-		graphics.Add(GFX_BD_MOUNTAINS_0103, Image.Load(GFX_BD_MOUNTAINS_0103, 0.0, 0.0))
-		graphics.Add(GFX_BD_MOUNTAINS_0104, Image.Load(GFX_BD_MOUNTAINS_0104, 0.0, 0.0))
-		graphics.Add(GFX_BD_MOUNTAINS_0105, Image.Load(GFX_BD_MOUNTAINS_0105, 0.0, 0.0))
-		graphics.Add(GFX_BD_DESERT_0201, Image.Load(GFX_BD_DESERT_0201, 0.0, 0.0))
-		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 0.0))
+		graphics.Add(GFX_BD_MOUNTAINS_0101, Image.Load(GFX_BD_MOUNTAINS_0101, 0.0, 1.0))
+		graphics.Add(GFX_BD_MOUNTAINS_0102, Image.Load(GFX_BD_MOUNTAINS_0102, 0.0, 1.0))
+		graphics.Add(GFX_BD_MOUNTAINS_0103, Image.Load(GFX_BD_MOUNTAINS_0103, 0.0, 1.0))
+		graphics.Add(GFX_BD_MOUNTAINS_0104, Image.Load(GFX_BD_MOUNTAINS_0104, 0.0, 1.0))
+		graphics.Add(GFX_BD_MOUNTAINS_0105, Image.Load(GFX_BD_MOUNTAINS_0105, 0.0, 1.0))
+		graphics.Add(GFX_BD_DESERT_0201, Image.Load(GFX_BD_DESERT_0201, 0.0, 1.0))
+		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 1.0))
 		
 	End Method
 	

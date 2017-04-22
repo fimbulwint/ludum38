@@ -15,7 +15,7 @@ Class World
 	Field worldMap:WorldMap
 	
 	Method New()
-		worldMap = New WorldMap()
+		worldMap = New WorldMap(Self)
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
@@ -23,6 +23,7 @@ Class World
 	End Method
 	
 	Method Update:Void()
+		worldMap.Update()
 		For Local actor:Actor = EachIn actors
 			actor.Update()
 			'check for collisions and other env data
@@ -31,6 +32,7 @@ Class World
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
+		worldMap.Draw(canvas)
 		actors.Sort()
 		For Local actor:Actor = EachIn actors
 			actor.Draw(canvas)
