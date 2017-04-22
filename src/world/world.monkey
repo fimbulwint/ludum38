@@ -7,10 +7,10 @@ Class World
 	Method New()
 	End Method
 	
-	Method OnUpdate:Void()
+	Method Update:Void()
 	End Method
 	
-	Method OnRender:Void(canvas:Canvas)
+	Method Draw:Void(canvas:Canvas)
 	End Method
 	
 End Class
