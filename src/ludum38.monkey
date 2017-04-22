@@ -1,6 +1,7 @@
 Strict
 
 
+Import graphics.assets
 Import mojo2 
 Import sound.dj
 Import scenes.game
@@ -19,7 +20,8 @@ Class Ludum38 Extends App
 	Method OnCreate:Int()
 		screen = New Canvas()
 		screen.SetProjection2d(0.0, CanvasWidth, 0.0, CanvasHeight)
-	
+		Local assets:Assets = Assets.instance ' init
+			
 		Time.instance.Update()
 		currentScene = New Game()
 		Return 0
