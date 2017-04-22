@@ -2,8 +2,12 @@ Strict
 
 Import mojo2
 Import actors.behaviors.behavior
+Import world.world
+Import system.time
 
 Class Actor
+
+	Const BASE_LATERAL_SPEED:Float = 200.0
 
 	Field behavior:Behavior
 	
@@ -18,6 +22,12 @@ Class Actor
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0
 	Field image:Image = Null
+	
+	Field movingLeft:Bool
+	Field movingRight:Bool
+	Field jumping:Bool
+	
+	Field speedX:Float
 	
 	Method New()
 	End Method
@@ -35,6 +45,19 @@ Class Actor
 			canvas.DrawImage(image, x, y, angle, sizeX, sizeY)
 			canvas.PopMatrix()
 		End If
+	End Method
+	
+	Method CompleteMovement:Void(worldState:WorldState)
+		'if no collissions, move
+		Local deltaInSecs:Float = Time.instance.realLastFrame / 1000
+	
+		If (movingLeft)
+			speedX = -BASE_LATERAL_SPEED
+		ElseIf(movingRight)
+			speedX = BASE_LATERAL_SPEED
+		EndIf
+		
+		x += deltaInSecs + speedX
 	End Method
 
 End Class
