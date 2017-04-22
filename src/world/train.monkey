@@ -9,6 +9,7 @@ Class Train Extends Actor
 		behavior = New EmptyBehavior()
 		x = 0.0
 		y = Screen.GroundHeight - 1.0
-'		image = Assets.instance.graphics.Get(Assets.GFX_TRAIN)
+		z = 100.0
+		image = Assets.instance.graphics.Get(Assets.GFX_TRAIN)
 	End Method
 End Class

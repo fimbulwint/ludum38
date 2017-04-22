@@ -20,16 +20,18 @@ Class World
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
 		actors.AddLast(New Ground())
-		actors.Sort()
 	End Method
 	
 	Method Update:Void()
 		For Local actor:Actor = EachIn actors
 			actor.Update()
+			'check for collisions and other env data
+			actor.CompleteMovement(New WorldState())
 		Next
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
+		actors.Sort()
 		For Local actor:Actor = EachIn actors
 			actor.Draw(canvas)
 		Next		
@@ -46,3 +48,7 @@ Class Actors Extends List<Actor>
 	End Method
 	
 End Class
+
+Class WorldState
+	
+End
