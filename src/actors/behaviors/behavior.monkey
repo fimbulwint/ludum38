@@ -1,5 +1,7 @@
+Strict 
+
 Interface Behavior
 	
-	Method Update():Void
+	Method Update:Void()
 
-End
+End Interface

@@ -11,7 +11,7 @@ Class Assets
 	
 	
 	Method New()
-		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, .0, .1))
+		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, .0, 1.0))
 	End Method
 	
 End Class
