@@ -9,8 +9,12 @@ Import system.time
 
 
 Class Ludum38 Extends App
+	
+	Field currentScene:Scene
+
 	Method OnCreate:Int()
 		Time.instance.Update()
+		currentScene = New Game()
 		Return 0
 	End Method
 
@@ -20,10 +24,12 @@ Class Ludum38 Extends App
 	
 	Method OnUpdate:Int()
 		Time.instance.Update()
+		currentScene.OnUpdate()
 		Return 0
 	End Method
 
 	Method OnRender:Int()
+		currentScene.OnRender()
 		Return 0
 	End Method
 End Class
