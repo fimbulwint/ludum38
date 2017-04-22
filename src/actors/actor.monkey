@@ -10,7 +10,7 @@ Class Actor
 	' Drawing parameters
 	Field blend:BlendMode = BlendMode.Alpha
 	Field alpha:Float = 1.0
-	Field x:Float, y:Float 
+	Field x:Float, y:Float, z:Float
 	Field angle:Float
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0
