@@ -1,5 +1,6 @@
 Strict
 
+Import mojo2
 Import scenes.scene
 Import world.world
 
@@ -11,8 +12,8 @@ Class Game Implements Scene
 		world.OnUpdate()
 	End Method
 	
-	Method OnRender:Void()
-		world.OnRender()
+	Method OnRender:Void(canvas:Canvas)
+		world.OnRender(canvas)
 	End Method
 	
 	Method GetSceneResult:String()

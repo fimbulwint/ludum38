@@ -1,5 +1,7 @@
 Strict
 
+Import mojo2 
+
 Class World
 	
 	Method New()
@@ -8,7 +10,7 @@ Class World
 	Method OnUpdate:Void()
 	End Method
 	
-	Method OnRender:Void()
+	Method OnRender:Void(canvas:Canvas)
 	End Method
 	
 End Class
