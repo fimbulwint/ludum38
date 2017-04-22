@@ -6,6 +6,8 @@ Import sound.dj
 Import scenes.game
 Import scenes.scene
 Import system.time
+Import world.world
+
 
 
 Class Ludum38 Extends App
