@@ -21,12 +21,24 @@ Class Ludum38 Extends App
 	End Method
 
 	Method OnClose:Int()
+		currentScene.Finish()
+		currentScene = Null
 		Return 0
 	End Method
 	
 	Method OnUpdate:Int()
 		Time.instance.Update()
+		
+		Local sceneResult:String = currentScene.GetSceneResult()
+		Select (sceneResult)
+			Case ""
+			Case Scene.RESULT_END
+				currentScene.Finish()
+				'for now nothing else
+		End Select
+		
 		currentScene.OnUpdate()
+		
 		Return 0
 	End Method
 

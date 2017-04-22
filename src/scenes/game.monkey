@@ -11,7 +11,7 @@ Class Game Implements Scene
 	End Method
 	
 	Method GetSceneResult:String()
-		Return Null;
+		Return ""
 	End Method
 	
 	Method Finish:Void()
