@@ -1,6 +1,5 @@
 Strict
 
-< < < < < < < HEAD
 Import graphics.screen
 Import mojo2
 Import world.train
@@ -21,7 +20,9 @@ Class World
 	End Method
 	
 	Method Update:Void()
-		train.Update()
+		For Local actor:Actor = EachIn actors
+			actor.Update()
+		Next
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -30,7 +31,11 @@ Class World
 		canvas.SetBlendMode(BlendMode.Alpha)
 		canvas.SetColor(0.0, 0.6, 0.0)
 		canvas.DrawRect(0.0, Screen.GroundHeight, Screen.Width, Screen.Height - Screen.GroundHeight)
-		train.Draw(canvas)
+		
+		For Local actor:Actor = EachIn actors
+			actor.Draw(canvas)
+		Next
+		
 		canvas.PopMatrix()
 	End Method
 	
