@@ -37,7 +37,7 @@ Class Ludum38 Extends App
 		
 		Local sceneResult:String = currentScene.GetSceneResult()
 		Select (sceneResult)
-			Case ""
+			Case Scene.STILL_CURRENT_SCENE
 			Case Scene.RESULT_END
 				currentScene.Finish()
 				'for now nothing else
