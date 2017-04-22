@@ -55,9 +55,12 @@ Class Actor
 			speedX = -BASE_LATERAL_SPEED
 		ElseIf(movingRight)
 			speedX = BASE_LATERAL_SPEED
+		Else
+			speedX = 0.0
 		EndIf
 		
-		x += deltaInSecs + speedX
+		x += speedX * deltaInSecs
+		
 	End Method
 
 End Class
