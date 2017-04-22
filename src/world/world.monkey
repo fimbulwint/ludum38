@@ -1,6 +1,5 @@
 Strict
 
-< < < < < < < HEAD
 Import graphics.screen
 Import mojo2
 Import world.ground
