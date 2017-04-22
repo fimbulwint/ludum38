@@ -15,10 +15,10 @@ Public
 	Method OnClose:Int()
 	End Method
 	
-	Method OnRender:Int()
+	Method OnUpdate:Int()
 	End Method
 
-	Method OnDraw:Int()
+	Method OnRender:Int()
 	End Method
 		
 End Class
