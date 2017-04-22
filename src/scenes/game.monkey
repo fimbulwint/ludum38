@@ -16,7 +16,7 @@ Class Game Implements Scene
 	End Method
 	
 	Method GetSceneResult:String()
-		Return ""
+		Return Scene.STILL_CURRENT_SCENE
 	End Method
 	
 	Method Finish:Void()
