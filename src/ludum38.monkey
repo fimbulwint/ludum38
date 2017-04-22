@@ -1,6 +1,10 @@
 Strict
 
+
 Import mojo2 
+Import sound.dj
+Import system.time
+
 
 Class Ludum38 Extends App
 	Method OnCreate:Int()
