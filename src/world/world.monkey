@@ -16,7 +16,7 @@ Class World
 		actors = New Actors()
 		actors.AddLast(New Survivor())
 		actors.AddLast(New Train())
-'		actors.AddLast(New Ground())
+		actors.AddLast(New Ground())
 		actors.Sort()
 	End Method
 	
@@ -37,8 +37,8 @@ End Class
 Class Actors Extends List<Actor>
 	
 	Method Compare:Int(left:Actor, right:Actor)
-		If (left.z < right.z) Then Return - 1
-		If (left.z > right.z) Then Return 1
+		If (left.z > right.z) Then Return - 1
+		If (left.z < right.z) Then Return 1
 		Return 0
 	End Method
 	
