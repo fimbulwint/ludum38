@@ -69,6 +69,8 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
+		Else If (punching)
+			animStatus = Animator.ANIM_MUTANT_PUNCH
 		End If
 		Local animResult:AnimResult = animator.Animate(animStatus)
 		If (animResult.graph = -1)

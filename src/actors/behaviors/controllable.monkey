@@ -16,6 +16,7 @@ Class Controllable Implements Behavior
 		owningActor.jumping = Bool(KeyDown(KEY_W))
 		owningActor.movingLeft = Bool(KeyDown(KEY_A))
 		owningActor.movingRight = Bool(KeyDown(KEY_D))
+		owningActor.punching = Bool(KeyDown(KEY_O))
 	End Method
 
 End Class

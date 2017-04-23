@@ -36,6 +36,7 @@ Class Actor Extends LifecycleAware
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
+	Field punching:Bool
 	Field directionX:Float = 1.0
 	Field speedX:Float
 	Field speedY:Float
