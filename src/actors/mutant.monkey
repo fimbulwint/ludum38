@@ -71,12 +71,11 @@ Class Mutant Extends Actor
 			End If
 		End If
 		
-		Print (speedX)
 		x += speedX * deltaInSecs
 		
 		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
 		y -= speedY * deltaInSecs
-		If (wasAboveTrain And IsDirectlyBelowTrain())
+		If (wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
 			y = Screen.TrainHeight - boxHeight + yShift
 			speedY = 0.0
 		End If
