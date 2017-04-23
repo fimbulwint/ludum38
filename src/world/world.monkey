@@ -41,7 +41,7 @@ Class World
 		For Local actor:Actor = EachIn actors
 			actor.Update()
 			'check for collisions and other env data
-			actor.CompleteMovement(New WorldState())
+			actor.TryToMove(New WorldState())
 		Next
 	End Method
 	
