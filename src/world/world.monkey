@@ -24,6 +24,7 @@ Class World
 	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
 	Field lifecycleAwaresToRemove:LifecycleAwares = New LifecycleAwares()
+	Field dynamicActorsToRemove:List<Actor> = New List<Actor>()
 	
 	Method New()
 		worldState = New WorldState()
@@ -44,7 +45,7 @@ Class World
 		
 		worldState.mainActors = New List<Actor>()
 		worldState.dynamicActors = New List<Actor>()
-		worldState.mainActors.AddLast(survivor)
+		worldState.mainActors.AddLast(survivors[0])
 		worldState.mainActors.AddLast(train)
 	End Method
 	
@@ -65,6 +66,10 @@ Class World
 	Method RemoveLifecycleAware:Void(aware:LifecycleAware)
 		lifecycleAwaresToRemove.AddLast(aware) ' will be considered next Update
 	End Method
+	
+	Method RemoveDynamicActor:Void(actor:Actor)
+		dynamicActorsToRemove.AddLast(actor) ' will be considered next Update
+	End Method
 		
 	Method Update:Void()
 		If (lifecycleAwaresToAdd.Count() > 0)
@@ -78,6 +83,12 @@ Class World
 				lifecycleAwares.Remove(aware)
 			End For
 			lifecycleAwaresToRemove.Clear()
+		End If
+		If (dynamicActorsToRemove.Count() > 0)
+			For Local dynamicActor:Actor = EachIn dynamicActorsToRemove
+				worldState.dynamicActors.Remove(dynamicActor)
+			End For
+			dynamicActorsToRemove.Clear()
 		End If
 		
 		For Local aware:LifecycleAware = EachIn lifecycleAwares

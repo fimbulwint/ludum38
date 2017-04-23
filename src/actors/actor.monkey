@@ -77,7 +77,23 @@ Class Actor Extends LifecycleAware
 		CheckCollisionsWith(worldState.dynamicActors)
 		' All collisions have been decided at this point
 	End Method
+	
+	Method IsOnGround:Bool()
+		Return y = Screen.GroundHeight - boxHeight + yShift
+	End Method
 
+	Method IsOnTrain:Bool()
+		Return y = Screen.TrainHeight - boxHeight + yShift And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+	
+	Method IsDirectlyAboveTrain:Bool()
+		Return y < (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+
+	Method IsDirectlyBelowTrain:Bool()
+		Return y > (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+	
 Private
 
 	Method GetMainCollisionBox:CollisionBox()
@@ -96,22 +112,6 @@ Private
 				Next
 			EndIf
 		Next
-	End Method
-	
-	Method IsOnGround:Bool()
-		Return y = Screen.GroundHeight - boxHeight + yShift
-	End Method
-
-	Method IsOnTrain:Bool()
-		Return y = Screen.TrainHeight - boxHeight + yShift And x > Screen.TrainStart And x <= Screen.TrainEnd
-	End Method
-	
-	Method IsDirectlyAboveTrain:Bool()
-		Return y < (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
-	End Method
-
-	Method IsDirectlyBelowTrain:Bool()
-		Return y > (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
 	End Method
 
 End Class
