@@ -14,8 +14,8 @@ Class Controllable Implements Behavior
 	
 	Method Update:Void()
 		owningActor.jumping = Bool(KeyDown(KEY_W))
-		owningActor.movingLeft = Bool(KeyDown(KEY_LEFT))
-		owningActor.movingRight = Bool(KeyDown(KEY_RIGHT))
+		owningActor.movingLeft = Bool(KeyDown(KEY_A))
+		owningActor.movingRight = Bool(KeyDown(KEY_D))
 	End Method
 
 End Class
