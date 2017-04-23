@@ -3,11 +3,14 @@ Strict
 
 Import graphics.assets
 Import graphics.screen
+Import lifecycleaware
 Import mojo2 
 Import sound.dj
 Import scenes.game
 Import scenes.scene
 Import system.time
+Import world.ground
+Import world.levelmarker
 Import world.train
 Import world.world
 Import world.worldmap

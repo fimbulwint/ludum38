@@ -1,11 +1,16 @@
 Strict
 
-Import drawable
 Import actors.actor
 Import graphics.screen
+Import lifecycleaware
 Import mojo2
+Import world.world
 
-Class Ground Extends Drawable
+Class Ground Extends LifecycleAware
+
+	Method Update:Void(worldState:WorldState)
+		'empty for now
+	End Method
 
 	Method Draw:Void(canvas:Canvas)
 		canvas.PushMatrix()

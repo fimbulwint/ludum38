@@ -7,7 +7,7 @@ Import mojo2
 Import system.time
 Import world.world
 
-Class WorldMap Extends Drawable
+Class WorldMap Extends LifecycleAware
 	Const ZONE_MOUNTAINS:String = "MOUNTAINS"
 	Const ZONE_DESERT:String = "DESERT"
 	
@@ -63,7 +63,7 @@ Class WorldMap Extends Drawable
 					[1, 2, -1])]
 	End Method
 
-	Method Update:Void()
+	Method Update:Void(worldState:WorldState)
 		Local delta:Float = Time.instance.lastFrame
 		x-= (delta * vx) / 1000.0
 		If (x <= -Screen.Width)

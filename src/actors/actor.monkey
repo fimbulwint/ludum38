@@ -1,12 +1,12 @@
 Strict
 
-Import drawable
+Import lifecycleaware
 Import mojo2
 Import actors.behaviors.behavior
 Import world.world
 Import graphics.screen
 
-Class Actor Extends Drawable
+Class Actor Extends LifecycleAware
 
 	Field behavior:Behavior
 	
@@ -40,8 +40,9 @@ Class Actor Extends Drawable
 		xShift = image.HandleX * boxWidth
 	End Method
 	
-	Method Update:Void()
+	Method Update:Void(worldState:WorldState)
 		behavior.Update()
+		CompleteMovement(worldState)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
