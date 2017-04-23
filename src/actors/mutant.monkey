@@ -16,6 +16,8 @@ Class Mutant Extends Actor
 	Const JUMP_SPEED_MIN:Float = 200.0
 	Const JUMP_SPEED_MAX:Float = 300.0
 	
+	Field world:World 
+	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_MUTANT)
 	
 	Field animStatus:Int = Animator.ANIM_MUTANT_IDLE
@@ -23,9 +25,10 @@ Class Mutant Extends Actor
 	
 	Field mutantType:String
 
-	Method New(type:String, survivor:Survivor[])
+	Method New(type:String, world:World)
+		Self.world = world
 		hp = BASE_HP
-		behavior = New MutantBrain(type, Self)
+		behavior = New MutantBrain(type, Self, world.survivors)
 		z = -10.0
 		image = anim[0]
 		
@@ -41,6 +44,13 @@ Class Mutant Extends Actor
 		SetRandomInitialPosition()
 	End Method
 
+	Method Update:Void(worldState:WorldState)
+		Super.Update(worldState)
+		If (hp < 0.0 And y > Screen.Height + boxHeight)
+			world.RemoveLifecycleAware(Self)
+		End If
+	End Method
+	
 	Method TryToMove:Void(worldState:WorldState)
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
