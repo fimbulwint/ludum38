@@ -1,0 +1,1 @@
+xcopy *.png /Y ..\..\src\ludum38.data

@@ -37,6 +37,8 @@ Class World
 		For Local actor:Actor = EachIn actors
 			actor.Draw(canvas)
 		Next		
+		canvas.SetFont(Assets.instance.fonts.Get(Assets.FNT_BOYCOTT))
+		canvas.DrawText("0123456789", 5.0, 5.0, 0, 0)
 	End Method
 	
 End Class
