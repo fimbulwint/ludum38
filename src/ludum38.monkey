@@ -31,7 +31,7 @@ Class Ludum38 Extends App
 
 	Method OnCreate:Int()
 		screen = New Canvas()
-		screen.SetProjection2d(0.0, Screen.Width, 0.0, Screen.Height)
+		screen.SetProjection2d(0.0, Screen.WIDTH, 0.0, Screen.HEIGHT)
 		Local assets:Assets = Assets.instance ' init
 		Animator.Initialize()
 		Seed = Millisecs()

@@ -20,13 +20,13 @@ Class Survivor Extends Actor
 
 	Method New()
 		behavior = New Controllable(Self)
-		x = Screen.Width / 2
+		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
 		
 		Super.PostConstruct()
 		
-		y = Screen.GroundHeight - boxHeight
+		y = Ground.GROUND_HEIGHT - boxHeight
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
@@ -50,10 +50,10 @@ Class Survivor Extends Actor
 		If (OverflowingLeft())
 			x = -xShift
 		ElseIf(OverflowingRight())
-			x = Screen.Width - boxWidth + xShift
+			x = Screen.WIDTH - boxWidth + xShift
 		EndIf
 
-		If (jumping And y = Screen.GroundHeight - boxHeight + yShift)
+		If (jumping And y = Ground.GROUND_HEIGHT - boxHeight + yShift)
 			speedY = JUMP_SPEED
 		EndIf
 
@@ -65,7 +65,7 @@ Class Survivor Extends Actor
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp < 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_DIE
-		Else If (y <> Screen.GroundHeight - boxHeight + yShift)
+		Else If (y <> Ground.GROUND_HEIGHT - boxHeight + yShift)
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
@@ -86,7 +86,7 @@ Private
 	End Method
 	
 	Method OverflowingRight:Bool()
-		Return x + boxWidth - xShift > Screen.Width
+		Return x + boxWidth - xShift > Screen.WIDTH
 	End Method
 
 End Class

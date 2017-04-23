@@ -7,6 +7,7 @@ Import mojo2
 Import world.world
 
 Class Ground Extends LifecycleAware
+	Const GROUND_HEIGHT:Float = Screen.HEIGHT - 165.0
 
 	Method Update:Void(worldState:WorldState)
 		'empty for now
@@ -17,7 +18,7 @@ Class Ground Extends LifecycleAware
 		canvas.SetAlpha(1.0)
 		canvas.SetBlendMode(BlendMode.Alpha)
 		canvas.SetColor(0.0, 0.6, 0.0)
-		canvas.DrawRect(0.0, Screen.GroundHeight, Screen.Width, Screen.Height - Screen.GroundHeight)
+		canvas.DrawRect(0.0, Ground.GROUND_HEIGHT, Screen.WIDTH, Screen.HEIGHT - Ground.GROUND_HEIGHT)
 		canvas.PopMatrix()
 	End Method
 
