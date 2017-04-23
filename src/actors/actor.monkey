@@ -1,20 +1,19 @@
 Strict
 
+Import drawable
 Import mojo2
 Import actors.behaviors.behavior
 Import world.world
-Import system.time
+Import graphics.screen
 
-Class Actor
-
-	Const BASE_LATERAL_SPEED:Float = 200.0
+Class Actor Extends Drawable
 
 	Field behavior:Behavior
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
 	Field alpha:Float = 1.0
-	Field x:Float, y:Float, z:Float
+	Field x:Float, y:Float
 	Field r:Float = 1.0
 	Field g:Float = 1.0
 	Field b:Float = 1.0
@@ -22,14 +21,23 @@ Class Actor
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0
 	Field image:Image = Null
+	Field xShift:Float = 0.0
 	
+	' Movement
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
-	
 	Field speedX:Float
+	Field boxWidth:Float
+	Field boxHeight:Float
 	
 	Method New()
+	End Method
+	
+	Method PostConstruct:Void()
+		boxWidth = image.Width()
+		boxHeight = image.Height()
+		xShift = image.HandleX * boxWidth
 	End Method
 	
 	Method Update:Void()
@@ -48,19 +56,6 @@ Class Actor
 	End Method
 	
 	Method CompleteMovement:Void(worldState:WorldState)
-		'if no collissions, move
-		Local deltaInSecs:Float = Time.instance.realLastFrame / 1000
-	
-		If (movingLeft)
-			speedX = -BASE_LATERAL_SPEED
-		ElseIf(movingRight)
-			speedX = BASE_LATERAL_SPEED
-		Else
-			speedX = 0.0
-		EndIf
-		
-		x += speedX * deltaInSecs
-		
 	End Method
 
 End Class

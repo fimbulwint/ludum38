@@ -45,4 +45,8 @@ Public
 		End If
 	End Method
 	
+	Method getDeltaInSecs:Float()
+		Return realLastFrame / 1000
+	End Method
+	
 End Class

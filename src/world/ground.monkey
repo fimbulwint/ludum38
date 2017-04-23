@@ -1,13 +1,11 @@
 Strict
 
+Import drawable
 Import actors.actor
 Import graphics.screen
 Import mojo2
 
-Class Ground Extends Actor
-	Method New()
-		behavior = New EmptyBehavior()
-	End Method
+Class Ground Extends Drawable
 
 	Method Draw:Void(canvas:Canvas)
 		canvas.PushMatrix()
@@ -16,5 +14,6 @@ Class Ground Extends Actor
 		canvas.SetColor(0.0, 0.6, 0.0)
 		canvas.DrawRect(0.0, Screen.GroundHeight, Screen.Width, Screen.Height - Screen.GroundHeight)
 		canvas.PopMatrix()
-	End Method	
+	End Method
+
 End Class
