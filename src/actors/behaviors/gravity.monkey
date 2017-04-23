@@ -11,7 +11,7 @@ Class Gravity
 
 	Function applyTo:Void(actor:Actor)
 		actor.speedY -= GRAVITY * Time.instance.getDeltaInSecs()
-		If (actor.y + actor.boxHeight - actor.yShift > Screen.GroundHeight)
+		If (actor.hp > 0.0 And actor.y + actor.boxHeight - actor.yShift > Screen.GroundHeight)
 			actor.y = Screen.GroundHeight - actor.boxHeight + actor.yShift
 		EndIf
 	End Function

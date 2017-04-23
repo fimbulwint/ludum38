@@ -12,6 +12,9 @@ Class Actor Extends LifecycleAware
 
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
+
+	' Attributes
+	Field hp:Float = 1.0
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
@@ -66,5 +69,13 @@ Class Actor Extends LifecycleAware
 	
 	Method TryToMove:Void(worldState:WorldState)
 	End Method
+	
+	Method IsOnGround:Bool()
+		Return y = Screen.GroundHeight - boxHeight + yShift
+	End Method
 
+	Method IsOnTrain:Bool()
+		Return y = Screen.TrainHeight - boxHeight + yShift And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+	
 End Class
