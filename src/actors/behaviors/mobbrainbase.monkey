@@ -126,9 +126,10 @@ Class MobBrainBase Implements Behavior
 	Method SetObjX:Void(x:Float)
 		If (x = -1.0)
 			objX = Rnd(TRAIN_X_MIN, TRAIN_X_MAX)
+			Print("objX " + objX)
 		End If
 		
-		If (x < objX)
+		If (actor.x < objX)
 			approachVectorX = 1.0
 		Else
 			approachVectorX = -1.0
