@@ -82,7 +82,9 @@ Class Mutant Extends Actor
 					speedX = -GROUND_LATERAL_SPEED
 					speedY = JUMP_SPEED_MAX
 				End If
-			Else If (IsOnGround()) ' and not wanting to do anything particular
+			Else If (IsOnTrain()) 
+				speedX = 0.0 ' why stop? should never happen
+			Else If (IsOnGround()) 
 				speedX = -Train.TRAIN_SPEED ' ciao!
 			End If
 		End If
