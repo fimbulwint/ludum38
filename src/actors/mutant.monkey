@@ -64,7 +64,9 @@ Class Mutant Extends Actor
 
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
-		If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
+		If (hp < 0.0)
+			animStatus = Animator.ANIM_MUTANT_DIE
+		Else If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
 			animStatus = Animator.ANIM_MUTANT_JUMP
 		Else If (speedX <> 0.0)
 			If (y = Screen.GroundHeight)

@@ -62,7 +62,9 @@ Class Survivor Extends Actor
 	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
-		If (y <> Screen.GroundHeight - boxHeight + yShift)
+		If (hp < 0.0)
+			animStatus = Animator.ANIM_SURVIVOR_DIE
+		Else If (y <> Screen.GroundHeight - boxHeight + yShift)
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
