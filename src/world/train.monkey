@@ -5,6 +5,8 @@ Import graphics.assets
 Import graphics.screen
 
 Class Train Extends Actor
+	Const TRAIN_SPEED:Float = 1000.0 ' used to determine object speed when touching ground
+	
 	Method New()
 		behavior = New EmptyBehavior()
 		x = 0.0
