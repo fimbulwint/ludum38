@@ -33,6 +33,7 @@ Class World
 			drawables.AddLast(actor)
 		Next
 		drawables.AddLast(New Ground())
+		drawables.AddLast(worldMap)
 	End Method
 	
 	Method Update:Void()
@@ -45,7 +46,6 @@ Class World
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
-		worldMap.Draw(canvas)
 		drawables.Sort()
 		For Local drawable:Drawable = EachIn drawables
 			drawable.Draw(canvas)

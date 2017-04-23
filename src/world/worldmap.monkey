@@ -1,12 +1,13 @@
 Strict
 
+Import drawable
 Import graphics.assets
 Import graphics.screen
 Import mojo2
 Import system.time
 Import world.world
 
-Class WorldMap
+Class WorldMap Extends Drawable
 	Const ZONE_MOUNTAINS:String = "MOUNTAINS"
 	Const ZONE_DESERT:String = "DESERT"
 	
@@ -35,6 +36,7 @@ Class WorldMap
 		currentZone = map.Length - 1
 		currentBackdrop = map[currentZone].content.Length - 1
 		currentImage = Null
+		z = 1000.0
 		AdvanceBackdrop()
 	End Method
 	

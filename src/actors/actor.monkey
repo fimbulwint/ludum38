@@ -4,12 +4,9 @@ Import drawable
 Import mojo2
 Import actors.behaviors.behavior
 Import world.world
-Import system.time
 Import graphics.screen
 
 Class Actor Extends Drawable
-
-	Const BASE_LATERAL_SPEED:Float = 200.0
 
 	Field behavior:Behavior
 	
@@ -24,7 +21,7 @@ Class Actor Extends Drawable
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0
 	Field image:Image = Null
-	Field imageHandleXShift:Float = 0.0
+	Field xShift:Float = 0.0
 	
 	' Movement
 	Field movingLeft:Bool
@@ -40,7 +37,7 @@ Class Actor Extends Drawable
 	Method PostConstruct:Void()
 		boxWidth = image.Width()
 		boxHeight = image.Height()
-		imageHandleXShift = image.HandleX * boxWidth
+		xShift = image.HandleX * boxWidth
 	End Method
 	
 	Method Update:Void()
@@ -59,32 +56,6 @@ Class Actor Extends Drawable
 	End Method
 	
 	Method CompleteMovement:Void(worldState:WorldState)
-		'if no collissions, move
-		Local deltaInSecs:Float = Time.instance.realLastFrame / 1000
-	
-		If (movingLeft)
-			speedX = -BASE_LATERAL_SPEED
-		ElseIf(movingRight)
-			speedX = BASE_LATERAL_SPEED
-		Else
-			speedX = 0.0
-		EndIf
-		
-		x += speedX * deltaInSecs
-		If (OverflowingLeft())
-			x = 0
-		ElseIf(OverflowingRight())
-			x = Screen.Width - 0.5 * boxWidth + imageHandleXShift
-		EndIf
-	End Method
-	
-Private
-	Method OverflowingLeft:Bool()
-		Return x - 0.5 * boxWidth + imageHandleXShift < 0
-	End Method
-	
-	Method OverflowingRight:Bool()
-		Return x + 0.5 * boxWidth - imageHandleXShift > Screen.Width
 	End Method
 
 End Class
