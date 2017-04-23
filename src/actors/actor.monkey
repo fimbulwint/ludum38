@@ -2,11 +2,13 @@ Strict
 
 Import actors.behaviors.behavior
 Import actors.gravity
+Import actors.collisions
 Import graphics.animator 
 Import graphics.screen
 Import lifecycleaware
 Import mojo2
 Import world.world
+Import system.time
 
 Class Actor Extends LifecycleAware
 
@@ -39,9 +41,8 @@ Class Actor Extends LifecycleAware
 	Field speedY:Float
 	Field boxWidth:Float
 	Field boxHeight:Float
-	
-	Method New()
-	End Method
+	Field collisionBoxes:List<CollisionBox> = New List<CollisionBox>()
+	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
 		boxWidth = image.Width()
@@ -51,6 +52,10 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method Update:Void(worldState:WorldState)
+		collidingActors.Clear()
+		collisionBoxes.Clear()
+		collisionBoxes.AddLast(GetMainCollisionBox())
+	
 		behavior.Update()
 		TryToMove(worldState)
 		Gravity.applyTo(Self)
@@ -68,6 +73,9 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
+		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.dynamicActors)
+		' All collisions have been decided at this point
 	End Method
 	
 	Method IsOnGround:Bool()
@@ -84,6 +92,26 @@ Class Actor Extends LifecycleAware
 
 	Method IsDirectlyBelowTrain:Bool()
 		Return y > (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+	
+Private
+
+	Method GetMainCollisionBox:CollisionBox()
+		Return New CollisionBox([x, y],[x + boxWidth, y + boxHeight])
+	End Method
+	
+	Method CheckCollisionsWith:Void(actors:List<Actor>)
+		For Local other:Actor = EachIn actors
+			If (other <> Self)
+				For Local colBox:CollisionBox = EachIn Self.collisionBoxes
+					For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
+						If (Collisions.ThereIsCollision(colBox, otherColBox))
+							collidingActors.AddLast(other)
+						EndIf
+					Next
+				Next
+			EndIf
+		Next
 	End Method
 
 End Class
