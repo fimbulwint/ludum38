@@ -21,17 +21,18 @@ Class Survivor Extends Actor
 	Method New()
 		behavior = New Controllable(Self)
 		x = Screen.Width / 2
-		y = Screen.GroundHeight - boxHeight
 		z = 0.0
 		image = anim[0]
 		
 		Super.PostConstruct()
+		
+		y = Screen.GroundHeight - boxHeight
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
+		Super.TryToMove(worldState)
 	
-		'if all goes well (no collisions and stuff), move
+		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 		
 		If (movingLeft)
 			speedX = -BASE_LATERAL_SPEED

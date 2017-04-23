@@ -8,14 +8,17 @@ Import world.train
 Import world.worldmap
 Import actors.actor
 Import actors.survivor
+Import actors.collisions
 Import drawable
 
 Class World
 
 	Field lifecycleAwares:LifecycleAwares = New LifecycleAwares()
+	Field worldState:WorldState
 	Field worldMap:WorldMap
 	
 	Method New()
+		worldState = New WorldState()
 		worldMap = New WorldMap(Self)
 		InitActors()
 		InitDrawables()
@@ -24,6 +27,10 @@ Class World
 	Method InitActors:Void()
 		lifecycleAwares.AddLast(New Survivor())
 		lifecycleAwares.AddLast(New Train())
+		
+		worldState.actors = New List<Actor>()
+		worldState.actors.AddLast(New Survivor())
+		worldState.actors.AddLast(New Train())
 	End Method
 	
 	Method InitDrawables:Void()
@@ -33,8 +40,6 @@ Class World
 	End Method
 	
 	Method Update:Void()
-		Local worldState:WorldState = New WorldState()
-		
 		For Local aware:LifecycleAware = EachIn lifecycleAwares
 			aware.Update(worldState)
 		Next
@@ -60,5 +65,5 @@ Class LifecycleAwares Extends List<LifecycleAware>
 End Class
 
 Class WorldState
-	Field collisions:[[Actor]]
+	Field actors:List<Actor>
 End

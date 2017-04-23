@@ -2,6 +2,7 @@ Strict
 
 Import actors.behaviors.behavior
 Import actors.gravity
+Import actors.collisions
 Import graphics.animator 
 Import graphics.screen
 Import lifecycleaware
@@ -36,15 +37,15 @@ Class Actor Extends LifecycleAware
 	Field speedY:Float
 	Field boxWidth:Float
 	Field boxHeight:Float
-	
-	Method New()
-	End Method
+	Field collisionBoxes:List<CollisionBox> = New List<CollisionBox>()
+	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
 		boxWidth = image.Width()
 		boxHeight = image.Height()
 		xShift = image.HandleX * boxWidth
 		yShift = image.HandleY * boxHeight
+		collisionBoxes.AddLast(New CollisionBox([x, y],[x + boxWidth, y + boxHeight]))
 	End Method
 	
 	Method Update:Void(worldState:WorldState)
@@ -65,6 +66,15 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
+		For Local other:Actor = EachIn worldState.actors
+			For Local colBox:CollisionBox = EachIn Self.collisionBoxes
+				For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
+					If (Collisions.ThereIsCollision(colBox, otherColBox))
+						collidingActors.AddLast(other)
+					EndIf
+				Next
+			Next
+		Next
 	End Method
 
 End Class
