@@ -11,7 +11,7 @@ Class WorldMap Extends LifecycleAware
 	Const ZONE_MOUNTAINS:String = "MOUNTAINS"
 	Const ZONE_DESERT:String = "DESERT"
 	
-	Const yOffset:Float = Screen.GroundHeight + 50.0
+	Const yOffset:Float = Ground.GROUND_HEIGHT + 50.0
 	Const vx:Float = 600.0
 	
 	Field zoneTypes:Map<String, ZoneType> = New StringMap<ZoneType> ' for each zonetype, its backdrops definition
@@ -26,7 +26,7 @@ Class WorldMap Extends LifecycleAware
 	Field currentImage:Image
 	Field currentFlipped:Bool 
 	
-	Field x:Float = -Screen.Width
+	Field x:Float = -Screen.WIDTH
 	
 	Method New(world:World)
 		Self.world = world
@@ -66,7 +66,7 @@ Class WorldMap Extends LifecycleAware
 	Method Update:Void(worldState:WorldState)
 		Local delta:Float = Time.instance.lastFrame
 		x-= (delta * vx) / 1000.0
-		If (x <= -Screen.Width)
+		If (x <= -Screen.WIDTH)
 			' the prevImage is no longer seen, advance backdrops
 			AdvanceBackdrop()
 		End If
@@ -81,14 +81,14 @@ Class WorldMap Extends LifecycleAware
 			DrawBackdrop(canvas, prevImage, x, prevFlipped)
 		End If
 		If (currentImage <> Null)
-			DrawBackdrop(canvas, currentImage, x + Screen.Width - 1.0, currentFlipped)
+			DrawBackdrop(canvas, currentImage, x + Screen.WIDTH - 1.0, currentFlipped)
 		End If
 		canvas.PopMatrix()
 	End Method
 	
 Private
 	Method AdvanceBackdrop:Void()
-		x += Screen.Width
+		x += Screen.WIDTH
 		prevImage = currentImage
 		prevFlipped = currentFlipped
 		currentBackdrop += 1
@@ -112,7 +112,7 @@ Private
 
 	Method DrawBackdrop:Void(canvas:Canvas, img:Image, x:Float, flipped:Bool)
 		If (flipped)
-			canvas.DrawImage(img, x + Screen.Width, yOffset, 0.0, -1.0, 1.0)
+			canvas.DrawImage(img, x + Screen.WIDTH, yOffset, 0.0, -1.0, 1.0)
 		Else
 			canvas.DrawImage(img, x, yOffset, 0.0, 1.0, 1.0)
 		End If

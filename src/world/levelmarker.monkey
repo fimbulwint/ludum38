@@ -9,7 +9,7 @@ Import world.worldmap
 
 Class LevelMarker Extends LifecycleAware
 	Const INITIAL_X:Float = 25.0
-	Const Y:Float = Screen.Height - 25.0
+	Const Y:Float = Screen.HEIGHT - 25.0
 	Const CHAR_SEPARATION_X:Float = 26.0
 	Const SHINE_SPEED:Float = 1.0
 	
