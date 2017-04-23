@@ -9,20 +9,20 @@ Import system.time
 
 Class Survivor Extends Actor
 
-	Const BASE_LATERAL_SPEED:Float = 200.0
+	Const BASE_LATERAL_SPEED:Float = 300.0
+	Const JUMP_SPEED:Float = 200.0
 
 	Method New()
 		behavior = New Controllable(Self)
 		x = Screen.Width / 2
-		y = Screen.GroundHeight - 60.0
+		y = Screen.GroundHeight - boxHeight
 		z = 0.0
 		image = Assets.instance.graphics.Get(Assets.GFX_SURVIVOR)
 		
 		Super.PostConstruct()
 	End Method
 	
-	Method CompleteMovement:Void(worldState:WorldState)
-		'if no collissions, move
+	Method Move:Void()
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
 		If (movingLeft)
@@ -39,6 +39,13 @@ Class Survivor Extends Actor
 		ElseIf(OverflowingRight())
 			x = Screen.Width - boxWidth + xShift
 		EndIf
+
+		If (jumping And y = Screen.GroundHeight - boxHeight)
+			speedY = JUMP_SPEED
+		EndIf
+
+		y -= speedY * deltaInSecs
+		
 	End Method
 	
 Private

@@ -3,6 +3,7 @@ Strict
 Import lifecycleaware
 Import mojo2
 Import actors.behaviors.behavior
+Import actors.gravity
 Import world.world
 Import graphics.screen
 
@@ -22,12 +23,14 @@ Class Actor Extends LifecycleAware
 	Field sizeY:Float = 1.0
 	Field image:Image = Null
 	Field xShift:Float = 0.0
+	Field yShift:Float = 0.0
 	
 	' Movement
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
 	Field speedX:Float
+	Field speedY:Float
 	Field boxWidth:Float
 	Field boxHeight:Float
 	
@@ -38,11 +41,12 @@ Class Actor Extends LifecycleAware
 		boxWidth = image.Width()
 		boxHeight = image.Height()
 		xShift = image.HandleX * boxWidth
+		yShift = image.HandleY * boxHeight
 	End Method
 	
 	Method Update:Void(worldState:WorldState)
 		behavior.Update()
-		CompleteMovement(worldState)
+		TryToMove(worldState)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -56,7 +60,13 @@ Class Actor Extends LifecycleAware
 		End If
 	End Method
 	
-	Method CompleteMovement:Void(worldState:WorldState)
+	Method TryToMove:Void(worldState:WorldState)
+		'if all goes well (no collisions), move
+		Move()
+		Gravity.applyTo(Self)
+	End Method
+	
+	Method Move:Void()
 	End Method
 
 End Class
