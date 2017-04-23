@@ -16,6 +16,7 @@ Class Assets
 
 	Const ANIMS_FRAMES:Int = 16
 	Const GFX_ANIM_SURVIVOR:String = "survivor.png"
+	Const GFX_ANIM_MUTANT:String = "mutants.png"
 
 	Const FNT_BOYCOTT:String = "fnt_boycott.png"
 	
@@ -35,6 +36,7 @@ Class Assets
 		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 1.0))
 	
 		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES, False, .5, 1.0))
+		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES, False, .5, 1.0))
 		
 		fonts.Add(FNT_BOYCOTT, Font.Load(FNT_BOYCOTT, 48, 10, False))
 	End Method
