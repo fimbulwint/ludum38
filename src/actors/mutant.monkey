@@ -10,12 +10,16 @@ Class Mutant Extends Actor
 	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
 
 	Const BASE_HP:Float = 1.0
-	Const BASE_LATERAL_SPEED:Float = 300.0
+	Const BASE_LATERAL_SPEED:Float = 200.0
 	Const GROUND_LATERAL_SPEED:Float = 100.0
-	Const JUMP_LATERAL_SPEED_MIN:Float = 400.0
+	Const INITIAL_JUMP_LATERAL_SPEED_MIN:Float = 400.0
+	Const INITIAL_JUMP_LATERAL_SPEED_MAX:Float = 600.0
+	Const JUMP_LATERAL_SPEED_MIN:Float = 300.0
 	Const JUMP_LATERAL_SPEED_MAX:Float = 400.0
-	Const JUMP_SPEED_MIN:Float = 200.0
-	Const JUMP_SPEED_MAX:Float = 300.0
+	Const GROUND_JUMP_SPEED_MIN:Float = 300.0
+	Const GROUND_JUMP_SPEED_MAX:Float = 350.0
+	Const JUMP_SPEED_MIN:Float = 100.0
+	Const JUMP_SPEED_MAX:Float = 150.0
 	
 	Field world:World 
 	
@@ -58,7 +62,16 @@ Class Mutant Extends Actor
 		'if all goes well (no collisions and stuff), move
 		
 		If (hp > 0.0)
-			If (movingLeft)
+			If (jumping)
+				If (IsOnTrain())
+					If (movingLeft) Then directionX = -1.0 Else directionX = 1.0
+					speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * directionX
+					speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
+				Else If (IsOnGround())	
+					speedX = -GROUND_LATERAL_SPEED
+					speedY = Rnd(GROUND_JUMP_SPEED_MIN, GROUND_JUMP_SPEED_MAX)
+				End If
+			Else If (movingLeft)
 				If (IsOnTrain())
 					speedX = -BASE_LATERAL_SPEED
 					directionX = -1.0
@@ -73,14 +86,6 @@ Class Mutant Extends Actor
 				Else If (IsOnGround())
 					speedX = GROUND_LATERAL_SPEED
 					directionX = 1.0
-				End If
-			Else If (jumping)
-				If (IsOnTrain())
-					speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * directionX
-					speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
-				Else If (IsOnGround())	
-					speedX = -GROUND_LATERAL_SPEED
-					speedY = JUMP_SPEED_MAX
 				End If
 			Else If (IsOnTrain()) 
 				speedX = 0.0 ' why stop? should never happen
@@ -132,7 +137,7 @@ Private
 			' jumping
 		'	y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
 		'	directionX = -side
-		'	speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * -side
+		'	speedX = Rnd(INITIAL_JUMP_LATERAL_SPEED_MIN, INITIAL_JUMP_LATERAL_SPEED_MAX) * -side
 		'	speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
 		'Else
 			' running on ground

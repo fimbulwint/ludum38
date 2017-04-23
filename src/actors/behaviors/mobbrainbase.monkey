@@ -8,7 +8,7 @@ Class MobBrainBase Implements Behavior
 	Const OBJ_APPROACH_TRAIN:String = "APPROACH_TRAIN"
 	Const OBJ_MOVE_TO_POINT_ON_TRAIN:String ="MOVE_TO_POINT_ON_TRAIN"
 
-	Const TRAIN_X_MIN:Float = Train.TRAIN_START + 80.0
+	Const TRAIN_X_MIN:Float = Train.TRAIN_START + 100.0
 	Const TRAIN_X_MAX:Float = Train.TRAIN_END - 80.0
 	
 	Field actor:Actor
@@ -67,7 +67,7 @@ Class MobBrainBase Implements Behavior
 		If (target = Null) ' no available targets, move to random point
 			StartMoveToPointOnTrain()
 		End If
-		'TODO
+		'TODO? should depend on type of mob
 	End Method
 
 	Method StartApproachTrain:Void()
@@ -92,7 +92,9 @@ Class MobBrainBase Implements Behavior
 				End If
 			End If
 		Else
-		' if not on ground wait for him to fall somewhere
+		' if not on ground wait for him to fall somewhere but keep selecting new objX
+		' to avoid not being able to climb and keep repeating forever
+			SetObjX(-1.0)
 		End If
 	End Method
 
