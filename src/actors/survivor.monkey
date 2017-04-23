@@ -3,6 +3,7 @@ Strict
 Import mojo2
 Import actors.behaviors.controllable
 Import actors.actor
+Import graphics.animator
 Import graphics.assets
 Import graphics.screen
 Import system.time
@@ -11,13 +12,18 @@ Class Survivor Extends Actor
 
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const JUMP_SPEED:Float = 250.0
+	
+	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_SURVIVOR)
+	
+	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
+	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
 
 	Method New()
 		behavior = New Controllable(Self)
 		x = Screen.Width / 2
 		y = Screen.GroundHeight - boxHeight
 		z = 0.0
-		image = Assets.instance.graphics.Get(Assets.GFX_SURVIVOR)
+		image = anim[0]
 		
 		Super.PostConstruct()
 	End Method
@@ -29,8 +35,10 @@ Class Survivor Extends Actor
 		
 		If (movingLeft)
 			speedX = -BASE_LATERAL_SPEED
+			directionX = -1.0
 		ElseIf(movingRight)
 			speedX = BASE_LATERAL_SPEED
+			directionX = 1.0
 		Else
 			speedX = 0.0
 		EndIf
@@ -42,12 +50,29 @@ Class Survivor Extends Actor
 			x = Screen.Width - boxWidth + xShift
 		EndIf
 
-		If (jumping And y = Screen.GroundHeight - boxHeight)
+		If (jumping And y = Screen.GroundHeight - boxHeight + yShift)
 			speedY = JUMP_SPEED
 		EndIf
 
 		y -= speedY * deltaInSecs
 		
+	End Method
+	
+	Method Draw:Void(canvas:Canvas)
+		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
+		If (y <> Screen.GroundHeight - boxHeight + yShift)
+			animStatus = Animator.ANIM_SURVIVOR_JUMP
+		Else If (speedX <> 0.0)
+			animStatus = Animator.ANIM_SURVIVOR_RUN
+		End If
+		Local animResult:AnimResult = animator.Animate(animStatus)
+		If (animResult.graph = -1)
+			image = Null
+		Else 
+			image = anim[animResult.graph]
+		End If
+		sizeX = directionX
+		Super.Draw(canvas)
 	End Method
 	
 Private
