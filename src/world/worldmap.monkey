@@ -18,7 +18,7 @@ Class WorldMap Extends LifecycleAware
 	Field map:ZoneDefinition[] ' array of zone definitions with a zonetype and integer list (backdrops)
 	Field world:World 
 		
-	Field level:Int = 1
+	Field level:Int = 0
 	Field currentZone:Int
 	Field currentBackdrop:Int
 	Field prevImage:Image
