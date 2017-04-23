@@ -78,4 +78,12 @@ Class Actor Extends LifecycleAware
 		Return y = Screen.TrainHeight - boxHeight + yShift And x > Screen.TrainStart And x <= Screen.TrainEnd
 	End Method
 	
+	Method IsDirectlyAboveTrain:Bool()
+		Return y < (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+
+	Method IsDirectlyBelowTrain:Bool()
+		Return y > (Screen.TrainHeight - boxHeight + yShift) And x > Screen.TrainStart And x <= Screen.TrainEnd
+	End Method
+
 End Class

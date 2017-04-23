@@ -69,14 +69,20 @@ Class Mutant Extends Actor
 		End If
 		
 		x += speedX * deltaInSecs
+		
+		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
 		y -= speedY * deltaInSecs
+		If (wasAboveTrain And IsDirectlyBelowTrain())
+			y = Screen.TrainHeight - boxHeight + yShift
+			speedY = 0.0
+		End If
 	End Method
 
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
 		If (hp < 0.0)
 			animStatus = Animator.ANIM_MUTANT_DIE
-		Else If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
+		Else If (speedY <> 0.0 And Not IsOnGround() And Not IsOnTrain())
 			animStatus = Animator.ANIM_MUTANT_JUMP
 		Else If (speedX <> 0.0)
 			If (y = Screen.GroundHeight)
