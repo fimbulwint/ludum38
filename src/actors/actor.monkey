@@ -47,6 +47,7 @@ Class Actor Extends LifecycleAware
 	Method Update:Void(worldState:WorldState)
 		behavior.Update()
 		TryToMove(worldState)
+		Gravity.applyTo(Self)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -61,12 +62,6 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
-		'if all goes well (no collisions), move
-		Move()
-		Gravity.applyTo(Self)
-	End Method
-	
-	Method Move:Void()
 	End Method
 
 End Class

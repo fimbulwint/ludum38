@@ -10,7 +10,7 @@ Import system.time
 Class Survivor Extends Actor
 
 	Const BASE_LATERAL_SPEED:Float = 300.0
-	Const JUMP_SPEED:Float = 200.0
+	Const JUMP_SPEED:Float = 250.0
 
 	Method New()
 		behavior = New Controllable(Self)
@@ -22,9 +22,11 @@ Class Survivor Extends Actor
 		Super.PostConstruct()
 	End Method
 	
-	Method Move:Void()
+	Method TryToMove:Void(worldState:WorldState)
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
+		'if all goes well (no collisions and stuff), move
+		
 		If (movingLeft)
 			speedX = -BASE_LATERAL_SPEED
 		ElseIf(movingRight)
