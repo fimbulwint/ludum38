@@ -12,8 +12,6 @@ Import system.time
 
 Class Actor Extends LifecycleAware
 
-Field bla:String
-
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
 	
@@ -48,13 +46,15 @@ Field bla:String
 		boxHeight = image.Height()
 		xShift = image.HandleX * boxWidth
 		yShift = image.HandleY * boxHeight
-		collisionBoxes.AddLast(New CollisionBox([x, y],[x + boxWidth, y + boxHeight]))
 	End Method
 	
 	Method Update:Void(worldState:WorldState)
+		collidingActors.Clear()
+		collisionBoxes.Clear()
+		collisionBoxes.AddLast(GetMainCollisionBox())
+	
 		behavior.Update()
 		TryToMove(worldState)
-		collidingActors.Clear()
 		Gravity.applyTo(Self)
 	End Method
 	
@@ -70,15 +70,24 @@ Field bla:String
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
-		For Local other:Actor = EachIn worldState.actors
+		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.dynamicActors)
+		' All collisions have been decided at this point
+	End Method
+
+Private
+
+	Method GetMainCollisionBox:CollisionBox()
+		Return New CollisionBox([x, y],[x + boxWidth, y + boxHeight])
+	End Method
+	
+	Method CheckCollisionsWith:Void(actors:List<Actor>)
+		For Local other:Actor = EachIn actors
 			If (other <> Self)
 				For Local colBox:CollisionBox = EachIn Self.collisionBoxes
 					For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
 						If (Collisions.ThereIsCollision(colBox, otherColBox))
-'							collidingActors.AddLast(other)
-'							
-'							Print(other.bla)
-'							Print(Time.instance.realActTime)
+							collidingActors.AddLast(other)
 						EndIf
 					Next
 				Next

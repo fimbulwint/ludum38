@@ -10,8 +10,6 @@ Class Train Extends Actor
 	Field trainFloor:CollisionBox ' A one pixel high collision box to simulate the roof
 
 	Method New()
-		bla = "TRAIN"
-	
 		behavior = New EmptyBehavior()
 		
 		x = 0.0

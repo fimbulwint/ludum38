@@ -12,8 +12,10 @@ Class MobSpawner
 	
 	Method Update:Void()
 		If (world <> Null) ' trick
-			world.AddLifecycleAware(New Mutant(Mutant.TYPE_ROCKY))
-			'world = Null
+			Local rocky:Mutant = New Mutant(Mutant.TYPE_ROCKY)
+			world.AddLifecycleAware(rocky)
+			world.AddDynamicActor(rocky)
+			world = Null
 		End If
 	End Method
 End Class

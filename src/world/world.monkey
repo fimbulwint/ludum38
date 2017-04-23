@@ -10,7 +10,6 @@ Import world.levelmarker
 Import world.mobspawner
 Import world.train
 Import world.worldmap
-Import actors.darkSurvivor
 Import actors.collisions
 Import drawable
 
@@ -34,16 +33,14 @@ Class World
 	Method InitActors:Void()
 		Local survivor:Survivor = New Survivor()
 		Local train:Train = New Train()
-		Local ds:DarkSurvivor = New DarkSurvivor()
 	
 		lifecycleAwares.AddLast(survivor)
 		lifecycleAwares.AddLast(train)
-		lifecycleAwares.AddLast(ds)
 		
-		worldState.actors = New List<Actor>()
-		worldState.actors.AddLast(survivor)
-		worldState.actors.AddLast(train)
-		worldState.actors.AddLast(ds)
+		worldState.mainActors = New List<Actor>()
+		worldState.dynamicActors = New List<Actor>()
+		worldState.mainActors.AddLast(survivor)
+		worldState.mainActors.AddLast(train)
 	End Method
 	
 	Method InitDrawables:Void()
@@ -56,10 +53,11 @@ Class World
 		lifecycleAwaresToAdd.AddLast(aware) ' will be considered next Update
 	End Method
 	
+	Method AddDynamicActor:Void(actor:Actor)
+		worldState.dynamicActors.AddLast(actor) ' will be considered next Update
+	End Method
+	
 	Method Update:Void()
-
-		Local worldState:WorldState = New WorldState()
-		
 		If (lifecycleAwaresToAdd.Count() > 0)
 			For Local aware:LifecycleAware = EachIn lifecycleAwaresToAdd
 				lifecycleAwares.AddLast(aware)
@@ -94,5 +92,6 @@ Class LifecycleAwares Extends List<LifecycleAware>
 End Class
 
 Class WorldState
-	Field actors:List<Actor>
+	Field mainActors:List<Actor>
+	Field dynamicActors:List<Actor>
 End

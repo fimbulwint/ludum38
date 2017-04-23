@@ -5,6 +5,7 @@ Import actors.behaviors.mutantbrain
 Import graphics.screen 
 
 Class Mutant Extends Actor
+
 	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
 
 	Const BASE_LATERAL_SPEED:Float = 300.0

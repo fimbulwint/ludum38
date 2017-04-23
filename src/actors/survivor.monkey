@@ -19,8 +19,6 @@ Class Survivor Extends Actor
 	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
 
 	Method New()
-		bla = "SURV"
-	
 		behavior = New Controllable(Self)
 		x = Screen.Width / 2
 		z = 0.0
