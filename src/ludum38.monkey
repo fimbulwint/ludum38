@@ -1,6 +1,13 @@
 Strict
 
 
+Import actors.behaviors.behavior
+Import actors.behaviors.controllable
+Import actors.behaviors.gravity
+Import actors.behaviors.mutantbrain
+Import actors.actor
+Import actors.mutant
+Import actors.survivor
 Import graphics.animator
 Import graphics.assets
 Import graphics.screen
@@ -12,6 +19,7 @@ Import scenes.scene
 Import system.time
 Import world.ground
 Import world.levelmarker
+Import world.mobspawner
 Import world.train
 Import world.world
 Import world.worldmap
@@ -26,7 +34,7 @@ Class Ludum38 Extends App
 		screen.SetProjection2d(0.0, Screen.Width, 0.0, Screen.Height)
 		Local assets:Assets = Assets.instance ' init
 		Animator.Initialize()
-		
+		Seed = Millisecs()
 		Time.instance.Update()
 		currentScene = New Game()
 		Return 0
