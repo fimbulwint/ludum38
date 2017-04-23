@@ -1,15 +1,17 @@
 Strict
 
-Import lifecycleaware
-Import mojo2
 Import actors.behaviors.behavior
 Import actors.gravity
-Import world.world
+Import graphics.animator 
 Import graphics.screen
+Import lifecycleaware
+Import mojo2
+Import world.world
 
 Class Actor Extends LifecycleAware
 
 	Field behavior:Behavior
+	Field animator:Animator = New Animator()
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
@@ -29,6 +31,7 @@ Class Actor Extends LifecycleAware
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
+	Field directionX:Float = 1.0
 	Field speedX:Float
 	Field speedY:Float
 	Field boxWidth:Float
