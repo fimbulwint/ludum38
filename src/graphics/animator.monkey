@@ -31,15 +31,25 @@ Public
 	Const ANIM_SURVIVOR_JUMP:Int = 2
 	Const ANIM_SURVIVOR_PUNCH:Int = 3
 	Const ANIM_SURVIVOR_DIE:Int = 4
+	Const ANIM_MUTANT_IDLE:Int = 5
+	Const ANIM_MUTANT_RUN:Int = 6
+	Const ANIM_MUTANT_JUMP:Int = 7
+	Const ANIM_MUTANT_PUNCH:Int = 8
+	Const ANIM_MUTANT_DIE:Int = 9
 
-	Global anims:AnimStep[5][]
+	Global anims:AnimStep[10][]
 	
 	Function Initialize:Void()
 		anims[ANIM_SURVIVOR_IDLE] =		[ New AnimStep(0, 500)]
-		anims[ANIM_SURVIVOR_RUN] =		[ New AnimStep(3, 90), 	New AnimStep(4, 140)]
+		anims[ANIM_SURVIVOR_RUN] =		[ New AnimStep(3, 90), 		New AnimStep(4, 140)]
 		anims[ANIM_SURVIVOR_JUMP] =		[ New AnimStep(7, 120)]
 		anims[ANIM_SURVIVOR_PUNCH] =	[ New AnimStep(11, 120)]
 		anims[ANIM_SURVIVOR_DIE] =		[ New AnimStep(14, 100)]
+		anims[ANIM_MUTANT_IDLE] =		[ New AnimStep(0, 500)]
+		anims[ANIM_MUTANT_RUN] =		[ New AnimStep(3, 90), 		New AnimStep(4, 140)]
+		anims[ANIM_MUTANT_JUMP] =		[ New AnimStep(7, 120)]
+		anims[ANIM_MUTANT_PUNCH] =		[ New AnimStep(11, 120)]
+		anims[ANIM_MUTANT_DIE] =		[ New AnimStep(14, 100)]
 	End Function
 
 	Field stepEnd:Float

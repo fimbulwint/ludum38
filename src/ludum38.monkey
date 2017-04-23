@@ -25,7 +25,7 @@ Class Ludum38 Extends App
 		screen = New Canvas()
 		screen.SetProjection2d(0.0, Screen.Width, 0.0, Screen.Height)
 		Local assets:Assets = Assets.instance ' init
-		New Animator().Initialize()
+		Animator.Initialize()
 		
 		Time.instance.Update()
 		currentScene = New Game()
