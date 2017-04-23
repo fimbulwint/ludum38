@@ -60,5 +60,5 @@ Class LifecycleAwares Extends List<LifecycleAware>
 End Class
 
 Class WorldState
-	
+	Field collisions:[[Actor]]
 End
