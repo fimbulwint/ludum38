@@ -34,15 +34,17 @@ Class Survivor Extends Actor
 	
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 		
-		If (movingLeft)
-			speedX = -BASE_LATERAL_SPEED
-			directionX = -1.0
-		ElseIf(movingRight)
-			speedX = BASE_LATERAL_SPEED
-			directionX = 1.0
-		Else
-			speedX = 0.0
-		EndIf
+		If (hp > 0.0)
+			If (movingLeft)
+				speedX = -BASE_LATERAL_SPEED
+				directionX = -1.0
+			ElseIf(movingRight)
+				speedX = BASE_LATERAL_SPEED
+				directionX = 1.0
+			Else
+				speedX = 0.0
+			EndIf
+		End If
 		
 		x += speedX * deltaInSecs
 		If (OverflowingLeft())
@@ -61,7 +63,9 @@ Class Survivor Extends Actor
 	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
-		If (y <> Screen.GroundHeight - boxHeight + yShift)
+		If (hp < 0.0)
+			animStatus = Animator.ANIM_SURVIVOR_DIE
+		Else If (y <> Screen.GroundHeight - boxHeight + yShift)
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN

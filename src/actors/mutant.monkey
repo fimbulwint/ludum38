@@ -1,6 +1,7 @@
 Strict
 
 Import actors.actor
+Import actors.survivor
 Import actors.behaviors.mutantbrain
 Import graphics.screen 
 
@@ -8,12 +9,15 @@ Class Mutant Extends Actor
 
 	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
 
+	Const BASE_HP:Float = 1.0
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const GROUND_LATERAL_SPEED:Float = 100.0
 	Const JUMP_LATERAL_SPEED_MIN:Float = 400.0
 	Const JUMP_LATERAL_SPEED_MAX:Float = 400.0
 	Const JUMP_SPEED_MIN:Float = 200.0
 	Const JUMP_SPEED_MAX:Float = 300.0
+	
+	Field world:World 
 	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_MUTANT)
 	
@@ -22,8 +26,10 @@ Class Mutant Extends Actor
 	
 	Field mutantType:String
 
-	Method New(type:String)
-		behavior = New MutantBrain(type, Self)
+	Method New(type:String, world:World)
+		Self.world = world
+		hp = BASE_HP
+		behavior = New MutantBrain(type, Self, world.survivors)
 		z = -10.0
 		image = anim[0]
 		
@@ -36,13 +42,48 @@ Class Mutant Extends Actor
 		End Select
 		
 		Super.PostConstruct()
-
 		SetRandomInitialPosition()
 	End Method
+
+	Method Update:Void(worldState:WorldState)
+		Super.Update(worldState)
+		If (hp < 0.0 And y > Screen.Height + boxHeight)
+			world.RemoveLifecycleAware(Self)
+		End If
+	End Method
 	
+	Method TryToMove:Void(worldState:WorldState)
+		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
+	
+		'if all goes well (no collisions and stuff), move
+		
+		If (hp > 0.0)
+			If (movingLeft)
+				If (IsOnTrain())
+				Else If (IsOnGround())
+				End If
+			Else If (movingRight)
+				If (IsOnTrain())
+				Else If (IsOnGround())
+				End If
+			End If
+		End If
+		
+		x += speedX * deltaInSecs
+		
+		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
+		y -= speedY * deltaInSecs
+		If (wasAboveTrain And IsDirectlyBelowTrain())
+			y = Screen.TrainHeight - boxHeight + yShift
+			speedY = 0.0
+		End If
+	End Method
+
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
-		If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
+		If (hp < 0.0)
+			animStatus = Animator.ANIM_MUTANT_DIE
+		Else If (speedY <> 0.0 And Not IsOnGround() And Not IsOnTrain())
 			animStatus = Animator.ANIM_MUTANT_JUMP
 		Else If (speedX <> 0.0)
 			If (y = Screen.GroundHeight)
@@ -61,15 +102,7 @@ Class Mutant Extends Actor
 		Super.Draw(canvas)
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
-		'if all goes well (no collisions and stuff), move
-		x += speedX * deltaInSecs
-		y -= speedY * deltaInSecs
-	End Method
-
-		
 Private
 	Method SetRandomInitialPosition:Void()
 		Local side:Float = 1.0

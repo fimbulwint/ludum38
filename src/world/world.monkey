@@ -20,7 +20,10 @@ Class World
 	Field mobSpawner:MobSpawner
 	Field worldMap:WorldMap
 	
+	Field survivors:Survivor[]
+	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
+	Field lifecycleAwaresToRemove:LifecycleAwares = New LifecycleAwares()
 	
 	Method New()
 		worldState = New WorldState()
@@ -31,10 +34,12 @@ Class World
 	End Method
 	
 	Method InitActors:Void()
-		Local survivor:Survivor = New Survivor()
 		Local train:Train = New Train()
-	
-		lifecycleAwares.AddLast(survivor)
+		survivors =[New Survivor()]
+		
+		For Local survivor:Survivor = EachIn survivors
+			lifecycleAwares.AddLast(survivor)
+		End For
 		lifecycleAwares.AddLast(train)
 		
 		worldState.mainActors = New List<Actor>()
@@ -56,13 +61,23 @@ Class World
 	Method AddDynamicActor:Void(actor:Actor)
 		worldState.dynamicActors.AddLast(actor) ' will be considered next Update
 	End Method
-	
+
+	Method RemoveLifecycleAware:Void(aware:LifecycleAware)
+		lifecycleAwaresToRemove.AddLast(aware) ' will be considered next Update
+	End Method
+		
 	Method Update:Void()
 		If (lifecycleAwaresToAdd.Count() > 0)
 			For Local aware:LifecycleAware = EachIn lifecycleAwaresToAdd
 				lifecycleAwares.AddLast(aware)
 			End For
 			lifecycleAwaresToAdd.Clear()
+		End If
+		If (lifecycleAwaresToRemove.Count() > 0)
+			For Local aware:LifecycleAware = EachIn lifecycleAwaresToRemove
+				lifecycleAwares.Remove(aware)
+			End For
+			lifecycleAwaresToRemove.Clear()
 		End If
 		
 		For Local aware:LifecycleAware = EachIn lifecycleAwares

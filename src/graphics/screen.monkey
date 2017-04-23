@@ -6,4 +6,6 @@ Class Screen
 	
 	Const GroundHeight:Float = Height - 165.0
 	Const TrainHeight:Float = GroundHeight - 120.0
+	Const TrainStart:Float = 80.0
+	Const TrainEnd:Float = 1170.0
 End Class
