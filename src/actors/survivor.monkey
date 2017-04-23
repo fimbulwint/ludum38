@@ -33,15 +33,17 @@ Class Survivor Extends Actor
 	
 		'if all goes well (no collisions and stuff), move
 		
-		If (movingLeft)
-			speedX = -BASE_LATERAL_SPEED
-			directionX = -1.0
-		ElseIf(movingRight)
-			speedX = BASE_LATERAL_SPEED
-			directionX = 1.0
-		Else
-			speedX = 0.0
-		EndIf
+		If (hp > 0.0)
+			If (movingLeft)
+				speedX = -BASE_LATERAL_SPEED
+				directionX = -1.0
+			ElseIf(movingRight)
+				speedX = BASE_LATERAL_SPEED
+				directionX = 1.0
+			Else
+				speedX = 0.0
+			EndIf
+		End If
 		
 		x += speedX * deltaInSecs
 		If (OverflowingLeft())

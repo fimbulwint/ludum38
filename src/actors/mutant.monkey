@@ -1,12 +1,14 @@
 Strict
 
 Import actors.actor
+Import actors.survivor
 Import actors.behaviors.mutantbrain
 Import graphics.screen 
 
 Class Mutant Extends Actor
 	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
 
+	Const BASE_HP:Float = 1.0
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const GROUND_LATERAL_SPEED:Float = 100.0
 	Const JUMP_LATERAL_SPEED_MIN:Float = 400.0
@@ -21,7 +23,8 @@ Class Mutant Extends Actor
 	
 	Field mutantType:String
 
-	Method New(type:String)
+	Method New(type:String, survivor:Survivor[])
+		hp = BASE_HP
 		behavior = New MutantBrain(type, Self)
 		z = -10.0
 		image = anim[0]
@@ -35,10 +38,30 @@ Class Mutant Extends Actor
 		End Select
 		
 		Super.PostConstruct()
-
 		SetRandomInitialPosition()
 	End Method
+
+	Method TryToMove:Void(worldState:WorldState)
+		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
+		'if all goes well (no collisions and stuff), move
+		
+		If (hp > 0.0)
+			If (movingLeft)
+				If (IsOnTrain())
+				Else If (IsOnGround())
+				End If
+			Else If (movingRight)
+				If (IsOnTrain())
+				Else If (IsOnGround())
+				End If
+			End If
+		End If
+		
+		x += speedX * deltaInSecs
+		y -= speedY * deltaInSecs
+	End Method
+
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
 		If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
@@ -60,15 +83,7 @@ Class Mutant Extends Actor
 		Super.Draw(canvas)
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
-		'if all goes well (no collisions and stuff), move
-		x += speedX * deltaInSecs
-		y -= speedY * deltaInSecs
-	End Method
-
-		
 Private
 	Method SetRandomInitialPosition:Void()
 		Local side:Float = 1.0

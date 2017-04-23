@@ -17,6 +17,8 @@ Class World
 	Field mobSpawner:MobSpawner
 	Field worldMap:WorldMap
 	
+	Field survivors:Survivor[]
+	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
 	
 	Method New()
@@ -27,7 +29,10 @@ Class World
 	End Method
 	
 	Method InitActors:Void()
-		lifecycleAwares.AddLast(New Survivor())
+		survivors = [New Survivor()]
+		For Local survivor:Survivor = EachIn survivors
+			lifecycleAwares.AddLast(survivor)
+		End For
 		lifecycleAwares.AddLast(New Train())
 	End Method
 	
