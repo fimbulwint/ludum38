@@ -80,19 +80,31 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method IsOnGround:Bool()
-		Return y = Ground.GROUND_HEIGHT - boxHeight + yShift
+		Return y = GetHeightOnTopOfGround()
+	End Method
+	
+	Method IsAboveGround:Bool()
+		Return y < GetHeightOnTopOfGround()
 	End Method
 
 	Method IsOnTrain:Bool()
-		Return y = Train.TRAIN_HEIGHT - boxHeight + yShift And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y = GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
 	End Method
 	
 	Method IsDirectlyAboveTrain:Bool()
-		Return y < (Train.TRAIN_HEIGHT - boxHeight + yShift) And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y < GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
 	End Method
 
 	Method IsDirectlyBelowTrain:Bool()
-		Return y > (Train.TRAIN_HEIGHT - boxHeight + yShift) And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y > GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
+	End Method
+	
+	Method GetHeightOnTopOfGround:Float()
+		Return Ground.GROUND_HEIGHT - boxHeight + yShift
+	End Method
+	
+	Method GetHeightOnTopOfTrain:Float()
+		Return Train.TRAIN_HEIGHT - boxHeight + yShift
 	End Method
 	
 Private

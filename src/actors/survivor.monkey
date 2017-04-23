@@ -7,6 +7,7 @@ Import graphics.animator
 Import graphics.assets
 Import graphics.screen
 Import system.time
+Import world.train
 
 Class Survivor Extends Actor
 
@@ -26,7 +27,7 @@ Class Survivor Extends Actor
 		
 		Super.PostConstruct()
 		
-		y = Ground.GROUND_HEIGHT - boxHeight
+		y = GetHeightOnTopOfTrain()
 	End Method
 	
 	Method TryToMove:Void(worldState:WorldState)
@@ -53,7 +54,7 @@ Class Survivor Extends Actor
 			x = Screen.WIDTH - boxWidth + xShift
 		EndIf
 
-		If (jumping And y = Ground.GROUND_HEIGHT - boxHeight + yShift)
+		If (jumping And IsOnTrain())
 			speedY = JUMP_SPEED
 		EndIf
 
@@ -65,7 +66,7 @@ Class Survivor Extends Actor
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp < 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_DIE
-		Else If (y <> Ground.GROUND_HEIGHT - boxHeight + yShift)
+		Else If (y <> GetHeightOnTopOfTrain())
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
