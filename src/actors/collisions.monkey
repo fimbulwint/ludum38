@@ -4,8 +4,6 @@ Import mojo2
 
 Class Collisions
 
-	Const GRAVITY:Float = 300.0
-
 	Function ThereIsCollision:Bool(box1:CollisionBox, box2:CollisionBox)
 		Return CheckOneSideCollision(box1, box2) Or CheckOneSideCollision(box2, box1)
 	End Function
