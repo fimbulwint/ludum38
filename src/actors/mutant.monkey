@@ -23,23 +23,25 @@ Class Mutant Extends Actor
 
 	Method New(type:String)
 		behavior = New MutantBrain(type, Self)
-		SetRandomInitialPosition()
 		z = -10.0
 		image = anim[0]
 		
+		Local colorShift:Float = Rnd(-0.2, 0.2)
 		Select(type)
 			Case TYPE_ROCKY
-				r = 0.5
-				g = 0.5
-				b = 0.5
+				r = 0.5 + colorShift
+				g = 0.5 + colorShift
+				b = 0.5 + colorShift
 		End Select
 		
 		Super.PostConstruct()
+
+		SetRandomInitialPosition()
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
-		If (speedY <> 0.0 And y <> Screen.GroundHeight And y <> Screen.TrainHeight)
+		If (speedY <> 0.0 And (y <> Screen.GroundHeight - boxHeight + yShift) And (y <> Screen.TrainHeight - boxHeight + yShift))
 			animStatus = Animator.ANIM_MUTANT_JUMP
 		Else If (speedX <> 0.0)
 			If (y = Screen.GroundHeight)
@@ -74,7 +76,7 @@ Private
 		x = (Screen.Width / 2.0) + side * ((Screen.Width / 2.0) + 100.0)
 		'If (Rnd(1000.0) < 500.0)
 			' jumping
-			y = Screen.TrainHeight + Rnd(-50.0, 50.0)
+			y = Screen.TrainHeight - boxHeight + yShift + Rnd(-50.0, 50.0)
 			directionX = -side
 			speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * -side
 			speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)

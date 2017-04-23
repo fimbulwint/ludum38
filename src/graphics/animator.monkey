@@ -51,7 +51,7 @@ Public
 		anims[ANIM_MUTANT_JUMP] =		[ New AnimStep(7, 120)]
 		anims[ANIM_MUTANT_PUNCH] =		[ New AnimStep(11, 120)]
 		anims[ANIM_MUTANT_DIE] =		[ New AnimStep(14, 100)]
-		anims[ANIM_MUTANT_SPRINT] =		[ New AnimStep(3, 45), 		New AnimStep(4, 70)]
+		anims[ANIM_MUTANT_SPRINT] =		[ New AnimStep(3, 25), 		New AnimStep(4, 40)]
 	End Function
 
 	Field stepEnd:Float
