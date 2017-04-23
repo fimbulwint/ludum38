@@ -66,6 +66,10 @@ Class Mutant Extends Actor
 				If (IsOnTrain())
 				Else If (IsOnGround())
 				End If
+			Else If (jumping)
+				If (IsOnTrain())
+				Else If (IsOnGround())	
+				End If
 			Else If (IsOnGround()) ' and not wanting to do anything particular
 				speedX = -Train.TRAIN_SPEED ' ciao!
 			End If
@@ -108,21 +112,21 @@ Class Mutant Extends Actor
 Private
 	Method SetRandomInitialPosition:Void()
 		Local side:Float = 1.0
-		If (Rnd(1000.0) < 500.0) Then side = -1.0	' left or right
+		'If (Rnd(1000.0) < 500.0) Then side = -1.0	' left or right
 		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0)
-		If (Rnd(1000.0) < 500.0)
+		'If (Rnd(1000.0) < 500.0)
 			' jumping
-			y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
-			directionX = -side
-			speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * -side
-			speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
-		Else
+		'	y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
+		'	directionX = -side
+		'	speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * -side
+		'	speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
+		'Else
 			' running on ground
 			y = Ground.GROUND_HEIGHT - boxHeight + yShift
 			speedX = GROUND_LATERAL_SPEED * -side
 			movingLeft = side = 1.0 ' HACK for now
 			movingRight = Not movingLeft
-		End If
+		'End If
 	End Method
 
 End Class
