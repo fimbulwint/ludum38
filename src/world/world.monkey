@@ -20,6 +20,7 @@ Class World
 	Field survivors:Survivor[]
 	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
+	Field lifecycleAwaresToRemove:LifecycleAwares = New LifecycleAwares()
 	
 	Method New()
 		worldMap = New WorldMap(Self)
@@ -45,7 +46,11 @@ Class World
 	Method AddLifecycleAware:Void(aware:LifecycleAware)
 		lifecycleAwaresToAdd.AddLast(aware) ' will be considered next Update
 	End Method
-	
+
+	Method RemoveLifecycleAware:Void(aware:LifecycleAware)
+		lifecycleAwaresToRemove.AddLast(aware) ' will be considered next Update
+	End Method
+		
 	Method Update:Void()
 		Local worldState:WorldState = New WorldState()
 		
@@ -54,6 +59,12 @@ Class World
 				lifecycleAwares.AddLast(aware)
 			End For
 			lifecycleAwaresToAdd.Clear()
+		End If
+		If (lifecycleAwaresToRemove.Count() > 0)
+			For Local aware:LifecycleAware = EachIn lifecycleAwaresToRemove
+				lifecycleAwares.Remove(aware)
+			End For
+			lifecycleAwaresToRemove.Clear()
 		End If
 		
 		For Local aware:LifecycleAware = EachIn lifecycleAwares
