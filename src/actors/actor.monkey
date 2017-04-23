@@ -8,8 +8,11 @@ Import graphics.screen
 Import lifecycleaware
 Import mojo2
 Import world.world
+Import system.time
 
 Class Actor Extends LifecycleAware
+
+Field bla:String
 
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
@@ -51,6 +54,7 @@ Class Actor Extends LifecycleAware
 	Method Update:Void(worldState:WorldState)
 		behavior.Update()
 		TryToMove(worldState)
+		collidingActors.Clear()
 		Gravity.applyTo(Self)
 	End Method
 	
@@ -67,13 +71,18 @@ Class Actor Extends LifecycleAware
 	
 	Method TryToMove:Void(worldState:WorldState)
 		For Local other:Actor = EachIn worldState.actors
-			For Local colBox:CollisionBox = EachIn Self.collisionBoxes
-				For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
-					If (Collisions.ThereIsCollision(colBox, otherColBox))
-						collidingActors.AddLast(other)
-					EndIf
+			If (other <> Self)
+				For Local colBox:CollisionBox = EachIn Self.collisionBoxes
+					For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
+						If (Collisions.ThereIsCollision(colBox, otherColBox))
+'							collidingActors.AddLast(other)
+'							
+'							Print(other.bla)
+'							Print(Time.instance.realActTime)
+						EndIf
+					Next
 				Next
-			Next
+			EndIf
 		Next
 	End Method
 

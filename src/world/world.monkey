@@ -8,6 +8,7 @@ Import world.train
 Import world.worldmap
 Import actors.actor
 Import actors.survivor
+Import actors.darkSurvivor
 Import actors.collisions
 Import drawable
 
@@ -25,12 +26,18 @@ Class World
 	End Method
 	
 	Method InitActors:Void()
-		lifecycleAwares.AddLast(New Survivor())
-		lifecycleAwares.AddLast(New Train())
+		Local survivor:Survivor = New Survivor()
+		Local train:Train = New Train()
+		Local ds:DarkSurvivor = New DarkSurvivor()
+	
+		lifecycleAwares.AddLast(survivor)
+		lifecycleAwares.AddLast(train)
+		lifecycleAwares.AddLast(ds)
 		
 		worldState.actors = New List<Actor>()
-		worldState.actors.AddLast(New Survivor())
-		worldState.actors.AddLast(New Train())
+		worldState.actors.AddLast(survivor)
+		worldState.actors.AddLast(train)
+		worldState.actors.AddLast(ds)
 	End Method
 	
 	Method InitDrawables:Void()
