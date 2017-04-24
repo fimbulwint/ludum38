@@ -116,12 +116,12 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_DIE
 		Else If (hurt)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
+		Else If (holdingPunch And punchTime > 0.0)
+			animStatus = Animator.ANIM_SURVIVOR_PUNCH
 		Else If (y <> GetHeightOnTopOfTrain())
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
-		Else If (holdingPunch And punchTime > 0.0)
-			animStatus = Animator.ANIM_SURVIVOR_PUNCH
 		End If
 		Local animResult:AnimResult = animator.Animate(animStatus)
 		If (animResult.graph = -1)
