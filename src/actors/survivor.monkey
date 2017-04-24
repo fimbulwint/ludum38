@@ -30,11 +30,7 @@ Class Survivor Extends Actor
 		y = GetHeightOnTopOfTrain()
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		Super.TryToMove(worldState)
-	
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
-		
+	Method Move:Void(worldState:WorldState)		
 		If (hp > 0.0)
 			If (movingLeft)
 				speedX = -BASE_LATERAL_SPEED
@@ -45,21 +41,10 @@ Class Survivor Extends Actor
 			Else
 				speedX = 0.0
 			EndIf
+			If (jumping And IsOnTrain())
+				speedY = JUMP_SPEED
+			EndIf
 		End If
-		
-		x += speedX * deltaInSecs
-		If (OverflowingLeft())
-			x = -xShift
-		ElseIf(OverflowingRight())
-			x = Screen.WIDTH - boxWidth + xShift
-		EndIf
-
-		If (jumping And IsOnTrain())
-			speedY = JUMP_SPEED
-		EndIf
-
-		y -= speedY * deltaInSecs
-		
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -81,15 +66,6 @@ Class Survivor Extends Actor
 		End If
 		sizeX = directionX
 		Super.Draw(canvas)
-	End Method
-	
-Private
-	Method OverflowingLeft:Bool()
-		Return x - xShift < 0
-	End Method
-	
-	Method OverflowingRight:Bool()
-		Return x + boxWidth - xShift > Screen.WIDTH
 	End Method
 
 End Class
