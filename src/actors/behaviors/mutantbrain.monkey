@@ -35,7 +35,6 @@ Class MutantBrain Extends MobBrainBase
 	Method ShouldJumpOnPlayer:Bool(targetOffset:Float)
 		' chances are inversely proportional to the distance towards player, multiplied by a factor
 		Local chancesIn1000:Float = (1000.0 - Abs(targetOffset)) * JUMP_FACTOR
-		Print(chancesIn1000)
 		Local result:Float = Rnd(0.0, 1000.0)
 		Return (result < chancesIn1000)
 	End Method
