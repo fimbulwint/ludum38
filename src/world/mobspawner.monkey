@@ -30,7 +30,8 @@ Class MobSpawner
 	End Method
 	
 	Method SpawnMobs:Void(level:Int, zone:String)
-		Local groupSize:Int = 2
+		Local groupSize:Int = 1 + level
+		If (Rnd(0.0, 10.0) < 2.5) Then Dj.instance.Play(Dj.SFX_MUTANT_CALL)
 		For Local i:Int = 1 To groupSize
 			Select (zone)
 				Case WorldMap.ZONE_MOUNTAINS

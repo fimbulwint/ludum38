@@ -81,7 +81,7 @@ Private
 	Field queue:Queue = New Queue()
 
 	Method FindFreeChannel:Int()
-		Local i:Int = 0
+		Local i:Int = 1
 		Local channel:Int = -1
 		While (channel = -1 And i < 32)
 			If (ChannelState(i) = 0)
