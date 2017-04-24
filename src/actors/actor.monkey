@@ -65,7 +65,7 @@ Class Actor Extends LifecycleAware
 		
 		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
 		y -= speedY * deltaInSecs
-		If (wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
+		If (hp > 0.0 And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0
 		End If

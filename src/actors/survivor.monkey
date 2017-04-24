@@ -47,6 +47,7 @@ Class Survivor Extends Actor
 			Else
 				speedX = 0.0
 			EndIf
+			
 			If (jumping And IsOnTrain())
 				speedY = JUMP_SPEED
 			EndIf
@@ -65,6 +66,12 @@ Class Survivor Extends Actor
 		End If
 	End Method
 	
+	Method ReactToResults:Void()
+'		If (punching)
+'			
+'		EndIf
+	End Method
+		
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp <= 0.0)
