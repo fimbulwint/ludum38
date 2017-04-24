@@ -15,6 +15,7 @@ Import lifecycleaware
 Import mojo2 
 Import sound.dj
 Import scenes.game
+Import scenes.gameover
 Import scenes.scene
 Import system.time
 Import world.background
@@ -60,7 +61,9 @@ Class Ludum38 Extends App
 			Case Scene.STILL_CURRENT_SCENE
 			Case Scene.RESULT_END
 				currentScene.Finish()
-				'for now nothing else
+				If (Game(currentScene) <> Null)
+					currentScene = New GameOver()
+				EndIf
 		End Select
 		
 		currentScene.Update()
