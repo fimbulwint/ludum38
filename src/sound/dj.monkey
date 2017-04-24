@@ -37,7 +37,7 @@ Public
 	
 	Method PlayMusic:Void(music:String)
 		mojo2.PlayMusic(music)
-		SetMusicVolume(0.5)
+		SetMusicVolume(0.3)
 	End Method
 	
 	Method StopMusic:Void()
