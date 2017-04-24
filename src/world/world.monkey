@@ -11,6 +11,7 @@ Import world.levelmarker
 Import world.mobspawner
 Import world.train
 Import world.worldmap
+Import world.lifebar
 Import actors.collisions
 Import drawable
 
@@ -55,6 +56,7 @@ Class World
 		lifecycleAwares.AddLast(worldMap)
 		lifecycleAwares.AddLast(New LevelMarker(worldMap))
 		lifecycleAwares.AddLast(New Background())
+		lifecycleAwares.AddLast(New Lifebar())
 	End Method
 	
 	Method AddLifecycleAware:Void(aware:LifecycleAware)
