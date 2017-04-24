@@ -78,7 +78,7 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-		If (hp > 0.0)
+		If (hp > 0.0 And Not hurt)
 			If (punching And punchCooldown <= 0.0)
 				If ( Not holdingPunch) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
 				holdingPunch = True
