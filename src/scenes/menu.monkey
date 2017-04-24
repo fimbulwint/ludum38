@@ -32,6 +32,7 @@ Class Menu Implements Scene
 	End Method
 	
 	Method Finish:Void()
+		Dj.instance.StopMusic()
 	End Method
 	
 End Class

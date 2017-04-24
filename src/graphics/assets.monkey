@@ -22,6 +22,7 @@ Class Assets
 
 	Const FNT_BOYCOTT:String = "fnt_boycott.png"
 	
+	Const GFX_GAME_OVER:String = "game_over_screen.png"
 	
 	Field graphics:Map<String, Image> = New StringMap<Image>
 	Field anims:Map<String, Image[]> = New StringMap<Image[]>
@@ -43,6 +44,8 @@ Class Assets
 		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES, False, .5, 1.0))
 		
 		fonts.Add(FNT_BOYCOTT, Font.Load(FNT_BOYCOTT, 48, 10, False))
+		
+		graphics.Add(GFX_GAME_OVER, Image.Load(GFX_GAME_OVER, 0.0, 0.0))
 	End Method
 	
 End Class

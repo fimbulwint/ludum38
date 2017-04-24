@@ -36,12 +36,12 @@ Public
 	End Method
 	
 	Method PlayMusic:Void(music:String)
-		PlayMusic(music)
+		mojo2.PlayMusic(music)
 		SetMusicVolume(0.5)
 	End Method
 	
-	Method StopInGameMusic:Void()
-		StopMusic()
+	Method StopMusic:Void()
+		mojo2.StopMusic()
 	End Method
 	
 	Method Play:Int(sfx:String, loop:Bool = False)
