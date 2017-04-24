@@ -81,7 +81,11 @@ Class Survivor Extends Actor
 		
 			If (holdingPunch And punchTime > 0.0)
 				For Local actor:Actor = EachIn collidingActors
-					actor.TakeDamage(SURVIVOR_DAMAGE, x)
+					Local enemyOnTheRight:Bool = (x - xShift) < actor.x - actor.xShift
+					Local enemyOnTheLeft:Bool = (x - xShift) > actor.x - actor.xShift
+					If ( (directionX > 0.0 And enemyOnTheRight) Or (directionX < 0.0 And enemyOnTheLeft))
+						actor.TakeDamage(SURVIVOR_DAMAGE, x)
+					EndIf
 				End For
 			EndIf
 			
