@@ -102,9 +102,8 @@ Class Survivor Extends Actor
 					holdingPunch = False
 				EndIf
 			Else
-				If (punchCooldown > 0.0)
-					punchCooldown -= Time.instance.realLastFrame
-				Else
+				punchCooldown -= Time.instance.realLastFrame
+				If (punchCooldown <= 0.0)
 					punchTime = 200.0
 				EndIf
 			EndIf

@@ -171,7 +171,7 @@ Private
 	Method DamageSurvivors:Void()
 		For Local actor:Actor = EachIn collidingActors
 			Local survivor:Survivor = Survivor(actor)
-			If (survivor <> Null And Not survivor.punching)
+			If (survivor <> Null And Not survivor.holdingPunch)
 				survivor.TakeDamage(MUTANT_DAMAGE, x)
 			End If
 		End For
