@@ -21,6 +21,10 @@ Class Survivor Extends Actor
 	
 	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
+	
+	Field punchTime:Float
+	Field punchCooldown:Float
+	Field holdingPunch:Bool
 
 	Method New()
 		behavior = New Controllable(Self)
@@ -28,6 +32,10 @@ Class Survivor Extends Actor
 		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
+		punchTime = 200.0
+		punchCooldown = 0.0
+		holdingPunch = False
+		
 		Super.PostConstruct()
 		
 		y = GetHeightOnTopOfTrain()
@@ -66,10 +74,31 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-		If (hp > 0.0 And punching)
-			For Local actor:Actor = EachIn collidingActors
-				actor.TakeDamage(SURVIVOR_DAMAGE, x)
-			End For
+		If (hp > 0.0)
+			If (punching And punchCooldown <= 0.0)
+				holdingPunch = True
+			EndIf
+		
+			If (holdingPunch And punchTime > 0.0)
+				For Local actor:Actor = EachIn collidingActors
+					actor.TakeDamage(SURVIVOR_DAMAGE, x)
+				End For
+			EndIf
+			
+			If (holdingPunch)
+				punchTime -= Time.instance.realLastFrame
+				If (punchTime <= 0)
+					punchTime = 0.0
+					punchCooldown = 200.0
+					holdingPunch = False
+				EndIf
+			Else
+				If (punchCooldown > 0.0)
+					punchCooldown -= Time.instance.realLastFrame
+				Else
+					punchTime = 200.0
+				EndIf
+			EndIf
 		EndIf
 	End Method
 		
@@ -83,8 +112,8 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
-		Else If (punching)
-			animStatus = Animator.ANIM_MUTANT_PUNCH
+		Else If (holdingPunch And punchTime > 0.0)
+			animStatus = Animator.ANIM_SURVIVOR_PUNCH
 		End If
 		Local animResult:AnimResult = animator.Animate(animStatus)
 		If (animResult.graph = -1)
@@ -94,11 +123,6 @@ Class Survivor Extends Actor
 		End If
 		sizeX = directionX
 		Super.Draw(canvas)
-	End Method
-	
-	Method GetMainCollisionBox:CollisionBox()
-		Local extra:Float = 5;
-		Return New CollisionBox([x - xShift - extra, y - yShift - extra],[x - xShift + boxWidth + extra, y - yShift + boxHeight + extra])
 	End Method
 	
 End Class
