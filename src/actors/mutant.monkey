@@ -10,10 +10,14 @@ Class Mutant Extends Actor
 	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
 
 	Const BASE_HP:Float = 1.0
+	Const MUTANT_DAMAGE:Float = 1.0
+	
 	Const BASE_LATERAL_SPEED:Float = 200.0
 	Const GROUND_LATERAL_SPEED:Float = 100.0
 	Const INITIAL_JUMP_LATERAL_SPEED_MIN:Float = 400.0
 	Const INITIAL_JUMP_LATERAL_SPEED_MAX:Float = 600.0
+	Const INITIAL_JUMP_SPEED_MIN:Float = 200.0
+	Const INITIAL_JUMP_SPEED_MAX:Float = 250.0
 	Const JUMP_LATERAL_SPEED_MIN:Float = 300.0
 	Const JUMP_LATERAL_SPEED_MAX:Float = 400.0
 	Const GROUND_JUMP_SPEED_MIN:Float = 300.0
@@ -34,7 +38,7 @@ Class Mutant Extends Actor
 		Self.world = world
 		hp = BASE_HP
 		behavior = New MutantBrain(type, Self, world.survivors)
-		z = -10.0
+		z = 50.0
 		image = anim[0]
 		
 		Local colorShift:Float = Rnd(-0.2, 0.2)
@@ -51,7 +55,7 @@ Class Mutant Extends Actor
 
 	Method Update:Void(worldState:WorldState)
 		Super.Update(worldState)
-		If (hp < 0.0 And y > Screen.HEIGHT + boxHeight)
+		If (hp <= 0.0 And x < -boxWidth)
 			world.RemoveLifecycleAware(Self)
 		End If
 	End Method
@@ -60,7 +64,11 @@ Class Mutant Extends Actor
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 	
 		'if all goes well (no collisions and stuff), move
-		
+
+		If (KeyDown(KEY_0))
+			hp = 0.0
+		End If
+				
 		If (hp > 0.0)
 			If (jumping)
 				If (IsOnTrain())
@@ -92,6 +100,12 @@ Class Mutant Extends Actor
 			Else If (IsOnGround()) 
 				speedX = -Train.TRAIN_SPEED ' ciao!
 			End If
+		Else
+			' dead
+			If (IsOnGround())
+				speedX = -Train.TRAIN_SPEED
+				speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
+			End If
 		End If
 		
 		x += speedX * deltaInSecs
@@ -102,11 +116,17 @@ Class Mutant Extends Actor
 			y = Train.TRAIN_HEIGHT - boxHeight + yShift
 			speedY = 0.0
 		End If
+		
+		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())
+			Super.TryToMove(worldState) ' update all collisions
+			DamageSurvivors()
+		End If
+		
 	End Method
-
+	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
-		If (hp < 0.0)
+		If (hp <= 0.0)
 			animStatus = Animator.ANIM_MUTANT_DIE
 		Else If (speedY <> 0.0 And Not IsOnGround() And Not IsOnTrain())
 			animStatus = Animator.ANIM_MUTANT_JUMP
@@ -131,21 +151,30 @@ Class Mutant Extends Actor
 Private
 	Method SetRandomInitialPosition:Void()
 		Local side:Float = 1.0
-		'If (Rnd(1000.0) < 500.0) Then side = -1.0	' left or right
+		If (Rnd(1000.0) < 500.0) Then side = -1.0	' left or right
 		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0)
-		'If (Rnd(1000.0) < 500.0)
+		If (Rnd(1000.0) < 500.0)
 			' jumping
-		'	y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
-		'	directionX = -side
-		'	speedX = Rnd(INITIAL_JUMP_LATERAL_SPEED_MIN, INITIAL_JUMP_LATERAL_SPEED_MAX) * -side
-		'	speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
-		'Else
+			y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
+			directionX = -side
+			speedX = Rnd(INITIAL_JUMP_LATERAL_SPEED_MIN, INITIAL_JUMP_LATERAL_SPEED_MAX) * -side
+			speedY = Rnd(INITIAL_JUMP_SPEED_MIN, INITIAL_JUMP_SPEED_MAX)
+		Else
 			' running on ground
 			y = Ground.GROUND_HEIGHT - boxHeight + yShift
 			speedX = GROUND_LATERAL_SPEED * -side
 			movingLeft = side = 1.0 ' HACK for now
 			movingRight = Not movingLeft
-		'End If
+		End If
 	End Method
 
+	Method DamageSurvivors:Void()
+		For Local actor:Actor = EachIn collidingActors
+			Local survivor:Survivor = Survivor(actor)
+			If (survivor <> Null)
+				survivor.TakeDamage(MUTANT_DAMAGE, x)
+			End If
+		End For
+	End Method
+	
 End Class
