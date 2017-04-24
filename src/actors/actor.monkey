@@ -91,6 +91,14 @@ Class Actor Extends LifecycleAware
 			canvas.SetAlpha(alpha)
 			canvas.SetColor(r, g, b)
 			canvas.DrawImage(image, x, y, angle, sizeX, sizeY)
+			
+			Local colBox:CollisionBox = GetMainCollisionBox()
+			#If CONFIG="debug"
+			canvas.SetAlpha(0.15)
+			canvas.SetColor(1.0, 0.0, 0.0)
+			canvas.DrawRect(colBox.upperLeft[0], colBox.upperLeft[1], colBox.lowerRight[0] - colBox.upperLeft[0], colBox.lowerRight[1] - colBox.upperLeft[1])
+			#End
+
 			canvas.PopMatrix()
 		End If
 	End Method
@@ -146,7 +154,7 @@ Class Actor Extends LifecycleAware
 	End Method
 
 	Method GetMainCollisionBox:CollisionBox()
-		Return New CollisionBox([x, y],[x + boxWidth, y + boxHeight])
+		Return New CollisionBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
 	End Method
 	
 	Method CheckCollisionsWith:Void(actors:List<Actor>)
