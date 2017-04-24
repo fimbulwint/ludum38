@@ -47,6 +47,9 @@ Class Survivor Extends Actor
 			Else
 				speedX = 0.0
 			EndIf
+			If (jumping And IsOnTrain())
+				speedY = JUMP_SPEED
+			EndIf
 		Else If (hp > 0.0 And hurt)
 			If (IsOnTrain())
 				hurt = False
@@ -59,9 +62,6 @@ Class Survivor Extends Actor
 				speedX = -Train.TRAIN_SPEED
 				speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
 			End If		
-			If (jumping And IsOnTrain())
-				speedY = JUMP_SPEED
-			EndIf
 		End If
 	End Method
 	
@@ -73,7 +73,6 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (hurt)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
-		Else If (y <> Ground.GROUND_HEIGHT - boxHeight + yShift)
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		Else If (punching)
