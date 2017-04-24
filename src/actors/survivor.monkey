@@ -24,7 +24,6 @@ Class Survivor Extends Actor
 		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
-		
 		Super.PostConstruct()
 		
 		y = GetHeightOnTopOfTrain()

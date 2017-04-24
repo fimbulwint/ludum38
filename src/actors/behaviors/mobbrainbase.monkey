@@ -6,9 +6,9 @@ Import world.train
 Class MobBrainBase Implements Behavior 
 	Const OBJ_SEEK_AND_DESTROY:String = "SEEK_AND_DESTROY"
 	Const OBJ_APPROACH_TRAIN:String = "APPROACH_TRAIN"
-	Const OBJ_MOVE_TO_POINT_ON_TRAIN:String ="MOVE_TO_POINT_ON_ROOF"
+	Const OBJ_MOVE_TO_POINT_ON_TRAIN:String ="MOVE_TO_POINT_ON_TRAIN"
 
-	Const TRAIN_X_MIN:Float = Train.TRAIN_START + 80.0
+	Const TRAIN_X_MIN:Float = Train.TRAIN_START + 100.0
 	Const TRAIN_X_MAX:Float = Train.TRAIN_END - 80.0
 	
 	Field actor:Actor
@@ -26,6 +26,8 @@ Class MobBrainBase Implements Behavior
 	
 	Method Update:Void()
 		If (actor.hp > 0.0)
+			actor.movingRight = False
+			actor.movingLeft = False
 			actor.jumping = False
 			Select (objective)
 				Case ""
@@ -37,43 +39,17 @@ Class MobBrainBase Implements Behavior
 						ApplySeekAndDestroy()
 					End If
 				Case OBJ_APPROACH_TRAIN
-					actor.movingRight = False
-					actor.movingLeft = False
 					If (actor.IsOnTrain()) 'obj achieved
 						StartSeekAndDestroy()
-					Else If (actor.IsOnGround()) 
-						If (actor.x < objX)
-							If (approachVectorX < 0.0) 'arrived to jump point
-								actor.jumping = True
-							Else
-								actor.movingRight = True
-							End If
-						Else
-							If (approachVectorX > 0.0) 'arrived to jump point
-								actor.jumping = True
-							Else
-								actor.movingLeft = True
-							End If
-						End If
-					Else
-					' if not on ground wait for him to fall somewhere
+					Else 
+						ApplyApproachTrain()
 					End If
 				Case OBJ_MOVE_TO_POINT_ON_TRAIN
-					actor.movingRight = False
-					actor.movingLeft = False
-					If (actor.x < objX)
-						If (approachVectorX < 0.0) 'arrived
-							StartSeekAndDestroy()
-						Else
-							actor.movingRight = True
-						End If
+					If (actor.IsOnGround())
+						StartApproachTrain()
 					Else
-						If (approachVectorX > 0.0) 'arrived
-							StartSeekAndDestroy()
-						Else
-							actor.movingLeft = True
-						End If
-					End If
+						ApplyMoveToPointOnTrain()
+					EndIf
 			End Select
 		End If
 	End Method
@@ -91,7 +67,7 @@ Class MobBrainBase Implements Behavior
 		If (target = Null) ' no available targets, move to random point
 			StartMoveToPointOnTrain()
 		End If
-		'TODO
+		'TODO? should depend on type of mob
 	End Method
 
 	Method StartApproachTrain:Void()
@@ -101,6 +77,25 @@ Class MobBrainBase Implements Behavior
 	End Method
 	
 	Method ApplyApproachTrain:Void()
+		If (actor.IsOnGround()) 
+			If (actor.x < objX)
+				If (approachVectorX < 0.0) 'arrived to jump point
+					actor.jumping = True
+				Else
+					actor.movingRight = True
+				End If
+			Else
+				If (approachVectorX > 0.0) 'arrived to jump point
+					actor.jumping = True
+				Else
+					actor.movingLeft = True
+				End If
+			End If
+		Else
+		' if not on ground wait for him to fall somewhere but keep selecting new objX
+		' to avoid not being able to climb and keep repeating forever
+			SetObjX(-1.0)
+		End If
 	End Method
 
 	' -1.0 = random x
@@ -111,6 +106,19 @@ Class MobBrainBase Implements Behavior
 	End Method
 
 	Method ApplyMoveToPointOnTrain:Void()
+		If (actor.x < objX)
+			If (approachVectorX < 0.0) 'arrived
+				StartSeekAndDestroy()
+			Else
+				actor.movingRight = True
+			End If
+		Else
+			If (approachVectorX > 0.0) 'arrived
+				StartSeekAndDestroy()
+			Else
+				actor.movingLeft = True
+			End If
+		End If
 	End Method
 	
 		
@@ -126,7 +134,6 @@ Class MobBrainBase Implements Behavior
 	Method SetObjX:Void(x:Float)
 		If (x = -1.0)
 			objX = Rnd(TRAIN_X_MIN, TRAIN_X_MAX)
-			Print("objX " + objX)
 		End If
 		
 		If (actor.x < objX)
