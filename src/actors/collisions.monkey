@@ -11,7 +11,10 @@ Class Collisions
 Private
 
 	Function CheckOneSideCollision:Bool(box1:CollisionBox, box2:CollisionBox)
-		Return box1.lowerRight[0] >= box2.upperLeft[0] And box1.lowerRight[0] <= box2.lowerRight[0] And box1.lowerRight[1] >= box2.upperLeft[1] And box1.lowerRight[1] <= box2.lowerRight[1]
+		If (box1.upperLeft[0] > box2.upperLeft[0] And box1.upperLeft[0] > box2.lowerRight[0]) Then Return False
+		If (box1.lowerRight[0] < box2.upperLeft[0] And box1.lowerRight[0] < box2.lowerRight[0]) Then Return False
+		If (box1.upperLeft[1] > box2.upperLeft[1] And box1.upperLeft[1] > box2.lowerRight[1]) Then Return False
+		If (box1.lowerRight[1] < box2.upperLeft[1] And box1.lowerRight[1] < box2.lowerRight[1]) Then Return False
 		Return True
 	End Function
 

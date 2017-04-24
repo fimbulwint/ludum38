@@ -68,7 +68,7 @@ Class Ludum38 Extends App
 	End Method
  
 	Method OnRender:Int()
-		screen.Clear(0.1, 0.1, 0.4)
+		screen.Clear(0.2, 0.2, 0.4)
 		currentScene.Draw(screen)
 		screen.Flush()
 		Return 0
