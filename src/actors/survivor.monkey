@@ -67,13 +67,11 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-		If (punching)
-			
-		EndIf
+'		If (punching)
+'			
+'		EndIf
 	End Method
 		
-	End Method
-	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp <= 0.0)
