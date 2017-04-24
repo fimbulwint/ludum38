@@ -3,7 +3,8 @@ Strict
 Import actors.actor
 Import actors.survivor
 Import actors.behaviors.mutantbrain
-Import graphics.screen 
+Import graphics.screen
+Import sound.dj
 
 Class Mutant Extends Actor
 
@@ -111,6 +112,9 @@ Class Mutant Extends Actor
 		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())
 			DamageSurvivors()
 		End If
+		If (jumping)
+			Dj.instance.Play(Dj.SFX_MUTANT_JUMP)
+		EndIf
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -136,6 +140,13 @@ Class Mutant Extends Actor
 		Super.Draw(canvas)
 	End Method
 	
+	Method TakeDamage:Bool(damage:Int, fromX:Float)
+		Local result:Bool = Super.TakeDamage(damage, fromX)
+		If (hp <= 0.0)
+			Dj.instance.Play(Dj.SFX_MUTANT_DIE)
+		EndIf
+		Return result
+	End Method
 	
 Private
 	Method SetRandomInitialPosition:Void()
