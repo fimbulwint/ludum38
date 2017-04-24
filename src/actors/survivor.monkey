@@ -15,7 +15,7 @@ Class Survivor Extends Actor
 	Const SURVIVOR_DAMAGE:Float = 1.0
 	
 	Const BASE_LATERAL_SPEED:Float = 300.0
-	Const JUMP_SPEED:Float = 250.0
+	Const JUMP_SPEED:Float = 300.0
 	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_SURVIVOR)
 	
@@ -42,8 +42,11 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method Move:Void(worldState:WorldState)		
-		If (IsOnGround()) Then hp = 0.0 ' above all
-		
+		If (IsOnGround())
+			If (hp > 0.0) Then Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+			hp = 0.0 ' above all
+		EndIf
+
 		If (hp > 0.0 And Not hurt)
 			If (movingLeft)
 				speedX = -BASE_LATERAL_SPEED
@@ -57,6 +60,7 @@ Class Survivor Extends Actor
 			
 			If (jumping And IsOnTrain())
 				speedY = JUMP_SPEED
+				Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
 			EndIf
 		Else If (hp > 0.0 And hurt)
 			If (IsOnTrain())
@@ -76,6 +80,7 @@ Class Survivor Extends Actor
 	Method ReactToResults:Void()
 		If (hp > 0.0)
 			If (punching And punchCooldown <= 0.0)
+				If ( Not holdingPunch) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
 				holdingPunch = True
 			EndIf
 		
@@ -127,6 +132,16 @@ Class Survivor Extends Actor
 		End If
 		sizeX = directionX
 		Super.Draw(canvas)
+	End Method
+	
+	Method TakeDamage:Bool(damage:Int, fromX:Float)
+		Local result:Bool = Super.TakeDamage(damage, fromX)
+		If (hp <= 0.0)
+			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+		ElseIf(result)
+			Dj.instance.Play(Dj.SFX_SURVIVOR_OUCH)
+		EndIf
+		Return result
 	End Method
 	
 End Class

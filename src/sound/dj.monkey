@@ -13,7 +13,7 @@ Public
 	Const SFX_MUTANT_CALL:String = "mutant_call.mp3"
 	Const SFX_MUTANT_DIE:String = "mutant_die.mp3"
 	Const SFX_MUTANT_JUMP:String = "mutant_jump.mp3"
-	Const SFX_PLAYER_DIE:String = "player_die.mp3"
+	Const SFX_SURVIVOR_DIE:String = "player_die.mp3"
 	Const SFX_SURVIVOR_JUMP:String = "survivor_jump.mp3"
 	Const SFX_SURVIVOR_OUCH:String = "survivor_ouch.mp3"
 	Const SFX_SURVIVOR_PUNCH:String = "survivor_punch.mp3"
@@ -28,7 +28,7 @@ Public
 		sfx.Add(SFX_MUTANT_CALL, LoadSound(SFX_MUTANT_CALL))
 		sfx.Add(SFX_MUTANT_DIE, LoadSound(SFX_MUTANT_DIE))
 		sfx.Add(SFX_MUTANT_JUMP, LoadSound(SFX_MUTANT_JUMP))
-		sfx.Add(SFX_PLAYER_DIE, LoadSound(SFX_PLAYER_DIE))
+		sfx.Add(SFX_SURVIVOR_DIE, LoadSound(SFX_SURVIVOR_DIE))
 		sfx.Add(SFX_SURVIVOR_JUMP, LoadSound(SFX_SURVIVOR_JUMP))
 		sfx.Add(SFX_SURVIVOR_OUCH, LoadSound(SFX_SURVIVOR_OUCH))
 		sfx.Add(SFX_SURVIVOR_PUNCH, LoadSound(SFX_SURVIVOR_PUNCH))
