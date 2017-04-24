@@ -17,6 +17,7 @@ Import sound.dj
 Import scenes.game
 Import scenes.scene
 Import system.time
+Import world.background
 Import world.ground
 Import world.levelmarker
 Import world.mobspawner

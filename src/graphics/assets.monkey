@@ -5,6 +5,7 @@ Import mojo2
 Class Assets
 	Global instance:Assets = New Assets()
 	
+	Const GFX_BACKGROUND:String = "background.png"
 	Const GFX_TRAIN:String = "train.png"
 	Const GFX_BD_MOUNTAINS_0101:String = "bd_mountains_0101.png"
 	Const GFX_BD_MOUNTAINS_0102:String = "bd_mountains_0102.png"
@@ -26,6 +27,7 @@ Class Assets
 	Field fonts:Map<String, Font> = New StringMap<Font>
 	
 	Method New()
+		graphics.Add(GFX_BACKGROUND, Image.Load(GFX_BACKGROUND, 0.0, 0.0))
 		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
 		graphics.Add(GFX_BD_MOUNTAINS_0101, Image.Load(GFX_BD_MOUNTAINS_0101, 0.0, 1.0))
 		graphics.Add(GFX_BD_MOUNTAINS_0102, Image.Load(GFX_BD_MOUNTAINS_0102, 0.0, 1.0))
