@@ -32,7 +32,7 @@ Class Survivor Extends Actor
 		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
-		punchTime = 400.0
+		punchTime = 200.0
 		punchCooldown = 0.0
 		holdingPunch = False
 		
@@ -75,26 +75,29 @@ Class Survivor Extends Actor
 	
 	Method ReactToResults:Void()
 		If (hp > 0.0)
+			If (punching And punchCooldown <= 0.0)
+				holdingPunch = True
+			EndIf
+		
+			If (holdingPunch And punchTime > 0.0)
+				For Local actor:Actor = EachIn collidingActors
+					actor.TakeDamage(SURVIVOR_DAMAGE, x)
+				End For
+			EndIf
+			
 			If (holdingPunch)
 				punchTime -= Time.instance.realLastFrame
-				If ( Not punching Or punchTime <= 0)
+				If (punchTime <= 0)
 					punchTime = 0.0
-					punchCooldown = 600.0
+					punchCooldown = 200.0
 					holdingPunch = False
 				EndIf
 			Else
 				If (punchCooldown > 0.0)
 					punchCooldown -= Time.instance.realLastFrame
 				Else
-					punchTime = 400.0
+					punchTime = 200.0
 				EndIf
-			EndIf
-		
-			If (punching And punchTime > 0.0)
-				For Local actor:Actor = EachIn collidingActors
-					actor.TakeDamage(SURVIVOR_DAMAGE, x)
-				End For
-				holdingPunch = True
 			EndIf
 		EndIf
 	End Method
@@ -109,7 +112,7 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
-		Else If (punching And punchTime > 0.0)
+		Else If (holdingPunch And punchTime > 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_PUNCH
 		End If
 		Local animResult:AnimResult = animator.Animate(animStatus)
