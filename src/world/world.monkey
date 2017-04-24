@@ -5,6 +5,7 @@ Import actors.survivor
 Import graphics.screen
 Import lifecycleaware
 Import mojo2
+Import world.background
 Import world.ground
 Import world.levelmarker
 Import world.mobspawner
@@ -53,6 +54,7 @@ Class World
 		lifecycleAwares.AddLast(New Ground())
 		lifecycleAwares.AddLast(worldMap)
 		lifecycleAwares.AddLast(New LevelMarker(worldMap))
+		lifecycleAwares.AddLast(New Background())
 	End Method
 	
 	Method AddLifecycleAware:Void(aware:LifecycleAware)
@@ -95,7 +97,7 @@ Class World
 			aware.Update(worldState)
 		Next
 		
-		mobSpawner.Update()
+		mobSpawner.Update(worldMap.level, worldMap.GetCurrentZone().type.id)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)

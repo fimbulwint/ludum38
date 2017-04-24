@@ -141,6 +141,7 @@ Class Actor Extends LifecycleAware
 		If (hp > 0.0 And Not hurt)
 			hp -= damage
 			If (hp < 0.0) Then hp = 0.0
+			y -= 0.001 'HACK :D
 			hurt = True
 			speedX = Rnd(HURT_LATERAL_SPEED_MIN, HURT_LATERAL_SPEED_MAX)
 			speedY = Rnd(HURT_JUMP_SPEED_MIN, HURT_JUMP_SPEED_MAX)

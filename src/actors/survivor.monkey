@@ -11,7 +11,7 @@ Import world.train
 
 Class Survivor Extends Actor
 
-	Const BASE_HP:Float = 2.0
+	Const BASE_HP:Float = 10.0
 	Const SURVIVOR_DAMAGE:Float = 1.0
 	
 	Const BASE_LATERAL_SPEED:Float = 300.0
@@ -42,6 +42,8 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method Move:Void(worldState:WorldState)		
+		If (IsOnGround()) Then hp = 0.0 ' above all
+		
 		If (hp > 0.0 And Not hurt)
 			If (movingLeft)
 				speedX = -BASE_LATERAL_SPEED
