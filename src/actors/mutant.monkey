@@ -60,15 +60,7 @@ Class Mutant Extends Actor
 		End If
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
-	
-		'if all goes well (no collisions and stuff), move
-
-		If (KeyDown(KEY_0))
-			hp = 0.0
-		End If
-				
+	Method Move:Void(worldState:WorldState)		
 		If (hp > 0.0)
 			If (jumping)
 				If (IsOnTrain())
@@ -106,15 +98,6 @@ Class Mutant Extends Actor
 				speedX = -Train.TRAIN_SPEED
 				speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
 			End If
-		End If
-		
-		x += speedX * deltaInSecs
-		
-		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
-		y -= speedY * deltaInSecs
-		If (wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
-			y = Train.TRAIN_HEIGHT - boxHeight + yShift
-			speedY = 0.0
 		End If
 		
 		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())

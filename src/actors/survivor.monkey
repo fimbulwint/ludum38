@@ -7,6 +7,7 @@ Import graphics.animator
 Import graphics.assets
 Import graphics.screen
 Import system.time
+Import world.train
 
 Class Survivor Extends Actor
 
@@ -32,14 +33,10 @@ Class Survivor Extends Actor
 		image = anim[0]
 		Super.PostConstruct()
 		
-		y = Ground.GROUND_HEIGHT - boxHeight
+		y = GetHeightOnTopOfTrain()
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		Super.TryToMove(worldState)
-	
-		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
-		
+	Method Move:Void(worldState:WorldState)		
 		If (hp > 0.0 And Not hurt)
 			If (movingLeft)
 				speedX = -BASE_LATERAL_SPEED
@@ -62,31 +59,21 @@ Class Survivor Extends Actor
 				speedX = -Train.TRAIN_SPEED
 				speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
 			End If		
+			If (jumping And IsOnTrain())
+				speedY = JUMP_SPEED
+			EndIf
 		End If
-		
-		x += speedX * deltaInSecs
-		If (OverflowingLeft())
-			x = -xShift
-		ElseIf(OverflowingRight())
-			x = Screen.WIDTH - boxWidth + xShift
-		EndIf
-
-		If (jumping And y = Ground.GROUND_HEIGHT - boxHeight + yShift)
-			speedY = JUMP_SPEED
-		EndIf
-
-		y -= speedY * deltaInSecs
-		
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp <= 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_DIE
+		Else If (y <> GetHeightOnTopOfTrain())
+			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (hurt)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
 		Else If (y <> Ground.GROUND_HEIGHT - boxHeight + yShift)
-			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		Else If (punching)

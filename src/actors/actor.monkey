@@ -41,6 +41,7 @@ Class Actor Extends LifecycleAware
 	Field directionX:Float = 1.0
 	Field speedX:Float
 	Field speedY:Float
+	Field gravityBound:Bool = True
 	Field boxWidth:Float
 	Field boxHeight:Float
 	Field collisionBoxes:List<CollisionBox> = New List<CollisionBox>()
@@ -54,13 +55,28 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method Update:Void(worldState:WorldState)
+		behavior.Update()
+		
+		Move(worldState)
+		Gravity.applyTo(Self)
+		
+		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
+		x += speedX * deltaInSecs
+		
+		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
+		y -= speedY * deltaInSecs
+		If (wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
+			y = GetHeightOnTopOfTrain()
+			speedY = 0.0
+		End If
+		
 		collidingActors.Clear()
 		collisionBoxes.Clear()
 		collisionBoxes.AddLast(GetMainCollisionBox())
-	
-		behavior.Update()
-		TryToMove(worldState)
-		Gravity.applyTo(Self)
+		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.dynamicActors)
+		
+		ReactToResults()
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -74,26 +90,38 @@ Class Actor Extends LifecycleAware
 		End If
 	End Method
 	
-	Method TryToMove:Void(worldState:WorldState)
-		CheckCollisionsWith(worldState.mainActors)
-		CheckCollisionsWith(worldState.dynamicActors)
-		' All collisions have been decided at this point
+	Method Move:Void(worldState:WorldState)
+	End Method
+	
+	Method ReactToResults:Void()
 	End Method
 	
 	Method IsOnGround:Bool()
-		Return y = Ground.GROUND_HEIGHT - boxHeight + yShift
+		Return y = GetHeightOnTopOfGround()
+	End Method
+	
+	Method IsAboveGround:Bool()
+		Return y < GetHeightOnTopOfGround()
 	End Method
 
 	Method IsOnTrain:Bool()
-		Return y = Train.TRAIN_HEIGHT - boxHeight + yShift And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y = GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
 	End Method
 	
 	Method IsDirectlyAboveTrain:Bool()
-		Return y < (Train.TRAIN_HEIGHT - boxHeight + yShift) And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y < GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
 	End Method
 
 	Method IsDirectlyBelowTrain:Bool()
-		Return y > (Train.TRAIN_HEIGHT - boxHeight + yShift) And x > Train.TRAIN_START And x <= Train.TRAIN_END
+		Return y > GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
+	End Method
+	
+	Method GetHeightOnTopOfGround:Float()
+		Return Ground.GROUND_HEIGHT - boxHeight + yShift
+	End Method
+	
+	Method GetHeightOnTopOfTrain:Float()
+		Return Train.TRAIN_HEIGHT - boxHeight + yShift
 	End Method
 	
 Private
