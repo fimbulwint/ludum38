@@ -17,6 +17,7 @@ Class Actor Extends LifecycleAware
 
 	' Attributes
 	Field hp:Float = 1.0
+	Field hurt:Bool = False ' used to notify hp has been externally modified
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
