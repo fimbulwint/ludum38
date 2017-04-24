@@ -12,6 +12,11 @@ Import system.time
 
 Class Actor Extends LifecycleAware
 
+	Const HURT_LATERAL_SPEED_MIN:Float = 50.0
+	Const HURT_LATERAL_SPEED_MAX:Float = 150.0
+	Const HURT_JUMP_SPEED_MIN:Float = 150.0
+	Const HURT_JUMP_SPEED_MAX:Float = 250.0
+
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
 
@@ -124,7 +129,21 @@ Class Actor Extends LifecycleAware
 		Return Train.TRAIN_HEIGHT - boxHeight + yShift
 	End Method
 	
-Private
+	Method TakeDamage:Bool(damage:Int, fromX:Float)
+		If (hp > 0.0 And Not hurt)
+			hp -= damage
+			If (hp < 0.0) Then hp = 0.0
+			hurt = True
+			speedX = Rnd(HURT_LATERAL_SPEED_MIN, HURT_LATERAL_SPEED_MAX)
+			speedY = Rnd(HURT_JUMP_SPEED_MIN, HURT_JUMP_SPEED_MAX)
+			If (fromX - x > 0.0) ' from the right
+				speedX = -speedX
+			End If
+			directionX = -(speedX / speedX)
+			Return True
+		End If
+		Return False
+	End Method
 
 	Method GetMainCollisionBox:CollisionBox()
 		Return New CollisionBox([x, y],[x + boxWidth, y + boxHeight])

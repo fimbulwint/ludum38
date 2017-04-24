@@ -12,13 +12,10 @@ Import world.train
 Class Survivor Extends Actor
 
 	Const BASE_HP:Float = 2.0
+	Const SURVIVOR_DAMAGE:Float = 1.0
+	
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const JUMP_SPEED:Float = 250.0
-	
-	Const HURT_LATERAL_SPEED_MIN:Float = 50.0
-	Const HURT_LATERAL_SPEED_MAX:Float = 150.0
-	Const HURT_JUMP_SPEED_MIN:Float = 150.0
-	Const HURT_JUMP_SPEED_MAX:Float = 250.0
 	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_SURVIVOR)
 	
@@ -67,9 +64,11 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-'		If (punching)
-'			
-'		EndIf
+		If (hp > 0.0 And punching)
+			For Local actor:Actor = EachIn collidingActors
+				actor.TakeDamage(SURVIVOR_DAMAGE, x)
+			End For
+		EndIf
 	End Method
 		
 	Method Draw:Void(canvas:Canvas)
@@ -95,29 +94,8 @@ Class Survivor Extends Actor
 		Super.Draw(canvas)
 	End Method
 	
-	Method TakeDamage:Bool(damage:Int, fromX:Float)
-		If (hp > 0.0 And Not hurt)
-			hp -= damage
-			If (hp < 0.0) Then hp = 0.0
-			hurt = True
-			speedX = Rnd(HURT_LATERAL_SPEED_MIN, HURT_LATERAL_SPEED_MAX)
-			speedY = Rnd(HURT_JUMP_SPEED_MIN, HURT_JUMP_SPEED_MAX)
-			If (fromX - x > 0.0) ' from the right
-				speedX = -speedX
-			End If
-			directionX = -(speedX / speedX)
-			Return True
-		End If
-		Return False
+	Method GetMainCollisionBox:CollisionBox()
+		Return New CollisionBox([x - 3, y - 3],[x + boxWidth + 3, y + boxHeight + 3])
 	End Method
 	
-Private
-	Method OverflowingLeft:Bool()
-		Return x - xShift < 0
-	End Method
-	
-	Method OverflowingRight:Bool()
-		Return x + boxWidth - xShift > Screen.WIDTH
-	End Method
-
 End Class
