@@ -41,13 +41,13 @@ Class WorldMap Extends LifecycleAware
 	End Method
 	
 	Method InitializeZoneTypes:Void()
-		zoneTypes.Add(ZONE_MOUNTAINS, New ZoneType(
+		zoneTypes.Add(ZONE_MOUNTAINS, New ZoneType(ZONE_MOUNTAINS,
 			[Assets.instance.graphics.Get(Assets.GFX_BD_MOUNTAINS_0101),
 			Assets.instance.graphics.Get(Assets.GFX_BD_MOUNTAINS_0102),
 			Assets.instance.graphics.Get(Assets.GFX_BD_MOUNTAINS_0103),
 			Assets.instance.graphics.Get(Assets.GFX_BD_MOUNTAINS_0104)]))
 		
-		zoneTypes.Add(ZONE_DESERT, New ZoneType(
+		zoneTypes.Add(ZONE_DESERT, New ZoneType(ZONE_DESERT,
 			[Assets.instance.graphics.Get(Assets.GFX_BD_DESERT_0201),
 			Assets.instance.graphics.Get(Assets.GFX_BD_DESERT_0202)]))
 	End Method
@@ -86,6 +86,10 @@ Class WorldMap Extends LifecycleAware
 		canvas.PopMatrix()
 	End Method
 	
+	Method GetCurrentZone:ZoneDefinition()
+		Return map[currentZone]
+	End Method
+	
 Private
 	Method AdvanceBackdrop:Void()
 		x += Screen.WIDTH
@@ -121,9 +125,11 @@ End Class
 
 
 Class ZoneType
+	Field id:String
 	Field backdrops:Map<Int, Image> = New IntMap<Image>	' 1-based
 	
-	Method New(images:Image[]) ' (0 - n-1) will correspond to image for backdrop 1 to image for backdrop n
+	Method New(id:String, images:Image[]) ' (0 - n-1) will correspond to image for backdrop 1 to image for backdrop n
+		Self.id = id
 		For Local i:Int = 0 To images.Length - 1
 			backdrops.Add(i + 1, images[i]) ' 1-based
 		End For

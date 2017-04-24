@@ -95,7 +95,7 @@ Class World
 			aware.Update(worldState)
 		Next
 		
-		mobSpawner.Update()
+		mobSpawner.Update(worldMap.level, worldMap.GetCurrentZone().type.id)
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
