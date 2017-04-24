@@ -35,6 +35,7 @@ Class Ludum38 Extends App
 		screen = New Canvas()
 		screen.SetProjection2d(0.0, Screen.WIDTH, 0.0, Screen.HEIGHT)
 		Local assets:Assets = Assets.instance ' init
+		Dj.instance.Init()
 		Animator.Initialize()
 		Seed = Millisecs()
 		Time.instance.Update()
@@ -55,6 +56,7 @@ Class Ludum38 Extends App
 	
 	Method OnUpdate:Int()
 		Time.instance.Update()
+		Dj.instance.Update()
 		
 		Local sceneResult:String = currentScene.GetSceneResult()
 		Select (sceneResult)

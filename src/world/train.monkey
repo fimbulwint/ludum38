@@ -3,6 +3,7 @@ Strict
 Import actors.actor
 Import graphics.assets
 Import graphics.screen
+Import sound.dj
 Import world.ground
 
 Class Train Extends Actor
@@ -21,6 +22,7 @@ Class Train Extends Actor
 		z = 100.0
 		
 		image = Assets.instance.graphics.Get(Assets.GFX_TRAIN)
+		Dj.instance.Play(Dj.SFX_TRAIN, True)
 	End Method
 
 End Class
