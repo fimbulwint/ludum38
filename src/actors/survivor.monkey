@@ -76,10 +76,10 @@ Class Survivor Extends Actor
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 		If (hp <= 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_DIE
-		Else If (y <> GetHeightOnTopOfTrain())
-			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (hurt)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
+		Else If (y <> GetHeightOnTopOfTrain())
+			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		Else If (punching)
@@ -98,6 +98,7 @@ Class Survivor Extends Actor
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
 		If (hp > 0.0 And Not hurt)
 			hp -= damage
+			If (IsOnTrain()) Then y -= 0.01 'HACK :D
 			If (hp < 0.0) Then hp = 0.0
 			hurt = True
 			speedX = Rnd(HURT_LATERAL_SPEED_MIN, HURT_LATERAL_SPEED_MAX)
