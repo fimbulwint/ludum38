@@ -100,10 +100,12 @@ Class Mutant Extends Actor
 			End If
 		End If
 		
+	End Method
+	
+	Method ReactToResults:Void()
 		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())
 			DamageSurvivors()
 		End If
-		
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)
@@ -153,7 +155,7 @@ Private
 	Method DamageSurvivors:Void()
 		For Local actor:Actor = EachIn collidingActors
 			Local survivor:Survivor = Survivor(actor)
-			If (survivor <> Null)
+			If (survivor <> Null And Not survivor.punching)
 				survivor.TakeDamage(MUTANT_DAMAGE, x)
 			End If
 		End For

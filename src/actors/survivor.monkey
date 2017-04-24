@@ -11,7 +11,7 @@ Import world.train
 
 Class Survivor Extends Actor
 
-	Const BASE_HP:Float = 2.0
+	Const BASE_HP:Float = 1.0
 	Const SURVIVOR_DAMAGE:Float = 1.0
 	
 	Const BASE_LATERAL_SPEED:Float = 300.0
@@ -95,7 +95,8 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method GetMainCollisionBox:CollisionBox()
-		Return New CollisionBox([x - 3, y - 3],[x + boxWidth + 3, y + boxHeight + 3])
+		Local extra:Float = 5;
+		Return New CollisionBox([x - xShift - extra, y - yShift - extra],[x - xShift + boxWidth + extra, y - yShift + boxHeight + extra])
 	End Method
 	
 End Class
