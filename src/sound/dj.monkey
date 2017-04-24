@@ -8,7 +8,21 @@ Import system.time
 Class Dj
 Public
 
+	Const MUSIC_INGAME:String = "Small_World.mp3"
+
 	Global instance:Dj = New Dj()
+	
+	Method New()
+	End Method
+	
+	Method PlayInGameMusic:Void()
+		PlayMusic(MUSIC_INGAME)
+		SetMusicVolume(0.5)
+	End Method
+	
+	Method StopInGameMusic:Void()
+		StopMusic()
+	End Method
 	
 	Method Play:Int(sound:Sound, loop:Bool = False)
 		Local channel:Int = FindFreeChannel()

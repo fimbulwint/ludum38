@@ -141,7 +141,7 @@ Private
 	Method SetRandomInitialPosition:Void()
 		Local side:Float = 1.0
 		If (Rnd(1000.0) < 500.0) Then side = -1.0	' left or right
-		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0)
+		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0) + Rnd(0.0, 100.0) * side
 		If (Rnd(1000.0) < 500.0)
 			' jumping
 			y = Train.TRAIN_HEIGHT - boxHeight + yShift + Rnd(-50.0, 50.0)
