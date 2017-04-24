@@ -1,3 +1,5 @@
 *.JILayout
 *.JIPO
 /src/ludum38.build*
+*.psd
+*.PSD
