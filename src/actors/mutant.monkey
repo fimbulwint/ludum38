@@ -101,7 +101,6 @@ Class Mutant Extends Actor
 		End If
 		
 		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())
-			Super.TryToMove(worldState) ' update all collisions
 			DamageSurvivors()
 		End If
 		
