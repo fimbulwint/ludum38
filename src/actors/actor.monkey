@@ -59,12 +59,6 @@ Class Actor Extends LifecycleAware
 		Move(worldState)
 		Gravity.applyTo(Self)
 		
-		collidingActors.Clear()
-		collisionBoxes.Clear()
-		collisionBoxes.AddLast(GetMainCollisionBox())
-		CheckCollisionsWith(worldState.mainActors)
-		CheckCollisionsWith(worldState.dynamicActors)
-		
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
 		x += speedX * deltaInSecs
 		
@@ -74,6 +68,12 @@ Class Actor Extends LifecycleAware
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0
 		End If
+		
+		collidingActors.Clear()
+		collisionBoxes.Clear()
+		collisionBoxes.AddLast(GetMainCollisionBox())
+		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.dynamicActors)
 		
 		ReactToResults()
 	End Method
