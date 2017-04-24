@@ -57,7 +57,7 @@ Class MobBrainBase Implements Behavior
 	Method StartSeekAndDestroy:Void()
 		SelectNewTarget()
 		objective = OBJ_SEEK_AND_DESTROY
-		Print(objective)
+		'Print(objective)
 	End Method
 	
 	Method ApplySeekAndDestroy:Void()
@@ -73,7 +73,7 @@ Class MobBrainBase Implements Behavior
 	Method StartApproachTrain:Void()
 		objective = OBJ_APPROACH_TRAIN
 		SetObjX(-1.0)
-		Print(objective)
+		'Print(objective)
 	End Method
 	
 	Method ApplyApproachTrain:Void()
@@ -102,7 +102,7 @@ Class MobBrainBase Implements Behavior
 	Method StartMoveToPointOnTrain:Void(x:Float = -1.0)
 		objective = OBJ_MOVE_TO_POINT_ON_TRAIN
 		SetObjX(x)
-		Print(objective)
+		'Print(objective)
 	End Method
 
 	Method ApplyMoveToPointOnTrain:Void()

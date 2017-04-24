@@ -8,16 +8,16 @@ Import system.time
 Class Dj
 Public
 
-	Const MUSIC_INGAME:String = "Small_World.mp3"
+	Const MUSIC_INGAME:String = "monkey://data/Small_World.mp3"
 	
-	Const SFX_MUTANT_CALL:String = "mutant_call.mp3"
-	Const SFX_MUTANT_DIE:String = "mutant_die.mp3"
-	Const SFX_MUTANT_JUMP:String = "mutant_jump.mp3"
-	Const SFX_SURVIVOR_DIE:String = "player_die.mp3"
-	Const SFX_SURVIVOR_JUMP:String = "survivor_jump.mp3"
-	Const SFX_SURVIVOR_OUCH:String = "survivor_ouch.mp3"
-	Const SFX_SURVIVOR_PUNCH:String = "survivor_punch.mp3"
-	Const SFX_TRAIN:String = "train.mp3"
+	Const SFX_MUTANT_CALL:String = "monkey://data/mutant_call.mp3"
+	Const SFX_MUTANT_DIE:String = "monkey://data/mutant_die.mp3"
+	Const SFX_MUTANT_JUMP:String = "monkey://data/mutant_jump.mp3"
+	Const SFX_SURVIVOR_DIE:String = "monkey://data/player_die.mp3"
+	Const SFX_SURVIVOR_JUMP:String = "monkey://data/survivor_jump.mp3"
+	Const SFX_SURVIVOR_OUCH:String = "monkey://data/survivor_ouch.mp3"
+	Const SFX_SURVIVOR_PUNCH:String = "monkey://data/survivor_punch.mp3"
+	Const SFX_TRAIN:String = "monkey://data/train.mp3"
 	
 
 	Global instance:Dj = New Dj()

@@ -5,24 +5,24 @@ Import mojo2
 Class Assets
 	Global instance:Assets = New Assets()
 	
-	Const GFX_TITLE:String = "title.png"
-	Const GFX_BACKGROUND:String = "background.png"
-	Const GFX_TRAIN:String = "train.png"
-	Const GFX_BD_MOUNTAINS_0101:String = "bd_mountains_0101.png"
-	Const GFX_BD_MOUNTAINS_0102:String = "bd_mountains_0102.png"
-	Const GFX_BD_MOUNTAINS_0103:String = "bd_mountains_0103.png"
-	Const GFX_BD_MOUNTAINS_0104:String = "bd_mountains_0104.png"
-	Const GFX_BD_MOUNTAINS_0105:String = "bd_mountains_0105.png"
-	Const GFX_BD_DESERT_0201:String = "bd_desert_0201.png"
-	Const GFX_BD_DESERT_0202:String = "bd_desert_0202.png"
+	Const GFX_TITLE:String = "monkey://data/title.png"
+	Const GFX_BACKGROUND:String = "monkey://data/background.png"
+	Const GFX_TRAIN:String = "monkey://data/train.png"
+	Const GFX_BD_MOUNTAINS_0101:String = "monkey://data/bd_mountains_0101.png"
+	Const GFX_BD_MOUNTAINS_0102:String = "monkey://data/bd_mountains_0102.png"
+	Const GFX_BD_MOUNTAINS_0103:String = "monkey://data/bd_mountains_0103.png"
+	Const GFX_BD_MOUNTAINS_0104:String = "monkey://data/bd_mountains_0104.png"
+	Const GFX_BD_MOUNTAINS_0105:String = "monkey://data/bd_mountains_0105.png"
+	Const GFX_BD_DESERT_0201:String = "monkey://data/bd_desert_0201.png"
+	Const GFX_BD_DESERT_0202:String = "monkey://data/bd_desert_0202.png"
 
 	Const ANIMS_FRAMES:Int = 16
-	Const GFX_ANIM_SURVIVOR:String = "survivor.png"
-	Const GFX_ANIM_MUTANT:String = "mutants.png"
+	Const GFX_ANIM_SURVIVOR:String = "monkey://data/survivor.png"
+	Const GFX_ANIM_MUTANT:String = "monkey://data/mutants.png"
 
-	Const FNT_BOYCOTT:String = "fnt_boycott.png"
+	Const FNT_BOYCOTT:String = "monkey://data/fnt_boycott.png"
 	
-	Const GFX_GAME_OVER:String = "game_over_screen.png"
+	Const GFX_GAME_OVER:String = "monkey://data/game_over_screen.png"
 	
 	Field graphics:Map<String, Image> = New StringMap<Image>
 	Field anims:Map<String, Image[]> = New StringMap<Image[]>
