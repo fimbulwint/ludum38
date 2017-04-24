@@ -48,6 +48,7 @@ Class Ludum38 Extends App
 	
 	Method OnResume:Int()
 		Time.instance.Update()
+		Return 0
 	End Method
 	
 	Method OnUpdate:Int()
