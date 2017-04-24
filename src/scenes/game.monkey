@@ -10,7 +10,7 @@ Class Game Implements Scene
 	Field world:World = New World()
 
 	Method New()
-		Dj.instance.PlayInGameMusic()
+		Dj.instance.PlayMusic(Dj.MUSIC_INGAME)
 	End Method
 	
 	Method Update:Void()

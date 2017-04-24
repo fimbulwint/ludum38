@@ -35,8 +35,8 @@ Public
 		sfx.Add(SFX_TRAIN, LoadSound(SFX_TRAIN))
 	End Method
 	
-	Method PlayInGameMusic:Void()
-		PlayMusic(MUSIC_INGAME)
+	Method PlayMusic:Void(music:String)
+		PlayMusic(music)
 		SetMusicVolume(0.5)
 	End Method
 	

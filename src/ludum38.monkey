@@ -15,6 +15,7 @@ Import lifecycleaware
 Import mojo2 
 Import sound.dj
 Import scenes.game
+Import scenes.menu
 Import scenes.scene
 Import system.time
 Import world.background
@@ -38,7 +39,7 @@ Class Ludum38 Extends App
 		Animator.Initialize()
 		Seed = Millisecs()
 		Time.instance.Update()
-		currentScene = New Game()
+		currentScene = New Menu()
 		Return 0
 	End Method
 
