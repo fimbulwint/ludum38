@@ -32,7 +32,14 @@ Class MobSpawner
 	Method SpawnMobs:Void(level:Int, zone:String)
 		Local groupSize:Int = 2
 		For Local i:Int = 1 To groupSize
-			SpawnMutants(Mutant.TYPE_ROCKY)
+			Select (zone)
+				Case WorldMap.ZONE_MOUNTAINS
+					SpawnMutants(Mutant.TYPE_ROCKY)
+				Case WorldMap.ZONE_DESERT
+					SpawnMutants(Mutant.TYPE_FIRE)
+				Default 
+					SpawnMutants(Mutant.TYPE_ROCKY)
+			End Select
 		End For
 	End Method
 	
