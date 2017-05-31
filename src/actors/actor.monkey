@@ -14,8 +14,8 @@ Class Actor Extends LifecycleAware
 
 	Const HURT_LATERAL_SPEED_MIN:Float = 50.0
 	Const HURT_LATERAL_SPEED_MAX:Float = 150.0
-	Const HURT_JUMP_SPEED_MIN:Float = 150.0
-	Const HURT_JUMP_SPEED_MAX:Float = 250.0
+	Const HURT_JUMP_SPEED_MIN:Float = -150.0
+	Const HURT_JUMP_SPEED_MAX:Float = -250.0
 
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
@@ -69,7 +69,7 @@ Class Actor Extends LifecycleAware
 		x += speedX * deltaInSecs
 		
 		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
-		y -= speedY * deltaInSecs
+		y += speedY * deltaInSecs
 		If (hp > 0.0 And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0

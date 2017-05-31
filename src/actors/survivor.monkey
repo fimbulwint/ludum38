@@ -15,7 +15,7 @@ Class Survivor Extends Actor
 	Const SURVIVOR_DAMAGE:Float = 1.0
 	
 	Const BASE_LATERAL_SPEED:Float = 300.0
-	Const JUMP_SPEED:Float = 300.0
+	Const JUMP_SPEED:Float = -300.0
 	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_SURVIVOR)
 	
@@ -84,20 +84,19 @@ Class Survivor Extends Actor
 				holdingPunch = True
 			EndIf
 		
-			If (holdingPunch And punchTime > 0.0)
-				For Local actor:Actor = EachIn collidingActors
-					Local enemyOnTheRight:Bool = (x - xShift) < actor.x - actor.xShift
-					Local enemyOnTheLeft:Bool = (x - xShift) > actor.x - actor.xShift
-					If ( (directionX > 0.0 And enemyOnTheRight) Or (directionX < 0.0 And enemyOnTheLeft))
-						actor.TakeDamage(SURVIVOR_DAMAGE, x)
-					EndIf
-				End For
-			EndIf
-			
 			If (holdingPunch)
+				If (punchTime > 0.0)
+					For Local actor:Actor = EachIn collidingActors
+						Local enemyOnTheRight:Bool = (x - xShift) < actor.x - actor.xShift
+						Local enemyOnTheLeft:Bool = (x - xShift) > actor.x - actor.xShift
+						If ( (directionX > 0.0 And enemyOnTheRight) Or (directionX < 0.0 And enemyOnTheLeft))
+							actor.TakeDamage(SURVIVOR_DAMAGE, x)
+						EndIf
+					End For
+				EndIf
+			
 				punchTime -= Time.instance.realLastFrame
 				If (punchTime <= 0)
-					punchTime = 0.0
 					punchCooldown = 200.0
 					holdingPunch = False
 				EndIf
