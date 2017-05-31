@@ -12,10 +12,8 @@ Import system.time
 
 Class Actor Extends LifecycleAware
 
-	Const HURT_LATERAL_SPEED_MIN:Float = 50.0
-	Const HURT_LATERAL_SPEED_MAX:Float = 150.0
-	Const HURT_JUMP_SPEED_MIN:Float = -150.0
-	Const HURT_JUMP_SPEED_MAX:Float = -250.0
+	Const HURT_LATERAL_SPEED:Float = 150.0
+	Const HURT_JUMP_SPEED:Float = -100.0
 
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
@@ -23,6 +21,7 @@ Class Actor Extends LifecycleAware
 	' Attributes
 	Field hp:Float = 1.0
 	Field hurt:Bool = False ' used to notify hp has been externally modified
+	Field invulnerable:Int = 0
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
@@ -74,6 +73,8 @@ Class Actor Extends LifecycleAware
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0
 		End If
+		
+		If (invulnerable > 0) Then invulnerable -= Time.instance.realLastFrame
 		
 		collidingActors.Clear()
 		collisionBoxes.Clear()
@@ -138,13 +139,13 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
-		If (hp > 0.0 And Not hurt)
+		If (hp > 0.0 And Not hurt And invulnerable <= 0)
 			hp -= damage
 			If (hp < 0.0) Then hp = 0.0
 			y -= 0.001 'HACK :D
 			hurt = True
-			speedX = Rnd(HURT_LATERAL_SPEED_MIN, HURT_LATERAL_SPEED_MAX)
-			speedY = Rnd(HURT_JUMP_SPEED_MIN, HURT_JUMP_SPEED_MAX)
+			speedX = HURT_LATERAL_SPEED
+			speedY = HURT_JUMP_SPEED
 			If (fromX - x > 0.0) ' from the right
 				speedX = -speedX
 			End If

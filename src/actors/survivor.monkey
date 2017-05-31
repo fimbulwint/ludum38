@@ -47,26 +47,30 @@ Class Survivor Extends Actor
 			hp = 0.0 ' above all
 		EndIf
 
-		If (hp > 0.0 And Not hurt)
-			If (movingLeft)
-				speedX = -BASE_LATERAL_SPEED
-				directionX = -1.0
-			ElseIf(movingRight)
-				speedX = BASE_LATERAL_SPEED
-				directionX = 1.0
+		If (hp > 0.0)
+			If (Not hurt)
+				If (movingLeft)
+					speedX = -BASE_LATERAL_SPEED
+					directionX = -1.0
+				ElseIf(movingRight)
+					speedX = BASE_LATERAL_SPEED
+					directionX = 1.0
+				Else
+					speedX = 0.0
+				EndIf
+				
+				If (jumping And IsOnTrain())
+					speedY = JUMP_SPEED
+					Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
+				EndIf
 			Else
-				speedX = 0.0
-			EndIf
-			
-			If (jumping And IsOnTrain())
-				speedY = JUMP_SPEED
-				Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
-			EndIf
-		Else If (hp > 0.0 And hurt)
-			If (IsOnTrain())
-				hurt = False
-			Else If (IsOnGround())
-				hp = 0.0
+				If (IsOnTrain())
+					hurt = False
+					invulnerable = 500
+				Else If (IsOnGround())
+					hp = 0.0
+					invulnerable = 0
+				End If
 			End If
 		Else
 			' dead
@@ -122,7 +126,8 @@ Class Survivor Extends Actor
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		End If
-		Local animResult:AnimResult = animator.Animate(animStatus)
+		Local blinking:Bool = (hurt Or invulnerable) And hp > 0.0
+		Local animResult:AnimResult = animator.Animate(animStatus, blinking)
 		If (animResult.graph = -1)
 			image = Null
 		Else 
