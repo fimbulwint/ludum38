@@ -69,7 +69,7 @@ Class Ludum38 Extends App
 				Else If (Menu(currentScene) <> Null)
 					currentScene = New Game()
 				Else If (GameOver(currentScene) <> Null)
-					currentScene = New Game()
+					currentScene = New Menu()
 				EndIf
 		End Select
 		
