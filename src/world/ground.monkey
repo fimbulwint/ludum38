@@ -8,8 +8,8 @@ Import world.world
 
 Class Ground Extends LifecycleAware
 	Const GROUND_HEIGHT:Float = Screen.HEIGHT - 165.0
-	Const GROUND_REBOUND_SPEED_MIN:Float = 75.0
-	Const GROUND_REBOUND_SPEED_MAX:Float = 125.0
+	Const GROUND_REBOUND_SPEED_MIN:Float = -75.0
+	Const GROUND_REBOUND_SPEED_MAX:Float = -125.0
 
 	Method New()
 		z = 300.0
