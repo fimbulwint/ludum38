@@ -6,7 +6,8 @@ Import actors.behaviors.mobbrainbase
 
 Class MutantBrain Extends MobBrainBase
 	Const JUMP_FACTOR:Float = 0.025
-	Const STOP_DISTANCE:Float = 30.0
+	Const NEAR_DISTANCE:Float = 30.0
+	Const TARGET_OVERHEAD_DISTANCE:Float = 40.0
 
 	Field mutantType:String
 
@@ -19,12 +20,13 @@ Class MutantBrain Extends MobBrainBase
 		Super.ApplySeekAndDestroy()
 		If (objective = OBJ_SEEK_AND_DESTROY And actor.IsOnTrain())
 			Local targetOffset:Float = target.x - actor.x
-			If (Abs(targetOffset) < STOP_DISTANCE)
+			If (Abs(targetOffset) < NEAR_DISTANCE)
+				ApplyNearBehavior(targetOffset)
 			Else If (targetOffset > 0.0)
 				actor.movingRight = True
 			Else
 				actor.movingLeft = True
-			EndIf If
+			EndIf
 			
 			If (ShouldJumpOnPlayer(targetOffset))
 				actor.jumping = True
@@ -37,5 +39,20 @@ Class MutantBrain Extends MobBrainBase
 		Local chancesIn1000:Float = (1000.0 - Abs(targetOffset)) * JUMP_FACTOR
 		Local result:Float = Rnd(0.0, 1000.0)
 		Return (result < chancesIn1000)
+	End Method
+	
+	Method ApplyNearBehavior:Void(targetOffset:Float)
+		' default
+		If (actor.y - target.y >= TARGET_OVERHEAD_DISTANCE)
+			' target is overhead, by default just wait until it comes in attack range again
+		Else
+			' jump to target
+			If (targetOffset > 0.0)
+				actor.movingRight = True
+			Else
+				actor.movingLeft = True
+			EndIf
+			actor.jumping = True
+		End If
 	End Method
 End Class
