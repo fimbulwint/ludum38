@@ -5,7 +5,7 @@ Import actors.behaviors.behavior
 Import actors.behaviors.mobbrainbase
 
 Class MutantBrain Extends MobBrainBase
-	Const JUMP_FACTOR:Float = 0.2
+	Const JUMP_FACTOR:Float = 0.025
 	Const STOP_DISTANCE:Float = 30.0
 
 	Field mutantType:String
