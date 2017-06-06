@@ -38,7 +38,7 @@ Class Mutant Extends Actor
 
 	Method New(type:String, world:World)
 		Self.world = world
-		hp = BASE_HP
+		attributes.hp = BASE_HP
 		behavior = New MutantBrain(type, Self, world.survivors)
 		z = 50.0
 		image = anim[0]
@@ -61,13 +61,13 @@ Class Mutant Extends Actor
 
 	Method Update:Void(worldState:WorldState)
 		Super.Update(worldState)
-		If (hp <= 0.0 And x < -boxWidth)
+		If (IsDead() And x < - boxWidth)
 			world.RemoveLifecycleAware(Self)
 		End If
 	End Method
 	
 	Method Move:Void(worldState:WorldState)		
-		If (hp > 0.0)
+		If (IsAlive())
 			If (jumping)
 				If (IsOnTrain())
 					If (movingLeft) Then directionX = -1.0 Else directionX = 1.0
@@ -109,7 +109,7 @@ Class Mutant Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-		If (hp > 0.0 And Not IsOnGround() And Not IsOnTrain())
+		If (IsAlive() And Not IsOnGround() And Not IsOnTrain())
 			DamageSurvivors()
 		End If
 		If (jumping)
@@ -119,7 +119,7 @@ Class Mutant Extends Actor
 	
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_MUTANT_IDLE
-		If (hp <= 0.0)
+		If (IsDead())
 			animStatus = Animator.ANIM_MUTANT_DIE
 		Else If (speedY <> 0.0 And Not IsOnGround() And Not IsOnTrain())
 			animStatus = Animator.ANIM_MUTANT_JUMP
@@ -142,7 +142,7 @@ Class Mutant Extends Actor
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
 		Local result:Bool = Super.TakeDamage(damage, fromX)
-		If (hp <= 0.0)
+		If (IsDead())
 			Dj.instance.Play(Dj.SFX_MUTANT_DIE)
 		EndIf
 		Return result

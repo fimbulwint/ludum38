@@ -25,7 +25,7 @@ Class Game Implements Scene
 	
 	Method GetSceneResult:String()
 		Local survivor:Survivor = Survivor(world.worldState.mainActors.First())
-		If (survivor.hp <= 0.0 And survivor.x < PLAYER_X_TO_TRANSIT_TO_GAME_OVER)
+		If (survivor.IsDead() And survivor.x < PLAYER_X_TO_TRANSIT_TO_GAME_OVER)
 			Return Scene.RESULT_END
 		EndIf
 		

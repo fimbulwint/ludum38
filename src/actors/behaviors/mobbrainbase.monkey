@@ -25,7 +25,7 @@ Class MobBrainBase Implements Behavior
 	End Method
 	
 	Method Update:Void()
-		If (actor.hp > 0.0)
+		If (actor.IsAlive())
 			actor.movingRight = False
 			actor.movingLeft = False
 			actor.jumping = False
@@ -61,7 +61,7 @@ Class MobBrainBase Implements Behavior
 	End Method
 	
 	Method ApplySeekAndDestroy:Void()
-		If (target = Null Or target.hp < 0.0)
+		If (target = Null Or target.IsDead())
 			SelectNewTarget()
 		End If
 		If (target = Null) ' no available targets, move to random point
@@ -124,7 +124,7 @@ Class MobBrainBase Implements Behavior
 		
 	Method SelectNewTarget:Void()
 		'TODO: adapt to multiple survivors?
-		If (survivors[0].hp > 0.0)
+		If (survivors[0].IsAlive())
 			target = survivors[0]
 		Else
 			target = Null

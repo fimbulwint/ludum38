@@ -8,6 +8,8 @@ Import graphics.assets
 Import graphics.screen
 Import system.time
 Import world.train
+Import actors.timers
+Import utils.timer
 
 Class Survivor Extends Actor
 
@@ -28,7 +30,7 @@ Class Survivor Extends Actor
 
 	Method New()
 		behavior = New Controllable(Self)
-		hp = BASE_HP
+		attributes.hp = BASE_HP
 		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
@@ -43,12 +45,12 @@ Class Survivor Extends Actor
 	
 	Method Move:Void(worldState:WorldState)		
 		If (IsOnGround())
-			If (hp > 0.0) Then Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
-			hp = 0.0 ' above all
+			If (IsAlive()) Then Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+			attributes.hp = 0.0 ' above all
 		EndIf
 
-		If (hp > 0.0)
-			If (Not hurt)
+		If (IsAlive())
+			If (IsControllable())
 				If (movingLeft)
 					speedX = -BASE_LATERAL_SPEED
 					directionX = -1.0
@@ -65,11 +67,10 @@ Class Survivor Extends Actor
 				EndIf
 			Else
 				If (IsOnTrain())
-					hurt = False
-					invulnerable = 500
+					attributes.state = State.RECOVERING
+					Timer.addTimer(New DefaultRecoveringTimeout(Self))
 				Else If (IsOnGround())
-					hp = 0.0
-					invulnerable = 0
+					attributes.hp = 0.0
 				End If
 			End If
 		Else
@@ -82,7 +83,7 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method ReactToResults:Void()
-		If (hp > 0.0 And Not hurt)
+		If (IsControllable())
 			If (punching And punchCooldown <= 0.0)
 				If ( Not holdingPunch) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
 				holdingPunch = True
@@ -115,9 +116,9 @@ Class Survivor Extends Actor
 		
 	Method Draw:Void(canvas:Canvas)
 		Local animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
-		If (hp <= 0.0)
+		If (IsDead())
 			animStatus = Animator.ANIM_SURVIVOR_DIE
-		Else If (hurt)
+		Else If (attributes.state = State.HURT)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
 		Else If (holdingPunch And punchTime > 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_PUNCH
@@ -126,8 +127,7 @@ Class Survivor Extends Actor
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		End If
-		Local blinking:Bool = (hurt Or invulnerable) And hp > 0.0
-		Local animResult:AnimResult = animator.Animate(animStatus, blinking)
+		Local animResult:AnimResult = animator.Animate(animStatus, IsBlinking())
 		If (animResult.graph = -1)
 			image = Null
 		Else 
@@ -139,7 +139,7 @@ Class Survivor Extends Actor
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
 		Local result:Bool = Super.TakeDamage(damage, fromX)
-		If (hp <= 0.0)
+		If (IsDead())
 			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
 		ElseIf(result)
 			Dj.instance.Play(Dj.SFX_SURVIVOR_OUCH)

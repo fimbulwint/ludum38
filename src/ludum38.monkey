@@ -26,9 +26,10 @@ Import world.mobspawner
 Import world.train
 Import world.world
 Import world.worldmap
-
+Import utils.timer
 
 Class Ludum38 Extends App
+
 	Field screen:Canvas
 	Field currentScene:Scene
 
@@ -74,6 +75,7 @@ Class Ludum38 Extends App
 		End Select
 		
 		currentScene.Update()
+		Timer.TickTimers()
 		
 		Return 0
 	End Method
@@ -84,6 +86,7 @@ Class Ludum38 Extends App
 		screen.Flush()
 		Return 0
 	End Method
+	
 End Class
 
 

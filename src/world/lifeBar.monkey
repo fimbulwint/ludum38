@@ -12,7 +12,7 @@ Class Lifebar Extends LifecycleAware
 		For Local actor:Actor = EachIn worldState.mainActors
 			Local survivor:Survivor = Survivor(actor)
 			If (survivor <> Null)
-				survivorHealth = survivor.hp / Survivor.BASE_HP
+				survivorHealth = survivor.attributes.hp / Survivor.BASE_HP
 			End If
 		End For
 	End Method

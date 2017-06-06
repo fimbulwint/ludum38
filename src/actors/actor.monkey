@@ -19,9 +19,7 @@ Class Actor Extends LifecycleAware
 	Field animator:Animator = New Animator()
 
 	' Attributes
-	Field hp:Float = 1.0
-	Field hurt:Bool = False ' used to notify hp has been externally modified
-	Field invulnerable:Int = 0
+	Field attributes:Attributes = New Attributes()
 	
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
@@ -69,12 +67,10 @@ Class Actor Extends LifecycleAware
 		
 		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
 		y += speedY * deltaInSecs
-		If (hp > 0.0 And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
+		If (IsAlive() And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0
 		End If
-		
-		If (invulnerable > 0) Then invulnerable -= Time.instance.realLastFrame
 		
 		collidingActors.Clear()
 		collisionBoxes.Clear()
@@ -139,11 +135,11 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
-		If (hp > 0.0 And Not hurt And invulnerable <= 0)
-			hp -= damage
-			If (hp < 0.0) Then hp = 0.0
+		If (Not IsInvulnerable())
+			attributes.hp -= damage
+			If (IsDead()) Then attributes.hp = 0.0
 			y -= 0.001 'HACK :D
-			hurt = True
+			attributes.state = State.HURT
 			speedX = HURT_LATERAL_SPEED
 			speedY = HURT_JUMP_SPEED
 			If (fromX - x > 0.0) ' from the right
@@ -172,5 +168,39 @@ Class Actor Extends LifecycleAware
 			EndIf
 		Next
 	End Method
+	
+	Method IsAlive:Bool()
+		Return attributes.hp > 0.0
+	End Method
+	
+	Method IsDead:Bool()
+		Return Not IsAlive()
+	End Method
+	
+	Method IsInvulnerable:Bool()
+		Return IsDead() Or attributes.state = State.HURT Or attributes.state = State.RECOVERING
+	End Method
+	
+	Method IsBlinking:Bool()
+		Return IsAlive() And (attributes.state = State.HURT Or attributes.state = State.RECOVERING)
+	End Method
+	
+	Method IsControllable:Bool()
+		Return IsAlive() And (attributes.state = State.DEFAULT_STATE Or attributes.state = State.RECOVERING)
+	End Method
 
+
+End Class
+
+Class Attributes
+
+	Field hp:Float = 1.0
+	Field state:Int = State.DEFAULT_STATE
+
+End Class
+
+Class State
+	Const DEFAULT_STATE:Int = 0
+	Const HURT:Int = 1
+	Const RECOVERING:Int = 2
 End Class
