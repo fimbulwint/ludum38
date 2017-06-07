@@ -33,6 +33,7 @@ Class Game Implements Scene
 	End Method
 	
 	Method Finish:Void()
+		Time.instance.timeDistortion = 1.0
 	End Method
 	
 End Class

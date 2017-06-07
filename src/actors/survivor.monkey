@@ -45,7 +45,10 @@ Class Survivor Extends Actor
 	
 	Method Move:Void(worldState:WorldState)		
 		If (IsOnGround())
-			If (IsAlive()) Then Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+			If (IsAlive()) 
+				Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+				Time.instance.timeDistortion = 0.2
+			EndIf
 			attributes.hp = 0.0 ' above all
 		EndIf
 
@@ -141,6 +144,7 @@ Class Survivor Extends Actor
 		Local result:Bool = Super.TakeDamage(damage, fromX)
 		If (IsDead())
 			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
+			Time.instance.timeDistortion = 0.2
 		ElseIf(result)
 			Dj.instance.Play(Dj.SFX_SURVIVOR_OUCH)
 		EndIf
