@@ -19,6 +19,8 @@ Class Survivor Extends Actor
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const JUMP_SPEED:Float = -300.0
 	
+	Const DEATH_TIME_DISTORTION:Float = 0.5
+	
 	Field anim:Image[] = Assets.instance.anims.Get(Assets.GFX_ANIM_SURVIVOR)
 	
 	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
@@ -47,7 +49,7 @@ Class Survivor Extends Actor
 		If (IsOnGround())
 			If (IsAlive()) 
 				Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
-				Time.instance.timeDistortion = 0.2
+				Time.instance.timeDistortion = DEATH_TIME_DISTORTION
 			EndIf
 			attributes.hp = 0.0 ' above all
 		EndIf
@@ -144,7 +146,7 @@ Class Survivor Extends Actor
 		Local result:Bool = Super.TakeDamage(damage, fromX)
 		If (IsDead())
 			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
-			Time.instance.timeDistortion = 0.2
+			Time.instance.timeDistortion = DEATH_TIME_DISTORTION
 		ElseIf(result)
 			Dj.instance.Play(Dj.SFX_SURVIVOR_OUCH)
 		EndIf
