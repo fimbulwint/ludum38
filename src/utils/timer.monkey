@@ -26,7 +26,7 @@ Class Timer
 	End
 	
 	Method Tick:Void()
-		timeout -= Time.instance.realLastFrame
+		timeout -= Time.instance.lastFrame
 		If (timeout <= 0)
 			callback.Call()
 			timers.RemoveEach(Self)
