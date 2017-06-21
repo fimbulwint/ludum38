@@ -4,13 +4,9 @@ Import mojo2
 
 Class Collisions
 
-	Function ThereIsCollision:Bool(box1:CollisionBox, box2:CollisionBox)
-		Return CheckOneSideCollision(box1, box2) Or CheckOneSideCollision(box2, box1)
-	End Function
-	
-Private
+	Global EMPTY_COLLISION_BOX:CollisionBox = New CollisionBox([0.0, 0.0],[0.0, 0.0])
 
-	Function CheckOneSideCollision:Bool(box1:CollisionBox, box2:CollisionBox)
+	Function ThereIsCollision:Bool(box1:CollisionBox, box2:CollisionBox)
 		If (box1.upperLeft[0] > box2.upperLeft[0] And box1.upperLeft[0] > box2.lowerRight[0]) Then Return False
 		If (box1.lowerRight[0] < box2.upperLeft[0] And box1.lowerRight[0] < box2.lowerRight[0]) Then Return False
 		If (box1.upperLeft[1] > box2.upperLeft[1] And box1.upperLeft[1] > box2.lowerRight[1]) Then Return False

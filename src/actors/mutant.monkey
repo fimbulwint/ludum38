@@ -42,6 +42,8 @@ Class Mutant Extends Actor
 		behavior = New MutantBrain(type, Self, world.survivors)
 		z = 50.0
 		image = anim[0]
+		boxWidth = 52
+		boxHeight = 45
 		
 		Local colorShift:Float = Rnd(-0.2, 0.2)
 		Select(type)
@@ -171,7 +173,7 @@ Private
 	Method DamageSurvivors:Void()
 		For Local actor:Actor = EachIn collidingActors
 			Local survivor:Survivor = Survivor(actor)
-			If (survivor <> Null And Not survivor.holdingPunch)
+			If (survivor <> Null And Not survivor.punching)
 				survivor.TakeDamage(MUTANT_DAMAGE, x)
 			End If
 		End For

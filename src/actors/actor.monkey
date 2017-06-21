@@ -39,7 +39,7 @@ Class Actor Extends LifecycleAware
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
-	Field punching:Bool
+	Field wantsToPunch:Bool
 	Field directionX:Float = 1.0
 	Field speedX:Float
 	Field speedY:Float
@@ -50,8 +50,6 @@ Class Actor Extends LifecycleAware
 	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
-		boxWidth = image.Width()
-		boxHeight = image.Height()
 		xShift = image.HandleX * boxWidth
 		yShift = image.HandleY * boxHeight
 	End Method
@@ -72,14 +70,17 @@ Class Actor Extends LifecycleAware
 			speedY = 0.0
 		End If
 		
+		CalculateCollisions(worldState)
+		ReactToResults()
+	End Method
+	
+	Method CalculateCollisions:Void(worldState:WorldState)
 		collidingActors.Clear()
 		collisionBoxes.Clear()
 		collisionBoxes.AddLast(GetMainCollisionBox())
 		CheckCollisionsWith(worldState.mainActors)
 		CheckCollisionsWith(worldState.dynamicActors)
-		
-		ReactToResults()
-	End Method
+	End
 	
 	Method Draw:Void(canvas:Canvas)
 		If (image <> Null)

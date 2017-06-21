@@ -10,6 +10,7 @@ Import system.time
 Import world.train
 Import actors.timers
 Import utils.timer
+Import actors.collisions
 
 Class Survivor Extends Actor
 
@@ -26,9 +27,10 @@ Class Survivor Extends Actor
 	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
 	
-	Field punchTime:Float
-	Field punchCooldown:Float
-	Field holdingPunch:Bool
+	Field punching:Bool
+	Field punchCoolingDown:Bool
+	Field punchBox:CollisionBox
+	Field actorsPunched:List<Actor> = New List<Actor>()
 
 	Method New()
 		behavior = New Controllable(Self)
@@ -36,13 +38,55 @@ Class Survivor Extends Actor
 		x = Screen.WIDTH / 2
 		z = 0.0
 		image = anim[0]
-		punchTime = 200.0
-		punchCooldown = 0.0
-		holdingPunch = False
+		punching = False
+		punchCoolingDown = False
+		punchBox = Collisions.EMPTY_COLLISION_BOX
+		boxWidth = 52
+		boxHeight = 64
 		
 		Super.PostConstruct()
 		
 		y = GetHeightOnTopOfTrain()
+	End Method
+	
+	Method CalculateCollisions:Void(worldState:WorldState)
+		Super.CalculateCollisions(worldState)
+
+		If (punching)
+			punchBox = GetPunchBox()
+			CheckPunchImpacts(worldState.mainActors)
+			CheckPunchImpacts(worldState.dynamicActors)
+		Else
+			punchBox = Collisions.EMPTY_COLLISION_BOX
+		End
+	End
+	
+	Method GetPunchBox:CollisionBox()
+		Local mainColBox:CollisionBox = GetMainCollisionBox()
+		Local boxX1:Float
+		Local boxX2:Float
+		
+		If (directionX < 0.0)
+			boxX1 = mainColBox.upperLeft[0] - 15
+			boxX2 = mainColBox.upperLeft[0] + 5
+		Else
+			boxX1 = mainColBox.lowerRight[0] - 5
+			boxX2 = mainColBox.lowerRight[0] + 15
+		End
+		Return New CollisionBox([boxX1, mainColBox.upperLeft[1] + 20],[boxX2, mainColBox.upperLeft[1] + 40])
+	End
+	
+	Method CheckPunchImpacts:Void(actors:List<Actor>)
+		For Local other:Actor = EachIn actors
+			If (other <> Self)
+				For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
+					If (Collisions.ThereIsCollision(punchBox, otherColBox))
+						actorsPunched.AddLast(other)
+						Exit
+					EndIf
+				Next
+			EndIf
+		Next
 	End Method
 	
 	Method Move:Void(worldState:WorldState)		
@@ -89,32 +133,16 @@ Class Survivor Extends Actor
 	
 	Method ReactToResults:Void()
 		If (IsControllable())
-			If (punching And punchCooldown <= 0.0)
-				If ( Not holdingPunch) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
-				holdingPunch = True
+			If (wantsToPunch And Not punchCoolingDown)
+				If (Not punching) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
+				punching = True
+				Timer.addTimer(New DefaultPunchTimeout(Self))
 			EndIf
 		
-			If (holdingPunch)
-				If (punchTime > 0.0)
-					For Local actor:Actor = EachIn collidingActors
-						Local enemyOnTheRight:Bool = (x - xShift) < actor.x - actor.xShift
-						Local enemyOnTheLeft:Bool = (x - xShift) > actor.x - actor.xShift
-						If ( (directionX > 0.0 And enemyOnTheRight) Or (directionX < 0.0 And enemyOnTheLeft))
-							actor.TakeDamage(SURVIVOR_DAMAGE, x)
-						EndIf
-					End For
-				EndIf
-			
-				punchTime -= Time.instance.lastFrame
-				If (punchTime <= 0)
-					punchCooldown = 200.0
-					holdingPunch = False
-				EndIf
-			Else
-				punchCooldown -= Time.instance.lastFrame
-				If (punchCooldown <= 0.0)
-					punchTime = 200.0
-				EndIf
+			If (punching)
+				For Local actor:Actor = EachIn actorsPunched
+					actor.TakeDamage(SURVIVOR_DAMAGE, x)
+				End For
 			EndIf
 		EndIf
 	End Method
@@ -125,7 +153,7 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_DIE
 		Else If (attributes.state = State.HURT)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
-		Else If (holdingPunch And punchTime > 0.0)
+		Else If (punching)
 			animStatus = Animator.ANIM_SURVIVOR_PUNCH
 		Else If (y <> GetHeightOnTopOfTrain())
 			animStatus = Animator.ANIM_SURVIVOR_JUMP
@@ -140,6 +168,13 @@ Class Survivor Extends Actor
 		End If
 		sizeX = directionX
 		Super.Draw(canvas)
+		
+		#If CONFIG="debug"
+			canvas.SetAlpha(0.15)
+			canvas.SetColor(1.0, 0.0, 0.0)
+			canvas.DrawRect(punchBox.upperLeft[0], punchBox.upperLeft[1], punchBox.lowerRight[0] - punchBox.upperLeft[0], punchBox.lowerRight[1] - punchBox.upperLeft[1])
+		#End
+		
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
