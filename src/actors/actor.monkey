@@ -46,7 +46,7 @@ Class Actor Extends LifecycleAware
 	Field gravityBound:Bool = True
 	Field boxWidth:Float
 	Field boxHeight:Float
-	Field collisionBoxes:List<CollisionBox> = New List<CollisionBox>()
+	Field hitBoxes:List<HitBox> = New List<HitBox>()
 	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
@@ -70,15 +70,15 @@ Class Actor Extends LifecycleAware
 			speedY = 0.0
 		End If
 		
+		hitBoxes.Clear()
+		hitBoxes.AddLast(GetMainHitBox())
 		CalculateCollisions(worldState)
 		ReactToResults()
 	End Method
 	
 	Method CalculateCollisions:Void(worldState:WorldState)
 		collidingActors.Clear()
-		collisionBoxes.Clear()
-		collisionBoxes.AddLast(GetMainCollisionBox())
-		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.mainSurvivor)
 		CheckCollisionsWith(worldState.dynamicActors)
 	End
 	
@@ -90,11 +90,11 @@ Class Actor Extends LifecycleAware
 			canvas.SetColor(r, g, b)
 			canvas.DrawImage(image, x, y, angle, sizeX, sizeY)
 			
-			Local colBox:CollisionBox = GetMainCollisionBox()
+			Local hitBox:HitBox = GetMainHitBox()
 			#If CONFIG="debug"
 			canvas.SetAlpha(0.15)
 			canvas.SetColor(1.0, 0.0, 0.0)
-			canvas.DrawRect(colBox.upperLeft[0], colBox.upperLeft[1], colBox.lowerRight[0] - colBox.upperLeft[0], colBox.lowerRight[1] - colBox.upperLeft[1])
+			canvas.DrawRect(hitBox.upperLeft[0], hitBox.upperLeft[1], hitBox.lowerRight[0] - hitBox.upperLeft[0], hitBox.lowerRight[1] - hitBox.upperLeft[1])
 			#End
 
 			canvas.PopMatrix()
@@ -152,23 +152,27 @@ Class Actor Extends LifecycleAware
 		Return False
 	End Method
 
-	Method GetMainCollisionBox:CollisionBox()
-		Return New CollisionBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
+	Method GetMainHitBox:HitBox()
+		Return New HitBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
 	End Method
 	
 	Method CheckCollisionsWith:Void(actors:List<Actor>)
 		For Local other:Actor = EachIn actors
 			If (other <> Self)
-				For Local colBox:CollisionBox = EachIn Self.collisionBoxes
-					For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
-						If (Collisions.ThereIsCollision(colBox, otherColBox))
-							collidingActors.AddLast(other)
-						EndIf
-					Next
-				Next
+				CheckCollisionsWith(other)
 			EndIf
 		Next
-	End Method
+	End
+	
+	Method CheckCollisionsWith:Void(actor:Actor)
+		For Local hitBox:HitBox = EachIn Self.hitBoxes
+			For Local otherHitBox:HitBox = EachIn actor.hitBoxes
+				If (Collisions.ThereIsCollision(hitBox, otherHitBox))
+					collidingActors.AddLast(actor)
+				EndIf
+			Next
+		Next
+	End
 	
 	Method IsAlive:Bool()
 		Return attributes.hp > 0.0

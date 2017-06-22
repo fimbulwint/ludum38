@@ -29,7 +29,7 @@ Class Survivor Extends Actor
 	
 	Field punching:Bool
 	Field punchCoolingDown:Bool
-	Field punchBox:CollisionBox
+	Field punchBox:HitBox
 	Field actorsPunched:List<Actor> = New List<Actor>()
 
 	Method New()
@@ -40,7 +40,7 @@ Class Survivor Extends Actor
 		image = anim[0]
 		punching = False
 		punchCoolingDown = False
-		punchBox = Collisions.EMPTY_COLLISION_BOX
+		punchBox = Collisions.EMPTY_HIT_BOX
 		boxWidth = 52
 		boxHeight = 64
 		
@@ -54,40 +54,43 @@ Class Survivor Extends Actor
 
 		If (punching)
 			punchBox = GetPunchBox()
-			CheckPunchImpacts(worldState.mainActors)
 			CheckPunchImpacts(worldState.dynamicActors)
 		Else
-			punchBox = Collisions.EMPTY_COLLISION_BOX
+			punchBox = Collisions.EMPTY_HIT_BOX
 		End
 	End
 	
-	Method GetPunchBox:CollisionBox()
-		Local mainColBox:CollisionBox = GetMainCollisionBox()
+	Method GetPunchBox:HitBox()
+		Local mainHitBox:HitBox = GetMainHitBox()
 		Local boxX1:Float
 		Local boxX2:Float
 		
 		If (directionX < 0.0)
-			boxX1 = mainColBox.upperLeft[0] - 15
-			boxX2 = mainColBox.upperLeft[0] + 5
+			boxX1 = mainHitBox.upperLeft[0] - 15
+			boxX2 = mainHitBox.upperLeft[0] + 5
 		Else
-			boxX1 = mainColBox.lowerRight[0] - 5
-			boxX2 = mainColBox.lowerRight[0] + 15
+			boxX1 = mainHitBox.lowerRight[0] - 5
+			boxX2 = mainHitBox.lowerRight[0] + 15
 		End
-		Return New CollisionBox([boxX1, mainColBox.upperLeft[1] + 20],[boxX2, mainColBox.upperLeft[1] + 40])
+		Return New HitBox([boxX1, mainHitBox.upperLeft[1] + 20],[boxX2, mainHitBox.upperLeft[1] + 40])
 	End
 	
 	Method CheckPunchImpacts:Void(actors:List<Actor>)
 		For Local other:Actor = EachIn actors
 			If (other <> Self)
-				For Local otherColBox:CollisionBox = EachIn other.collisionBoxes
-					If (Collisions.ThereIsCollision(punchBox, otherColBox))
-						actorsPunched.AddLast(other)
-						Exit
-					EndIf
-				Next
+				CheckPunchImpacts(other)
 			EndIf
 		Next
-	End Method
+	End
+	
+	Method CheckPunchImpacts:Void(actor:Actor)
+		For Local otherHitBox:HitBox = EachIn actor.hitBoxes
+			If (Collisions.ThereIsCollision(punchBox, otherHitBox))
+				actorsPunched.AddLast(actor)
+				Exit
+			EndIf
+		Next
+	End
 	
 	Method Move:Void(worldState:WorldState)		
 		If (IsOnGround())

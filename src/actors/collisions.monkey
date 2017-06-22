@@ -4,9 +4,9 @@ Import mojo2
 
 Class Collisions
 
-	Global EMPTY_COLLISION_BOX:CollisionBox = New CollisionBox([0.0, 0.0],[0.0, 0.0])
+	Global EMPTY_HIT_BOX:HitBox = New HitBox([0.0, 0.0],[0.0, 0.0])
 
-	Function ThereIsCollision:Bool(box1:CollisionBox, box2:CollisionBox)
+	Function ThereIsCollision:Bool(box1:HitBox, box2:HitBox)
 		If (box1.upperLeft[0] > box2.upperLeft[0] And box1.upperLeft[0] > box2.lowerRight[0]) Then Return False
 		If (box1.lowerRight[0] < box2.upperLeft[0] And box1.lowerRight[0] < box2.lowerRight[0]) Then Return False
 		If (box1.upperLeft[1] > box2.upperLeft[1] And box1.upperLeft[1] > box2.lowerRight[1]) Then Return False
@@ -16,7 +16,7 @@ Class Collisions
 
 End Class
 
-Class CollisionBox
+Class HitBox
 	Field upperLeft:Float[]
 	Field lowerRight:Float[]
 	
