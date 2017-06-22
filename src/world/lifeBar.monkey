@@ -9,12 +9,7 @@ Class Lifebar Extends LifecycleAware
  	Field survivorHealth:Float = 1.0
 
 	Method Update:Void(worldState:WorldState)
-		For Local actor:Actor = EachIn worldState.mainActors
-			Local survivor:Survivor = Survivor(actor)
-			If (survivor <> Null)
-				survivorHealth = survivor.attributes.hp / Survivor.BASE_HP
-			End If
-		End For
+		survivorHealth = worldState.mainSurvivor.attributes.hp / Survivor.BASE_HP
 	End Method
 
 	Method Draw:Void(canvas:Canvas)

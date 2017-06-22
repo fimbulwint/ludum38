@@ -39,7 +39,7 @@ Class Mutant Extends Actor
 	Method New(type:String, world:World)
 		Self.world = world
 		attributes.hp = BASE_HP
-		behavior = New MutantBrain(type, Self, world.survivors)
+		behavior = New MutantBrain(type, Self,[world.worldState.mainSurvivor])
 		z = 50.0
 		image = anim[0]
 		boxWidth = 52
@@ -67,6 +67,11 @@ Class Mutant Extends Actor
 			world.RemoveLifecycleAware(Self)
 		End If
 	End Method
+	
+	Method CalculateCollisions:Void(worldState:WorldState)
+		collidingActors.Clear()
+		CheckCollisionsWith(worldState.mainSurvivor)
+	End
 	
 	Method Move:Void(worldState:WorldState)		
 		If (IsAlive())

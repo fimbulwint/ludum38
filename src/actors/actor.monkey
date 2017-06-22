@@ -70,15 +70,15 @@ Class Actor Extends LifecycleAware
 			speedY = 0.0
 		End If
 		
+		hitBoxes.Clear()
+		hitBoxes.AddLast(GetMainHitBox())
 		CalculateCollisions(worldState)
 		ReactToResults()
 	End Method
 	
 	Method CalculateCollisions:Void(worldState:WorldState)
 		collidingActors.Clear()
-		hitBoxes.Clear()
-		hitBoxes.AddLast(GetMainHitBox())
-		CheckCollisionsWith(worldState.mainActors)
+		CheckCollisionsWith(worldState.mainSurvivor)
 		CheckCollisionsWith(worldState.dynamicActors)
 	End
 	
@@ -159,16 +159,20 @@ Class Actor Extends LifecycleAware
 	Method CheckCollisionsWith:Void(actors:List<Actor>)
 		For Local other:Actor = EachIn actors
 			If (other <> Self)
-				For Local hitBox:HitBox = EachIn Self.hitBoxes
-					For Local otherHitBox:HitBox = EachIn other.hitBoxes
-						If (Collisions.ThereIsCollision(hitBox, otherHitBox))
-							collidingActors.AddLast(other)
-						EndIf
-					Next
-				Next
+				CheckCollisionsWith(other)
 			EndIf
 		Next
-	End Method
+	End
+	
+	Method CheckCollisionsWith:Void(actor:Actor)
+		For Local hitBox:HitBox = EachIn Self.hitBoxes
+			For Local otherHitBox:HitBox = EachIn actor.hitBoxes
+				If (Collisions.ThereIsCollision(hitBox, otherHitBox))
+					collidingActors.AddLast(actor)
+				EndIf
+			Next
+		Next
+	End
 	
 	Method IsAlive:Bool()
 		Return attributes.hp > 0.0

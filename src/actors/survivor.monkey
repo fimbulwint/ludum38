@@ -54,7 +54,6 @@ Class Survivor Extends Actor
 
 		If (punching)
 			punchBox = GetPunchBox()
-			CheckPunchImpacts(worldState.mainActors)
 			CheckPunchImpacts(worldState.dynamicActors)
 		Else
 			punchBox = Collisions.EMPTY_HIT_BOX
@@ -79,15 +78,19 @@ Class Survivor Extends Actor
 	Method CheckPunchImpacts:Void(actors:List<Actor>)
 		For Local other:Actor = EachIn actors
 			If (other <> Self)
-				For Local otherHitBox:HitBox = EachIn other.hitBoxes
-					If (Collisions.ThereIsCollision(punchBox, otherHitBox))
-						actorsPunched.AddLast(other)
-						Exit
-					EndIf
-				Next
+				CheckPunchImpacts(other)
 			EndIf
 		Next
-	End Method
+	End
+	
+	Method CheckPunchImpacts:Void(actor:Actor)
+		For Local otherHitBox:HitBox = EachIn actor.hitBoxes
+			If (Collisions.ThereIsCollision(punchBox, otherHitBox))
+				actorsPunched.AddLast(actor)
+				Exit
+			EndIf
+		Next
+	End
 	
 	Method Move:Void(worldState:WorldState)		
 		If (IsOnGround())

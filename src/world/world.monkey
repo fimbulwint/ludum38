@@ -22,8 +22,6 @@ Class World
 	Field mobSpawner:MobSpawner
 	Field worldMap:WorldMap
 	
-	Field survivors:Survivor[]
-	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
 	Field lifecycleAwaresToRemove:LifecycleAwares = New LifecycleAwares()
 	Field dynamicActorsToRemove:List<Actor> = New List<Actor>()
@@ -32,23 +30,21 @@ Class World
 		worldState = New WorldState()
 		worldMap = New WorldMap(Self)
 		mobSpawner = New MobSpawner(Self)
+
 		InitActors()
 		InitDrawables()
 	End Method
 	
 	Method InitActors:Void()
 		Local train:Train = New Train()
-		survivors =[New Survivor()]
+		Local mainSurvivor:Survivor = New Survivor()
 		
-		For Local survivor:Survivor = EachIn survivors
-			lifecycleAwares.AddLast(survivor)
-		End For
 		lifecycleAwares.AddLast(train)
-		
-		worldState.mainActors = New List<Actor>()
+		lifecycleAwares.AddLast(mainSurvivor)
+
+		worldState.train = train
+		worldState.mainSurvivor = mainSurvivor
 		worldState.dynamicActors = New List<Actor>()
-		worldState.mainActors.AddLast(survivors[0])
-		worldState.mainActors.AddLast(train)
 	End Method
 	
 	Method InitDrawables:Void()
@@ -122,6 +118,7 @@ Class LifecycleAwares Extends List<LifecycleAware>
 End Class
 
 Class WorldState
-	Field mainActors:List<Actor>
+	Field train:Train
+	Field mainSurvivor:Survivor
 	Field dynamicActors:List<Actor>
 End
