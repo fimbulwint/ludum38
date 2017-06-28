@@ -15,7 +15,7 @@ Class Ground Extends LifecycleAware
 		z = 300.0
 	End Method
 	
-	Method Update:Void(worldState:WorldState)
+	Method Update:Void(world:World)
 		'empty for now
 	End Method
 

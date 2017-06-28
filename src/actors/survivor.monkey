@@ -49,12 +49,12 @@ Class Survivor Extends Actor
 		y = GetHeightOnTopOfTrain()
 	End Method
 	
-	Method CalculateCollisions:Void(worldState:WorldState)
-		Super.CalculateCollisions(worldState)
+	Method CalculateCollisions:Void(world:World)
+		Super.CalculateCollisions(world)
 
 		If (punching)
 			punchBox = GetPunchBox()
-			CheckPunchImpacts(worldState.dynamicActors)
+			CheckPunchImpacts(world.dynamicActors)
 		Else
 			punchBox = Collisions.EMPTY_HIT_BOX
 		End
@@ -92,7 +92,7 @@ Class Survivor Extends Actor
 		Next
 	End
 	
-	Method Move:Void(worldState:WorldState)		
+	Method Move:Void(world:World)		
 		If (IsOnGround())
 			If (IsAlive()) 
 				Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)

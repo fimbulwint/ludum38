@@ -24,7 +24,7 @@ Class Game Implements Scene
 	End Method
 	
 	Method GetSceneResult:String()
-		Local survivor:Survivor = world.worldState.mainSurvivor
+		Local survivor:Survivor = world.mainSurvivor
 		If (survivor.IsDead() And survivor.x < PLAYER_X_TO_TRANSIT_TO_GAME_OVER)
 			Return Scene.RESULT_END
 		EndIf

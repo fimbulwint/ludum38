@@ -35,11 +35,13 @@ Class Actor Extends LifecycleAware
 	Field xShift:Float = 0.0
 	Field yShift:Float = 0.0
 	
-	' Movement
+	' Controlls
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
 	Field wantsToPunch:Bool
+	
+	' Movement	
 	Field directionX:Float = 1.0
 	Field speedX:Float
 	Field speedY:Float
@@ -54,10 +56,10 @@ Class Actor Extends LifecycleAware
 		yShift = image.HandleY * boxHeight
 	End Method
 	
-	Method Update:Void(worldState:WorldState)
+	Method Update:Void(world:World)
 		behavior.Update()
 		
-		Move(worldState)
+		Move(world)
 		Gravity.applyTo(Self)
 		
 		Local deltaInSecs:Float = Time.instance.getDeltaInSecs()
@@ -72,14 +74,14 @@ Class Actor Extends LifecycleAware
 		
 		hitBoxes.Clear()
 		hitBoxes.AddLast(GetMainHitBox())
-		CalculateCollisions(worldState)
+		CalculateCollisions(world)
 		ReactToResults()
 	End Method
 	
-	Method CalculateCollisions:Void(worldState:WorldState)
+	Method CalculateCollisions:Void(world:World)
 		collidingActors.Clear()
-		CheckCollisionsWith(worldState.mainSurvivor)
-		CheckCollisionsWith(worldState.dynamicActors)
+		CheckCollisionsWith(world.mainSurvivor)
+		CheckCollisionsWith(world.dynamicActors)
 	End
 	
 	Method Draw:Void(canvas:Canvas)
@@ -101,7 +103,7 @@ Class Actor Extends LifecycleAware
 		End If
 	End Method
 	
-	Method Move:Void(worldState:WorldState)
+	Method Move:Void(world:World)
 	End Method
 	
 	Method ReactToResults:Void()
