@@ -16,7 +16,8 @@ Class Assets
 	Const GFX_BD_DESERT_0201:String = "monkey://data/bd_desert_0201.png"
 	Const GFX_BD_DESERT_0202:String = "monkey://data/bd_desert_0202.png"
 
-	Const ANIMS_FRAMES:Int = 16
+	Const ANIMS_FRAMES_SURVIVOR:Int = 32
+	Const ANIMS_FRAMES_MUTANT:Int = 16
 	Const GFX_ANIM_SURVIVOR:String = "monkey://data/survivor.png"
 	Const GFX_ANIM_MUTANT:String = "monkey://data/mutants.png"
 
@@ -40,8 +41,8 @@ Class Assets
 		graphics.Add(GFX_BD_DESERT_0201, Image.Load(GFX_BD_DESERT_0201, 0.0, 1.0))
 		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 1.0))
 	
-		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES, False, .5, 1.0))
-		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES, False, .5, 1.0))
+		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES_SURVIVOR, False, .5, 1.0))
+		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES_MUTANT, False, .5, 1.0))
 		
 		fonts.Add(FNT_BOYCOTT, Font.Load(FNT_BOYCOTT, 48, 10, False))
 		
