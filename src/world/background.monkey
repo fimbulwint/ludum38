@@ -13,7 +13,7 @@ Class Background Extends LifecycleAware
 		img = Assets.instance.graphics.Get(Assets.GFX_BACKGROUND)
 	End Method
 	
-	Method Update:Void(worldState:WorldState)
+	Method Update:Void(world:World)
 		'empty for now
 	End Method
 

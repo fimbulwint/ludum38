@@ -18,7 +18,10 @@ Import drawable
 Class World
 
 	Field lifecycleAwares:LifecycleAwares = New LifecycleAwares()
-	Field worldState:WorldState
+	Field train:Train
+	Field mainSurvivor:Survivor
+	Field dynamicActors:List<Actor>
+
 	Field mobSpawner:MobSpawner
 	Field worldMap:WorldMap
 	
@@ -27,7 +30,6 @@ Class World
 	Field dynamicActorsToRemove:List<Actor> = New List<Actor>()
 	
 	Method New()
-		worldState = New WorldState()
 		worldMap = New WorldMap(Self)
 		mobSpawner = New MobSpawner(Self)
 
@@ -36,15 +38,12 @@ Class World
 	End Method
 	
 	Method InitActors:Void()
-		Local train:Train = New Train()
-		Local mainSurvivor:Survivor = New Survivor()
+		train = New Train()
+		mainSurvivor = New Survivor()
+		dynamicActors = New List<Actor>()
 		
 		lifecycleAwares.AddLast(train)
 		lifecycleAwares.AddLast(mainSurvivor)
-
-		worldState.train = train
-		worldState.mainSurvivor = mainSurvivor
-		worldState.dynamicActors = New List<Actor>()
 	End Method
 	
 	Method InitDrawables:Void()
@@ -60,7 +59,7 @@ Class World
 	End Method
 	
 	Method AddDynamicActor:Void(actor:Actor)
-		worldState.dynamicActors.AddLast(actor) ' will be considered next Update
+		dynamicActors.AddLast(actor) ' will be considered next Update
 	End Method
 
 	Method RemoveLifecycleAware:Void(aware:LifecycleAware)
@@ -86,13 +85,13 @@ Class World
 		End If
 		If (dynamicActorsToRemove.Count() > 0)
 			For Local dynamicActor:Actor = EachIn dynamicActorsToRemove
-				worldState.dynamicActors.Remove(dynamicActor)
+				dynamicActors.Remove(dynamicActor)
 			End For
 			dynamicActorsToRemove.Clear()
 		End If
 		
 		For Local aware:LifecycleAware = EachIn lifecycleAwares
-			aware.Update(worldState)
+			aware.Update(Self)
 		Next
 		
 		mobSpawner.Update(worldMap.level, worldMap.GetCurrentZone().type.id)
@@ -116,9 +115,3 @@ Class LifecycleAwares Extends List<LifecycleAware>
 	End Method
 	
 End Class
-
-Class WorldState
-	Field train:Train
-	Field mainSurvivor:Survivor
-	Field dynamicActors:List<Actor>
-End

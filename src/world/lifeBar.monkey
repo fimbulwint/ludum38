@@ -8,8 +8,8 @@ Class Lifebar Extends LifecycleAware
 
  	Field survivorHealth:Float = 1.0
 
-	Method Update:Void(worldState:WorldState)
-		survivorHealth = worldState.mainSurvivor.attributes.hp / Survivor.BASE_HP
+	Method Update:Void(world:World)
+		survivorHealth = world.mainSurvivor.attributes.hp / Survivor.BASE_HP
 	End Method
 
 	Method Draw:Void(canvas:Canvas)

@@ -23,7 +23,7 @@ Class LevelMarker Extends LifecycleAware
 		Self.worldMap = worldMap
 	End Method
 	
-	Method Update:Void(worldState:WorldState)
+	Method Update:Void(world:World)
 		Local delta:Float = Time.instance.lastFrame 
 		levelString = String(worldMap.level)
 		'levelString = "3578"

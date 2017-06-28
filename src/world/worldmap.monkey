@@ -63,7 +63,7 @@ Class WorldMap Extends LifecycleAware
 					[1, 2, -1])]
 	End Method
 
-	Method Update:Void(worldState:WorldState)
+	Method Update:Void(world:World)
 		Local delta:Float = Time.instance.lastFrame
 		x-= (delta * vx) / 1000.0
 		If (x <= -Screen.WIDTH)
