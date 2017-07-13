@@ -76,8 +76,9 @@ Class Survivor Extends Actor
 	End
 	
 	Method CheckPunchImpacts:Void(actors:List<Actor>)
+		actorsPunched.Clear()
 		For Local other:Actor = EachIn actors
-			If (other <> Self)
+			If (other <> Self And Not other.IsDead())
 				CheckPunchImpacts(other)
 			EndIf
 		Next
