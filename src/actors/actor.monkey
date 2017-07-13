@@ -39,6 +39,7 @@ Class Actor Extends LifecycleAware
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
+	Field crouching:Bool
 	Field wantsToPunch:Bool
 	
 	' Movement	
