@@ -15,7 +15,8 @@ Import actors.collisions
 Class Survivor Extends Actor
 
 	Const BASE_HP:Float = 10.0
-	Const SURVIVOR_DAMAGE:Float = 1.0
+	Const PUNCH_DAMAGE:Float = 1.0
+	Const KICK_DAMAGE:Float = 1.0
 	
 	Const BASE_LATERAL_SPEED:Float = 300.0
 	Const JUMP_SPEED:Float = -300.0
@@ -27,10 +28,11 @@ Class Survivor Extends Actor
 	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
 	
-	Field punching:Bool
-	Field punchCoolingDown:Bool
 	Field punchBox:HitBox
+	Field kickBox:HitBox
+	Field attackCoolingDown:Bool
 	Field actorsPunched:List<Actor> = New List<Actor>()
+	Field actorsKicked:List<Actor> = New List<Actor>()
 
 	Method New()
 		behavior = New Controllable(Self)
@@ -39,8 +41,10 @@ Class Survivor Extends Actor
 		z = 0.0
 		image = anim[0]
 		punching = False
-		punchCoolingDown = False
+		kicking = False
 		punchBox = Collisions.EMPTY_HIT_BOX
+		kickBox = Collisions.EMPTY_HIT_BOX
+		attackCoolingDown = False
 		boxWidth = 52
 		boxHeight = 64
 		
@@ -54,43 +58,76 @@ Class Survivor Extends Actor
 
 		If (punching)
 			punchBox = GetPunchBox()
-			CheckPunchImpacts(world.dynamicActors)
 		Else
 			punchBox = Collisions.EMPTY_HIT_BOX
 		End
+		
+		If (kicking)
+			kickBox = GetKickBox()
+		Else
+			kickBox = Collisions.EMPTY_HIT_BOX
+		End
+		
+		CheckImpacts(world.dynamicActors)
 	End
 	
 	Method GetPunchBox:HitBox()
+		If (crouching)
+			Return GetPunchBox(5, 20, 0, 20)
+		Else
+			Return GetPunchBox(5, 20, 20, 20)
+		End
+	End
+	
+	Method GetPunchBox:HitBox(xShift:Float, xWidth:Float, yShift:Float, yWidth:Float)
 		Local mainHitBox:HitBox = GetMainHitBox()
 		Local boxX1:Float
 		Local boxX2:Float
 		
 		If (directionX < 0.0)
-			boxX1 = mainHitBox.upperLeft[0] - 15
-			boxX2 = mainHitBox.upperLeft[0] + 5
+			boxX1 = mainHitBox.upperLeft[0] - xWidth + xShift
+			boxX2 = mainHitBox.upperLeft[0] + xShift
 		Else
-			boxX1 = mainHitBox.lowerRight[0] - 5
-			boxX2 = mainHitBox.lowerRight[0] + 15
+			boxX1 = mainHitBox.lowerRight[0] - xShift
+			boxX2 = mainHitBox.lowerRight[0] + xWidth - xShift
 		End
-		Return New HitBox([boxX1, mainHitBox.upperLeft[1] + 20],[boxX2, mainHitBox.upperLeft[1] + 40])
+		Return New HitBox([boxX1, mainHitBox.upperLeft[1] + yShift],[boxX2, mainHitBox.upperLeft[1] + yShift + yWidth])
 	End
 	
-	Method CheckPunchImpacts:Void(actors:List<Actor>)
+	Method GetKickBox:HitBox()
+		Local mainHitBox:HitBox = GetMainHitBox()
+		Local mainMiddlePoint:Float = (mainHitBox.upperLeft[0] + mainHitBox.lowerRight[0]) / 2
+		
+		Return New HitBox([mainMiddlePoint - 10, mainHitBox.lowerRight[1]],[mainMiddlePoint + 10, mainHitBox.lowerRight[1] + 30])
+	End
+	
+	Method CheckImpacts:Void(actors:List<Actor>)
 		actorsPunched.Clear()
+		actorsKicked.Clear()
 		For Local other:Actor = EachIn actors
 			If (other <> Self And Not other.IsDead())
-				CheckPunchImpacts(other)
+				CheckImpacts(other)
 			EndIf
 		Next
 	End
 	
-	Method CheckPunchImpacts:Void(actor:Actor)
+	Method CheckImpacts:Void(actor:Actor)
+		If (CheckImpacts(actor, punchBox))
+			actorsPunched.AddLast(actor)
+		End
+		
+		If (CheckImpacts(actor, kickBox))
+			actorsKicked.AddLast(actor)
+		End
+	End
+	
+	Method CheckImpacts:Bool(actor:Actor, attackHitBox:HitBox)
 		For Local otherHitBox:HitBox = EachIn actor.hitBoxes
-			If (Collisions.ThereIsCollision(punchBox, otherHitBox))
-				actorsPunched.AddLast(actor)
-				Exit
+			If (Collisions.ThereIsCollision(attackHitBox, otherHitBox))
+				Return True
 			EndIf
 		Next
+		Return False
 	End
 	
 	Method Move:Void(world:World)		
@@ -137,17 +174,24 @@ Class Survivor Extends Actor
 	
 	Method ReactToResults:Void()
 		If (IsControllable())
-			If (wantsToPunch And Not punchCoolingDown)
-				If (Not punching) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
-				punching = True
-				Timer.addTimer(New DefaultPunchTimeout(Self))
+			If (Not attackCoolingDown)
+				If (wantsToPunch)
+					If (Not punching) Then Dj.instance.Play(Dj.SFX_SURVIVOR_PUNCH)
+					punching = True
+					Timer.addTimer(New DefaultPunchTimeout(Self))
+				ElseIf(wantsToKick And IsOnTrain() And crouching)
+					If (Not kicking) Then Dj.instance.Play(Dj.SFX_SURVIVOR_KICK)
+					kicking = True
+					Timer.addTimer(New DefaultKickTimeout(Self))
+				EndIf
 			EndIf
 		
-			If (punching)
-				For Local actor:Actor = EachIn actorsPunched
-					actor.TakeDamage(SURVIVOR_DAMAGE, x)
-				End For
-			EndIf
+			For Local actor:Actor = EachIn actorsPunched
+				actor.TakeDamage(PUNCH_DAMAGE, x)
+			End For
+			For Local actor:Actor = EachIn actorsKicked
+				actor.TakeDamage(KICK_DAMAGE, x)
+			End For
 		EndIf
 	End Method
 		
@@ -177,6 +221,7 @@ Class Survivor Extends Actor
 			canvas.SetAlpha(0.15)
 			canvas.SetColor(1.0, 0.0, 0.0)
 			canvas.DrawRect(punchBox.upperLeft[0], punchBox.upperLeft[1], punchBox.lowerRight[0] - punchBox.upperLeft[0], punchBox.lowerRight[1] - punchBox.upperLeft[1])
+			canvas.DrawRect(kickBox.upperLeft[0], kickBox.upperLeft[1], kickBox.lowerRight[0] - kickBox.upperLeft[0], kickBox.lowerRight[1] - kickBox.upperLeft[1])
 		#End
 		
 	End Method

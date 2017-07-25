@@ -20,7 +20,7 @@ Class DefaultRecoveringTimeout Extends Timer Implements Callback
 
 End
 
-Class DefaultPunchTimeout Extends Timer Implements Callback
+Class DefaultAttackTimeout Extends Timer Implements Callback
 
 	Field survivor:Survivor
 	
@@ -30,14 +30,39 @@ Class DefaultPunchTimeout Extends Timer Implements Callback
 	End
 	
 	Method Call:Void()
-		survivor.punching = False
-		survivor.punchCoolingDown = True
-		Timer.addTimer(New DefaultPunchCooldown(survivor))
+		survivor.attackCoolingDown = True
+		Timer.addTimer(New DefaultAttackCooldown(survivor))
 	End
 	
 End
 
-Class DefaultPunchCooldown Extends Timer Implements Callback
+Class DefaultPunchTimeout Extends DefaultAttackTimeout
+	
+	Method New(survivor:Survivor)
+		Super.New(survivor)
+	End
+	
+	Method Call:Void()
+		Super.Call()
+		survivor.punching = False
+	End
+	
+End
+
+Class DefaultKickTimeout Extends DefaultAttackTimeout
+	
+	Method New(survivor:Survivor)
+		Super.New(survivor)
+	End
+	
+	Method Call:Void()
+		Super.Call()
+		survivor.kicking = False
+	End
+	
+End
+
+Class DefaultAttackCooldown Extends Timer Implements Callback
 
 	Field survivor:Survivor
 	
@@ -47,7 +72,7 @@ Class DefaultPunchCooldown Extends Timer Implements Callback
 	End
 	
 	Method Call:Void()
-		survivor.punchCoolingDown = False
+		survivor.attackCoolingDown = False
 	End
 	
 End

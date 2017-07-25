@@ -17,6 +17,7 @@ Public
 	Const SFX_SURVIVOR_JUMP:String = "monkey://data/survivor_jump.mp3"
 	Const SFX_SURVIVOR_OUCH:String = "monkey://data/survivor_ouch.mp3"
 	Const SFX_SURVIVOR_PUNCH:String = "monkey://data/survivor_punch.mp3"
+	Const SFX_SURVIVOR_KICK:String = "monkey://data/survivor_punch.mp3" ' Needs to be replaced with the real kick sound
 	Const SFX_TRAIN:String = "monkey://data/train.mp3"
 	
 

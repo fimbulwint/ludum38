@@ -41,6 +41,9 @@ Class Actor Extends LifecycleAware
 	Field jumping:Bool
 	Field crouching:Bool
 	Field wantsToPunch:Bool
+	Field punching:Bool
+	Field wantsToKick:Bool
+	Field kicking:Bool
 	
 	' Movement	
 	Field directionX:Float = 1.0
@@ -156,7 +159,11 @@ Class Actor Extends LifecycleAware
 	End Method
 
 	Method GetMainHitBox:HitBox()
-		Return New HitBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
+		If (crouching And IsOnTrain())
+			Return New HitBox([x - xShift, y - yShift + (boxHeight / 2)],[x - xShift + boxWidth, y - yShift + boxHeight])
+		Else
+			Return New HitBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
+		EndIf
 	End Method
 	
 	Method CheckCollisionsWith:Void(actors:List<Actor>)
