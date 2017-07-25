@@ -1,12 +1,12 @@
 Strict
 
 Import actors.behaviors.behavior
-Import actors.gravity
 Import actors.collisions
 Import graphics.animator 
 Import graphics.screen
 Import lifecycleaware
 Import mojo2
+Import world.gravity
 Import world.world
 Import system.time
 
@@ -89,22 +89,22 @@ Class Actor Extends LifecycleAware
 	End
 	
 	Method Draw:Void(canvas:Canvas)
+		canvas.PushMatrix()
 		If (image <> Null)
-			canvas.PushMatrix()
 			canvas.SetBlendMode(blend)
 			canvas.SetAlpha(alpha)
 			canvas.SetColor(r, g, b)
 			canvas.DrawImage(image, x, y, angle, sizeX, sizeY)
-			
-			Local hitBox:HitBox = GetMainHitBox()
+		End If
+		Local hitBox:HitBox = GetMainHitBox()
+		If (hitBox <> Null)
 			#If CONFIG="debug"
 			canvas.SetAlpha(0.15)
 			canvas.SetColor(1.0, 0.0, 0.0)
 			canvas.DrawRect(hitBox.upperLeft[0], hitBox.upperLeft[1], hitBox.lowerRight[0] - hitBox.upperLeft[0], hitBox.lowerRight[1] - hitBox.upperLeft[1])
 			#End
-
-			canvas.PopMatrix()
 		End If
+		canvas.PopMatrix()
 	End Method
 	
 	Method Move:Void(world:World)

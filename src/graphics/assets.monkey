@@ -15,6 +15,8 @@ Class Assets
 	Const GFX_BD_MOUNTAINS_0105:String = "monkey://data/bd_mountains_0105.png"
 	Const GFX_BD_DESERT_0201:String = "monkey://data/bd_desert_0201.png"
 	Const GFX_BD_DESERT_0202:String = "monkey://data/bd_desert_0202.png"
+	Const GFX_MISC_HELMET:String = "monkey://data/helmet01.png"
+		
 
 	Const ANIMS_FRAMES_SURVIVOR:Int = 32
 	Const ANIMS_FRAMES_MUTANT:Int = 16
@@ -40,6 +42,7 @@ Class Assets
 		graphics.Add(GFX_BD_MOUNTAINS_0105, Image.Load(GFX_BD_MOUNTAINS_0105, 0.0, 1.0))
 		graphics.Add(GFX_BD_DESERT_0201, Image.Load(GFX_BD_DESERT_0201, 0.0, 1.0))
 		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 1.0))
+		graphics.Add(GFX_MISC_HELMET, Image.Load(GFX_MISC_HELMET, 0.5, 0.5))
 	
 		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES_SURVIVOR, False, .5, 1.0))
 		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES_MUTANT, False, .5, 1.0))

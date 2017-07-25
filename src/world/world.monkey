@@ -39,7 +39,7 @@ Class World
 	
 	Method InitActors:Void()
 		train = New Train()
-		mainSurvivor = New Survivor()
+		mainSurvivor = New Survivor(Self)
 		dynamicActors = New List<Actor>()
 		
 		lifecycleAwares.AddLast(train)

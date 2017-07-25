@@ -6,6 +6,7 @@ Import actors.actor
 Import graphics.animator
 Import graphics.assets
 Import graphics.screen
+Import sprites.helmet
 Import system.time
 Import world.train
 Import actors.timers
@@ -28,13 +29,17 @@ Class Survivor Extends Actor
 	Field animStatus:Int = Animator.ANIM_SURVIVOR_IDLE
 	Field lastAnimResult:AnimResult = New AnimResult(-1, False)
 	
+	Field world:World
+	
 	Field punchBox:HitBox
 	Field kickBox:HitBox
 	Field attackCoolingDown:Bool
 	Field actorsPunched:List<Actor> = New List<Actor>()
 	Field actorsKicked:List<Actor> = New List<Actor>()
 
-	Method New()
+
+	Method New(world:World)
+		Self.world = world
 		behavior = New Controllable(Self)
 		attributes.hp = BASE_HP
 		x = Screen.WIDTH / 2
@@ -133,10 +138,8 @@ Class Survivor Extends Actor
 	Method Move:Void(world:World)		
 		If (IsOnGround())
 			If (IsAlive()) 
-				Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
-				Time.instance.timeDistortion = DEATH_TIME_DISTORTION
+				TakeDamage(BASE_HP + 1, 50000.0)
 			EndIf
-			attributes.hp = 0.0 ' above all
 		EndIf
 
 		If (IsAlive())
@@ -231,10 +234,16 @@ Class Survivor Extends Actor
 		If (IsDead())
 			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
 			Time.instance.timeDistortion = DEATH_TIME_DISTORTION
+			world.AddLifecycleAware(New Helmet(x, y - 48.0, speedX))
 		ElseIf(result)
 			Dj.instance.Play(Dj.SFX_SURVIVOR_OUCH)
 		EndIf
 		Return result
 	End Method
 	
+Private 
+
+	Method New()
+	End Method
+
 End Class

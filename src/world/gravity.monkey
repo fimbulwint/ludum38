@@ -3,6 +3,7 @@ Strict
 Import mojo2
 Import actors.actor
 Import graphics.screen
+Import sprites.sprite
 Import system.time
 
 Class Gravity
@@ -18,6 +19,11 @@ Class Gravity
 				actor.speedY = 0.0
 			EndIf
 		End If
+	End Function
+	
+	Function applyTo:Void(sprite:Sprite)
+		' sprites handle their collisions
+		sprite.speedY += GRAVITY * Time.instance.getDeltaInSecs()
 	End Function
 
 End Class
