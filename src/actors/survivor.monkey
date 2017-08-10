@@ -230,8 +230,9 @@ Class Survivor Extends Actor
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
+		Local wasDead:Bool = IsDead()
 		Local result:Bool = Super.TakeDamage(damage, fromX)
-		If (IsDead())
+		If (IsDead() And Not wasDead)
 			Dj.instance.Play(Dj.SFX_SURVIVOR_DIE)
 			Time.instance.timeDistortion = DEATH_TIME_DISTORTION
 			world.AddLifecycleAware(New Helmet(x, y - 48.0, speedX))
