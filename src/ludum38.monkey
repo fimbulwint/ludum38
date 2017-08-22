@@ -3,6 +3,7 @@ Strict
 
 Import actors.behaviors.behavior
 Import actors.behaviors.controllable
+Import actors.behaviors.gravity
 Import actors.behaviors.mutantbrain
 Import actors.actor
 Import actors.mutant
@@ -17,11 +18,8 @@ Import scenes.game
 Import scenes.gameover
 Import scenes.menu
 Import scenes.scene
-Import sprites.helmet
-Import sprites.sprite
 Import system.time
 Import world.background
-Import world.gravity
 Import world.ground
 Import world.levelmarker
 Import world.mobspawner

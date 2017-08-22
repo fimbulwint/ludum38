@@ -135,7 +135,7 @@ Class Survivor Extends Actor
 		Return False
 	End
 	
-	Method Move:Void(world:World)		
+	Method Move:Void(world:World)
 		If (IsOnGround())
 			If (IsAlive()) 
 				TakeDamage(BASE_HP + 1, 50000.0)
