@@ -152,7 +152,6 @@ Class Actor Extends LifecycleAware
 			If (fromX - x > 0.0) ' from the right
 				speedX = -speedX
 			End If
-			directionX = -(speedX / speedX)
 			Return True
 		End If
 		Return False
