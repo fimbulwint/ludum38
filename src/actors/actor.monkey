@@ -56,8 +56,8 @@ Class Actor Extends LifecycleAware
 	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
-		xShift = image.HandleX * boxWidth
-		yShift = image.HandleY * boxHeight
+		xShift = boxWidth / 2.0
+		yShift = boxHeight / 2.0
 	End Method
 	
 	Method Update:Void(world:World)

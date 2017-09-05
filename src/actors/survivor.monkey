@@ -50,8 +50,8 @@ Class Survivor Extends Actor
 		punchBox = Collisions.EMPTY_HIT_BOX
 		kickBox = Collisions.EMPTY_HIT_BOX
 		attackCoolingDown = False
-		boxWidth = 52
-		boxHeight = 64
+		boxWidth = 50
+		boxHeight = 58
 		
 		Super.PostConstruct()
 		
@@ -225,6 +225,9 @@ Class Survivor Extends Actor
 			canvas.SetColor(1.0, 0.0, 0.0)
 			canvas.DrawRect(punchBox.upperLeft[0], punchBox.upperLeft[1], punchBox.lowerRight[0] - punchBox.upperLeft[0], punchBox.lowerRight[1] - punchBox.upperLeft[1])
 			canvas.DrawRect(kickBox.upperLeft[0], kickBox.upperLeft[1], kickBox.lowerRight[0] - kickBox.upperLeft[0], kickBox.lowerRight[1] - kickBox.upperLeft[1])
+			canvas.SetAlpha(0.5)
+			canvas.SetColor(1.0, 1.0, 1.0)
+			canvas.DrawPoint(x, y)
 		#End
 		
 	End Method
