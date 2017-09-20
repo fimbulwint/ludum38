@@ -16,13 +16,23 @@ Class Assets
 	Const GFX_BD_DESERT_0201:String = "monkey://data/bd_desert_0201.png"
 	Const GFX_BD_DESERT_0202:String = "monkey://data/bd_desert_0202.png"
 	Const GFX_MISC_HELMET:String = "monkey://data/helmet01.png"
-		
 
 	Const ANIMS_FRAMES_SURVIVOR:Int = 32
 	Const ANIMS_FRAMES_MUTANT:Int = 16
 	Const GFX_ANIM_SURVIVOR:String = "monkey://data/survivor.png"
 	Const GFX_ANIM_MUTANT:String = "monkey://data/mutants.png"
 
+	Const IMG_HANDLE_X_SURVIVOR:Float = 30.0
+	Const IMG_MAX_X_SURVIVOR:Float = 64.0
+	Const IMG_HANDLE_Y_SURVIVOR:Float = 38.0
+	Const IMG_MAX_Y_SURVIVOR:Float = 127.0
+	
+	Const IMG_HANDLE_X_MUTANT:Float = 28.0
+	Const IMG_MAX_X_MUTANT:Float = 63.0
+	Const IMG_HANDLE_Y_MUTANT:Float = 46.0
+	Const IMG_MAX_Y_MUTANT:Float = 63.0
+
+		
 	Const FNT_BOYCOTT:String = "monkey://data/fnt_boycott.png"
 	
 	Const GFX_GAME_OVER:String = "monkey://data/game_over_screen.png"
@@ -44,9 +54,11 @@ Class Assets
 		graphics.Add(GFX_BD_DESERT_0202, Image.Load(GFX_BD_DESERT_0202, 0.0, 1.0))
 		graphics.Add(GFX_MISC_HELMET, Image.Load(GFX_MISC_HELMET, 0.5, 0.5))
 	
-		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES_SURVIVOR, False, .5, .28))
-		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES_MUTANT, False, .5, .5))
-		
+		anims.Add(GFX_ANIM_SURVIVOR, Image.LoadFrames(GFX_ANIM_SURVIVOR, ANIMS_FRAMES_SURVIVOR, False, 
+			IMG_HANDLE_X_SURVIVOR / IMG_MAX_X_SURVIVOR, IMG_HANDLE_Y_SURVIVOR / IMG_MAX_Y_SURVIVOR))
+		anims.Add(GFX_ANIM_MUTANT, Image.LoadFrames(GFX_ANIM_MUTANT, ANIMS_FRAMES_MUTANT, False,
+			IMG_HANDLE_X_MUTANT / IMG_MAX_X_MUTANT, IMG_HANDLE_Y_MUTANT / IMG_MAX_Y_MUTANT))
+	
 		fonts.Add(FNT_BOYCOTT, Font.Load(FNT_BOYCOTT, 48, 10, False))
 		
 		graphics.Add(GFX_GAME_OVER, Image.Load(GFX_GAME_OVER, 0.0, 0.0))

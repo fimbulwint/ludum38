@@ -50,8 +50,10 @@ Class Survivor Extends Actor
 		punchBox = Collisions.EMPTY_HIT_BOX
 		kickBox = Collisions.EMPTY_HIT_BOX
 		attackCoolingDown = False
-		boxWidth = 50
-		boxHeight = 58
+		boxLeft = 20
+		boxRight = 20
+		boxUp = 33
+		boxDown = 24
 		
 		Super.PostConstruct()
 		
