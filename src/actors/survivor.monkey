@@ -80,9 +80,9 @@ Class Survivor Extends Actor
 	
 	Method GetPunchBox:HitBox()
 		If (crouching)
-			Return GetPunchBox(5, 20, 0, 20)
+			Return GetPunchBox(5, 20, -10, 20)
 		Else
-			Return GetPunchBox(5, 20, 20, 20)
+			Return GetPunchBox(5, 20, 10, 20)
 		End
 	End
 	
@@ -146,17 +146,18 @@ Class Survivor Extends Actor
 
 		If (IsAlive())
 			If (IsControllable())
-				If (movingLeft)
+				If (movingLeft) Then directionX = -1.0
+				If (movingRight) Then directionX = 1.0
+
+				If (movingLeft And (Not IsOnTrain() Or Not crouching))
 					speedX = -BASE_LATERAL_SPEED
-					directionX = -1.0
-				ElseIf(movingRight)
+				ElseIf(movingRight And (Not IsOnTrain() Or Not crouching))
 					speedX = BASE_LATERAL_SPEED
-					directionX = 1.0
 				Else
 					speedX = 0.0
 				EndIf
-				
-				If (jumping And IsOnTrain())
+
+				If (jumping And IsOnTrain() And Not crouching)
 					speedY = JUMP_SPEED
 					Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
 				EndIf
@@ -206,10 +207,20 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_DIE
 		Else If (attributes.state = State.HURT)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
+		Else If (y <> GetHeightOnTopOfTrain())
+			If (punching)
+				animStatus = Animator.ANIM_SURVIVOR_PUNCH
+			Else
+				animStatus = Animator.ANIM_SURVIVOR_JUMP
+			End If
+		Else If (crouching)
+			If (punching)
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH_PUNCH
+			Else
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH
+			End If
 		Else If (punching)
 			animStatus = Animator.ANIM_SURVIVOR_PUNCH
-		Else If (y <> GetHeightOnTopOfTrain())
-			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		End If
