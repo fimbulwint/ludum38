@@ -79,7 +79,7 @@ Class Survivor Extends Actor
 	End
 	
 	Method GetPunchBox:HitBox()
-		If (crouching)
+		If (crouching And IsOnTrain())
 			Return GetPunchBox(5, 20, -10, 20)
 		Else
 			Return GetPunchBox(5, 20, 10, 20)
