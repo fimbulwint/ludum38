@@ -36,7 +36,8 @@ Public
 	Const ANIM_SURVIVOR_CROUCH:Int = ANIM_SURVIVOR_PUNCH + 1
 	
 	Const ANIM_SURVIVOR_CROUCH_PUNCH:Int = ANIM_SURVIVOR_CROUCH + 1
-	Const ANIM_SURVIVOR_OUCH:Int = ANIM_SURVIVOR_CROUCH_PUNCH + 1
+	Const ANIM_SURVIVOR_CROUCH_KICK:Int = ANIM_SURVIVOR_CROUCH_PUNCH + 1
+	Const ANIM_SURVIVOR_OUCH:Int = ANIM_SURVIVOR_CROUCH_KICK + 1
 	Const ANIM_SURVIVOR_DIE:Int = ANIM_SURVIVOR_OUCH + 1
 	Const ANIM_MUTANT_IDLE:Int = ANIM_SURVIVOR_DIE + 1
 	Const ANIM_MUTANT_RUN:Int = ANIM_MUTANT_IDLE + 1
@@ -46,7 +47,7 @@ Public
 	Const ANIM_MUTANT_DIE:Int = ANIM_MUTANT_PUNCH + 1
 	Const ANIM_MUTANT_SPRINT:Int = ANIM_MUTANT_DIE + 1
 
-	Global anims:AnimStep[14][]
+	Global anims:AnimStep[15][]
 	
 	Function Initialize:Void()
 		anims[ANIM_SURVIVOR_IDLE] =				[ New AnimStep(0, 500)								]
@@ -55,6 +56,7 @@ Public
 		anims[ANIM_SURVIVOR_PUNCH] =			[ New AnimStep(11, 120)								]
 		anims[ANIM_SURVIVOR_CROUCH] =			[ New AnimStep(16, 100)								]
 		anims[ANIM_SURVIVOR_CROUCH_PUNCH] =		[ New AnimStep(18, 100)								]
+		anims[ANIM_SURVIVOR_CROUCH_KICK] =		[ New AnimStep(20, 120)								]
 		anims[ANIM_SURVIVOR_OUCH] =				[ New AnimStep(7, 100)								]
 		anims[ANIM_SURVIVOR_DIE] =				[ New AnimStep(14, 100)								]
 		anims[ANIM_MUTANT_IDLE] =				[ New AnimStep(0, 500)								]

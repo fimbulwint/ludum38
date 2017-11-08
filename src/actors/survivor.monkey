@@ -216,6 +216,8 @@ Class Survivor Extends Actor
 		Else If (crouching)
 			If (punching)
 				animStatus = Animator.ANIM_SURVIVOR_CROUCH_PUNCH
+			Else If (kicking)
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH_KICK
 			Else
 				animStatus = Animator.ANIM_SURVIVOR_CROUCH
 			End If
