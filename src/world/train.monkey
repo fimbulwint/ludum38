@@ -5,6 +5,7 @@ Import graphics.assets
 Import graphics.screen
 Import sound.dj
 Import world.ground
+Import world.railroad
 
 Class Train Extends Actor
 	Const TRAIN_SPEED:Float = 800.0 ' used to determine object speed when touching ground
@@ -19,7 +20,7 @@ Class Train Extends Actor
 		
 		x = 0.0
 		y = Ground.GROUND_HEIGHT - 1.0
-		z = 100.0
+		z = Railroad.DEPTH
 		
 		image = Assets.instance.graphics.Get(Assets.GFX_TRAIN)
 		Dj.instance.Play(Dj.SFX_TRAIN, True)

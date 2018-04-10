@@ -8,7 +8,8 @@ Import mojo2
 Import world.background
 Import world.ground
 Import world.levelmarker
-Import world.mobspawner
+Import world.spawners.mobspawner
+Import world.spawners.rockspawner
 Import world.train
 Import world.worldmap
 Import world.lifebar
@@ -23,6 +24,7 @@ Class World
 	Field dynamicActors:List<Actor>
 
 	Field mobSpawner:MobSpawner
+	Field rockSpawner:RockSpawner
 	Field worldMap:WorldMap
 	
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
@@ -32,6 +34,7 @@ Class World
 	Method New()
 		worldMap = New WorldMap(Self)
 		mobSpawner = New MobSpawner(Self)
+		rockSpawner = New RockSpawner(Self)
 
 		InitActors()
 		InitDrawables()
@@ -95,6 +98,7 @@ Class World
 		Next
 		
 		mobSpawner.Update(worldMap.level, worldMap.GetCurrentZone().type.id)
+		rockSpawner.Update()
 	End Method
 	
 	Method Draw:Void(canvas:Canvas)

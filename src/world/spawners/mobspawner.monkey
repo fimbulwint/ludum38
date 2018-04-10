@@ -5,7 +5,7 @@ Import system.time
 Import world.world
 
 Class MobSpawner
-	Const INITIAL_MOBSPAWN_DELAY:Float = 10000
+	Const INITIAL_BASE_DELAY:Float = 10000
 	Const RANDOM_DELAY_FACTOR_MIN:Float = 0.5
 	Const RANDOM_DELAY_FACTOR_MAX:Float = 1.5
 	
@@ -25,8 +25,8 @@ Class MobSpawner
 	End Method
 	
 	Method CalculateNextSpawnTime:Int(level:Int)
-		Local delay:Int = (INITIAL_MOBSPAWN_DELAY - (level * 500)) * Rnd(RANDOM_DELAY_FACTOR_MIN, RANDOM_DELAY_FACTOR_MAX)
-		Return Time.instance.actTime + delay
+		Local baseDelay:Int = INITIAL_BASE_DELAY - (level * 500)
+		Return Time.instance.actTime + Rnd(baseDelay * 0.5, baseDelay * 1.5)
 	End Method
 	
 	Method SpawnMobs:Void(level:Int, zone:String)

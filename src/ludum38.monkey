@@ -22,7 +22,6 @@ Import system.time
 Import world.background
 Import world.ground
 Import world.levelmarker
-Import world.mobspawner
 Import world.train
 Import world.world
 Import world.worldmap
