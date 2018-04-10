@@ -50,8 +50,10 @@ Class Survivor Extends Actor
 		punchBox = Collisions.EMPTY_HIT_BOX
 		kickBox = Collisions.EMPTY_HIT_BOX
 		attackCoolingDown = False
-		boxWidth = 52
-		boxHeight = 64
+		boxLeft = 20
+		boxRight = 20
+		boxUp = 33
+		boxDown = 24
 		
 		Super.PostConstruct()
 		
@@ -77,10 +79,10 @@ Class Survivor Extends Actor
 	End
 	
 	Method GetPunchBox:HitBox()
-		If (crouching)
-			Return GetPunchBox(5, 20, 0, 20)
+		If (crouching And IsOnTrain())
+			Return GetPunchBox(5, 20, -10, 20)
 		Else
-			Return GetPunchBox(5, 20, 20, 20)
+			Return GetPunchBox(5, 20, 10, 20)
 		End
 	End
 	
@@ -144,17 +146,18 @@ Class Survivor Extends Actor
 
 		If (IsAlive())
 			If (IsControllable())
-				If (movingLeft)
+				If (movingLeft) Then directionX = -1.0
+				If (movingRight) Then directionX = 1.0
+
+				If (movingLeft And (Not IsOnTrain() Or Not crouching))
 					speedX = -BASE_LATERAL_SPEED
-					directionX = -1.0
-				ElseIf(movingRight)
+				ElseIf(movingRight And (Not IsOnTrain() Or Not crouching))
 					speedX = BASE_LATERAL_SPEED
-					directionX = 1.0
 				Else
 					speedX = 0.0
 				EndIf
-				
-				If (jumping And IsOnTrain())
+
+				If (jumping And IsOnTrain() And Not crouching)
 					speedY = JUMP_SPEED
 					Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
 				EndIf
@@ -204,10 +207,22 @@ Class Survivor Extends Actor
 			animStatus = Animator.ANIM_SURVIVOR_DIE
 		Else If (attributes.state = State.HURT)
 			animStatus = Animator.ANIM_SURVIVOR_OUCH
+		Else If (y <> GetHeightOnTopOfTrain())
+			If (punching)
+				animStatus = Animator.ANIM_SURVIVOR_PUNCH
+			Else
+				animStatus = Animator.ANIM_SURVIVOR_JUMP
+			End If
+		Else If (crouching)
+			If (punching)
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH_PUNCH
+			Else If (kicking)
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH_KICK
+			Else
+				animStatus = Animator.ANIM_SURVIVOR_CROUCH
+			End If
 		Else If (punching)
 			animStatus = Animator.ANIM_SURVIVOR_PUNCH
-		Else If (y <> GetHeightOnTopOfTrain())
-			animStatus = Animator.ANIM_SURVIVOR_JUMP
 		Else If (speedX <> 0.0)
 			animStatus = Animator.ANIM_SURVIVOR_RUN
 		End If
@@ -225,6 +240,9 @@ Class Survivor Extends Actor
 			canvas.SetColor(1.0, 0.0, 0.0)
 			canvas.DrawRect(punchBox.upperLeft[0], punchBox.upperLeft[1], punchBox.lowerRight[0] - punchBox.upperLeft[0], punchBox.lowerRight[1] - punchBox.upperLeft[1])
 			canvas.DrawRect(kickBox.upperLeft[0], kickBox.upperLeft[1], kickBox.lowerRight[0] - kickBox.upperLeft[0], kickBox.lowerRight[1] - kickBox.upperLeft[1])
+			canvas.SetAlpha(0.5)
+			canvas.SetColor(1.0, 1.0, 1.0)
+			canvas.DrawPoint(x, y)
 		#End
 		
 	End Method

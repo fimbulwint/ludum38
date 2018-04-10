@@ -2,7 +2,7 @@ Strict
 
 Import actors.behaviors.behavior
 Import actors.collisions
-Import graphics.animator 
+Import graphics.animator
 Import graphics.screen
 Import lifecycleaware
 Import mojo2
@@ -35,7 +35,7 @@ Class Actor Extends LifecycleAware
 	Field xShift:Float = 0.0
 	Field yShift:Float = 0.0
 	
-	' Controlls
+	' Controls
 	Field movingLeft:Bool
 	Field movingRight:Bool
 	Field jumping:Bool
@@ -50,14 +50,16 @@ Class Actor Extends LifecycleAware
 	Field speedX:Float
 	Field speedY:Float
 	Field gravityBound:Bool = True
-	Field boxWidth:Float
-	Field boxHeight:Float
+	Field boxLeft:Float
+	Field boxRight:Float
+	Field boxUp:Float
+	Field boxDown:Float
 	Field hitBoxes:List<HitBox> = New List<HitBox>()
 	Field collidingActors:List<Actor> = New List<Actor>()
 	
 	Method PostConstruct:Void()
-		xShift = image.HandleX * boxWidth
-		yShift = image.HandleY * boxHeight
+		xShift = boxLeft
+		yShift = boxUp
 	End Method
 	
 	Method Update:Void(world:World)
@@ -113,6 +115,14 @@ Class Actor Extends LifecycleAware
 	Method ReactToResults:Void()
 	End Method
 	
+	Method GetBoxWidth:Float()
+		Return boxLeft + 1 + boxRight
+	End Method
+
+	Method GetBoxHeight:Float()
+		Return boxUp + 1 + boxDown
+	End Method
+
 	Method IsOnGround:Bool()
 		Return y = GetHeightOnTopOfGround()
 	End Method
@@ -134,11 +144,11 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method GetHeightOnTopOfGround:Float()
-		Return Ground.GROUND_HEIGHT - boxHeight + yShift
+		Return Ground.GROUND_HEIGHT - GetBoxHeight() + yShift
 	End Method
 	
 	Method GetHeightOnTopOfTrain:Float()
-		Return Train.TRAIN_HEIGHT - boxHeight + yShift
+		Return Train.TRAIN_HEIGHT - GetBoxHeight() + yShift
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
@@ -158,6 +168,8 @@ Class Actor Extends LifecycleAware
 	End Method
 
 	Method GetMainHitBox:HitBox()
+		Local boxWidth:Float = GetBoxWidth()
+		Local boxHeight:Float = GetBoxHeight()
 		If (crouching And IsOnTrain())
 			Return New HitBox([x - xShift, y - yShift + (boxHeight / 2)],[x - xShift + boxWidth, y - yShift + boxHeight])
 		Else
