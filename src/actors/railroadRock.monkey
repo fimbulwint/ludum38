@@ -15,8 +15,10 @@ Class RailroadRock Extends Actor
 		gravityBound = False
 		behavior = New EmptyBehavior()
 		
-		boxWidth = 60
-		boxHeight = 60
+		boxLeft = 30
+        boxRight = 30
+        boxUp = 40
+        boxDown = 40
 		x = Screen.WIDTH
 		y = GetHeightOnTopOfGround()
 		z = Railroad.DEPTH
@@ -28,7 +30,7 @@ Class RailroadRock Extends Actor
 	
 	Method Move:Void(world:World)
 		x -= Train.TRAIN_SPEED * Time.instance.getDeltaInSecs()
-		If (x < Train.TRAIN_END - (Train.TRAIN_END - Train.TRAIN_START) * 1 / 6)
+		If (x < Train.TRAIN_END - (Train.TRAIN_END - Train.TRAIN_START) / 6)
 			world.RemoveLifecycleAware(Self)
 		End
 	End
