@@ -50,7 +50,7 @@ Class Assets
 		graphics.Add(GFX_TITLE, Image.Load(GFX_TITLE, 0.0, 0.0))
 		graphics.Add(GFX_BACKGROUND, Image.Load(GFX_BACKGROUND, 0.0, 0.0))
 		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
-		graphics.Add(GFX_RAILROAD_ROCK, Image.Load(GFX_RAILROAD_ROCK, 0.5, 0.5))
+		graphics.Add(GFX_RAILROAD_ROCK, Image.Load(GFX_RAILROAD_ROCK, 1, 1))
 		graphics.Add(GFX_BD_MOUNTAINS_0101, Image.Load(GFX_BD_MOUNTAINS_0101, 0.0, 1.0))
 		graphics.Add(GFX_BD_MOUNTAINS_0102, Image.Load(GFX_BD_MOUNTAINS_0102, 0.0, 1.0))
 		graphics.Add(GFX_BD_MOUNTAINS_0103, Image.Load(GFX_BD_MOUNTAINS_0103, 0.0, 1.0))

@@ -15,17 +15,19 @@ Class RailroadRock Extends Actor
 		gravityBound = False
 		behavior = New EmptyBehavior()
 		
-		boxLeft = 30
-        boxRight = 30
-        boxUp = 40
-        boxDown = 40
+		boxLeft = 60
+        boxRight = 0
+        boxUp = 80
+        boxDown = 0
 		x = Screen.WIDTH
-		y = GetHeightOnTopOfGround()
 		z = Railroad.DEPTH
-		
+
 		image = Assets.instance.graphics.Get(Assets.GFX_RAILROAD_ROCK)
 '		Dj.instance.Play(Dj.SFX_RAILROAD_ROCK, True)
 	Super.PostConstruct()
+	' After PostConstruct since GetHeightOnTopOfGround relies on it.
+	' Line should be moved up to x/z assignments again once we get rid of PostConstruct
+	y = GetHeightOnTopOfGround()
 	End Method
 	
 	Method Move:Void(world:World)
