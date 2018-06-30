@@ -12,7 +12,7 @@ Class FallingDebrisUtils
 		If (Rnd(0.0, 100.0) < 50.0) Then sprite.angularSpeed = -sprite.angularSpeed
 	End Function
 	
-	Function BounceFromGround:Void(sprite:Sprite, radius:Float)
+	Function BounceOffTheGround:Void(sprite:Sprite, radius:Float)
 		If (sprite.y >= Ground.GROUND_HEIGHT - radius)
 			AssignRandomAngularSpeed(sprite)
 			sprite.speedX = -Train.TRAIN_SPEED

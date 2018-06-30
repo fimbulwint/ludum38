@@ -19,7 +19,7 @@ Class RailroadSmallRock Extends Sprite
 	End Method
 
 	Method CorrectMovement:Void(world:World)
-		FallingDebrisUtils.BounceFromGround(Self, RADIUS)
+		FallingDebrisUtils.BounceOffTheGround(Self, RADIUS)
 	End Method
 	
 End Class
