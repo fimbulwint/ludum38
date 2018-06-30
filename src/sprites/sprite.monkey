@@ -6,8 +6,11 @@ Import lifecycleaware
 Import mojo2
 Import world.world
 Import system.time
+Import world.gravity
 
 Class Sprite Extends LifecycleAware Abstract
+
+    Const SIDE_CLIPPING_DISTANCE:Float = 100
 
 	' Drawing parameters
 	Field blend:Int = BlendMode.Alpha
@@ -36,6 +39,9 @@ Class Sprite Extends LifecycleAware Abstract
 		angle += angularSpeed * deltaInSecs
 
 		CorrectMovement(world)
+		If (x + SIDE_CLIPPING_DISTANCE < 0 or x - SIDE_CLIPPING_DISTANCE > Screen.WIDTH)
+			world.RemoveLifecycleAware(Self)
+		EndIf
 	End Method
 
 	Method Move:Void(world:World)
