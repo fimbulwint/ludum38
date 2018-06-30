@@ -8,6 +8,7 @@ Import world.ground
 Import world.railroad
 Import world.train
 Import system.time
+Import sprites.railroadSmallRock
 
 Class RailroadRock Extends Actor
 
@@ -32,8 +33,29 @@ Class RailroadRock Extends Actor
 	
 	Method Move:Void(world:World)
 		x -= Train.TRAIN_SPEED * Time.instance.getDeltaInSecs()
+	End Method
+	
+	Method ReactToResults:Void(world:World)
+'		If (x <= Train.TRAIN_END)
 		If (x < Train.TRAIN_END - (Train.TRAIN_END - Train.TRAIN_START) / 6)
-			world.RemoveLifecycleAware(Self)
+			Crash(world)
 		End
+	End Method
+	
+Private
+
+	Method Crash:Void(world:World)
+		Local rockCenter:Float[] = GetBoxCenter()
+	
+		Local smallRock1:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] + 10, -Train.TRAIN_SPEED * 0.7)
+		Local smallRock2:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] + 10, -Train.TRAIN_SPEED * 0.5)
+		Local smallRock3:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] - 10, -Train.TRAIN_SPEED * 0.7)
+		Local smallRock4:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] - 10, -Train.TRAIN_SPEED * 0.5)
+		world.AddLifecycleAware(smallRock1)
+		world.AddLifecycleAware(smallRock2)
+		world.AddLifecycleAware(smallRock3)
+		world.AddLifecycleAware(smallRock4)
+		
+		world.RemoveLifecycleAware(Self)	
 	End
 End

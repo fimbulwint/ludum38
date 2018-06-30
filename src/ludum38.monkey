@@ -3,7 +3,6 @@ Strict
 
 Import actors.behaviors.behavior
 Import actors.behaviors.controllable
-Import actors.behaviors.gravity
 Import actors.behaviors.mutantbrain
 Import actors.actor
 Import actors.mutant

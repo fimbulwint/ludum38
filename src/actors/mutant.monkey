@@ -117,7 +117,7 @@ Class Mutant Extends Actor
 		
 	End Method
 	
-	Method ReactToResults:Void()
+	Method ReactToResults:Void(world:World)
 		If (IsAlive() And Not IsOnGround() And Not IsOnTrain())
 			DamageSurvivors()
 		End If

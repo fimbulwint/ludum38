@@ -81,7 +81,7 @@ Class Actor Extends LifecycleAware
 		hitBoxes.Clear()
 		hitBoxes.AddLast(GetMainHitBox())
 		CalculateCollisions(world)
-		ReactToResults()
+		ReactToResults(world)
 	End Method
 	
 	Method CalculateCollisions:Void(world:World)
@@ -112,7 +112,7 @@ Class Actor Extends LifecycleAware
 	Method Move:Void(world:World)
 	End Method
 	
-	Method ReactToResults:Void()
+	Method ReactToResults:Void(world:World)
 	End Method
 	
 	Method GetBoxWidth:Float()
@@ -121,6 +121,10 @@ Class Actor Extends LifecycleAware
 
 	Method GetBoxHeight:Float()
 		Return boxUp + 1 + boxDown
+	End Method
+	
+	Method GetBoxCenter:Float[] ()
+		Return[ (2 * x - boxLeft + boxRight) / 2, (2 * y - boxUp + boxDown) / 2]
 	End Method
 
 	Method IsOnGround:Bool()

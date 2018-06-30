@@ -4,7 +4,7 @@ Import mojo2
 Import graphics.assets
 Import sprites.fallingDebrisUtils
 
-Class Helmet Extends Sprite
+Class RailroadSmallRock Extends Sprite
 
 	Const RADIUS:Float = 10
 
@@ -12,7 +12,7 @@ Class Helmet Extends Sprite
 		Self.x = x
 		Self.y = y
 		z = -10.0
-		image = Assets.instance.graphics.Get(Assets.GFX_MISC_HELMET)
+		image = Assets.instance.graphics.Get(Assets.GFX_RAILROAD_SMALL_ROCK)
 		FallingDebrisUtils.AssignRandomAngularSpeed(Self)
 		speedY = Rnd(-150.0, -100.0)
 		speedX = vx * Rnd(0.8, 1.2) ' slight variation

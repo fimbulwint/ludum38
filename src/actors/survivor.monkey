@@ -178,7 +178,7 @@ Class Survivor Extends Actor
 		End If
 	End Method
 	
-	Method ReactToResults:Void()
+	Method ReactToResults:Void(world:World)
 		If (IsControllable())
 			If (Not attackCoolingDown)
 				If (wantsToPunch)
