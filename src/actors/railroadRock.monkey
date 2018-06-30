@@ -15,8 +15,8 @@ Class RailroadRock Extends Actor
 		gravityBound = False
 		behavior = New EmptyBehavior()
 		
-		boxLeft = 60
-        boxRight = 0
+		boxLeft = 0
+        boxRight = 60
         boxUp = 80
         boxDown = 0
 		x = Screen.WIDTH
