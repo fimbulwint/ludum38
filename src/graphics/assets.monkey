@@ -23,15 +23,19 @@ Class Assets
 	Const GFX_ANIM_SURVIVOR:String = "monkey://data/survivor.png"
 	Const GFX_ANIM_MUTANT:String = "monkey://data/mutants.png"
 
+	Const IMG_WIDTH_SURVIVOR:Float = 64.0
+	Const IMG_HEIGHT_SURVIVOR:Float = 128.0
+	Const IMG_MAX_X_SURVIVOR:Float = IMG_WIDTH_SURVIVOR - 1
+	Const IMG_MAX_Y_SURVIVOR:Float = IMG_HEIGHT_SURVIVOR - 1
 	Const IMG_HANDLE_X_SURVIVOR:Float = 30.0
-	Const IMG_MAX_X_SURVIVOR:Float = 64.0
 	Const IMG_HANDLE_Y_SURVIVOR:Float = 38.0
-	Const IMG_MAX_Y_SURVIVOR:Float = 127.0
 	
+	Const IMG_WIDTH_MUTANT:Float = 64.0
+	Const IMG_HEIGHT_MUTANT:Float = 64.0
+	Const IMG_MAX_X_MUTANT:Float = IMG_WIDTH_MUTANT - 1
+	Const IMG_MAX_Y_MUTANT:Float = IMG_HEIGHT_MUTANT - 1
 	Const IMG_HANDLE_X_MUTANT:Float = 28.0
-	Const IMG_MAX_X_MUTANT:Float = 63.0
 	Const IMG_HANDLE_Y_MUTANT:Float = 46.0
-	Const IMG_MAX_Y_MUTANT:Float = 63.0
 
 		
 	Const FNT_BOYCOTT:String = "monkey://data/fnt_boycott.png"
