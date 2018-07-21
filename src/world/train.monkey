@@ -11,8 +11,8 @@ Class Train Extends Actor
 	Const TRAIN_SPEED:Float = 800.0 ' used to determine object speed when touching ground
 
 	Const TRAIN_HEIGHT:Float = Ground.GROUND_HEIGHT - 120.0
-	Const TRAIN_START:Float = 80.0
-	Const TRAIN_END:Float = 1170.0
+	Const TRAIN_START:Float = 100.0
+	Const TRAIN_END:Float = 1060.0
 	
 	Method New()
 		gravityBound = False
