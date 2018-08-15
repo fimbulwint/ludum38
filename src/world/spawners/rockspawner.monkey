@@ -5,10 +5,8 @@ Import world.world
 Import actors.railroadRock
 
 Class RockSpawner
-'	Const MIN_DELAY:Float = 20000
-	Const MIN_DELAY:Float = 2000
-'	Const MAX_DELAY:Float = 60000
-	Const MAX_DELAY:Float = 6000
+	Const MIN_DELAY:Float = 20000
+	Const MAX_DELAY:Float = 60000
 	
 	Field world:World
 	Field nextSpawn:Int

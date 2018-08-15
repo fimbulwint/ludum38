@@ -12,6 +12,7 @@ Import sprites.railroadSmallRock
 Import actors.actorEffects
 Import world
 
+' TODO: Not really an actor, but a lifecycle aware 
 Class RailroadRock Extends Actor
 
 	Method New()
@@ -38,8 +39,7 @@ Class RailroadRock Extends Actor
 	End Method
 	
 	Method ReactToResults:Void(world:World)
-'		If (x <= Train.TRAIN_END)
-		If (x < Train.TRAIN_END - (Train.TRAIN_END - Train.TRAIN_START) / 6)
+		If (x <= Train.TRAIN_END)
 			Crash(world)
 		End
 	End Method
