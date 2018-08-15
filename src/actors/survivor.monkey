@@ -146,13 +146,12 @@ Class Survivor Extends Actor
 
 		If (IsAlive())
 			If (IsControllable())
-				If (movingLeft) Then directionX = -1.0
-				If (movingRight) Then directionX = 1.0
-
-				If (movingLeft And (Not IsOnTrain() Or Not crouching))
-					speedX = -BASE_LATERAL_SPEED
-				ElseIf(movingRight And (Not IsOnTrain() Or Not crouching))
-					speedX = BASE_LATERAL_SPEED
+				If (movingLeft)
+					directionX = -1.0
+					If ( Not crouching) Then speedX = -BASE_LATERAL_SPEED
+				ElseIf(movingRight)
+					directionX = 1.0
+					If ( Not crouching) Then speedX = BASE_LATERAL_SPEED
 				ElseIf(IsOnTrain())
 					speedX = 0.0
 				EndIf
