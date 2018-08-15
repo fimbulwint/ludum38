@@ -9,6 +9,8 @@ Import world.railroad
 Import world.train
 Import system.time
 Import sprites.railroadSmallRock
+Import actors.actorEffects
+Import world
 
 Class RailroadRock Extends Actor
 
@@ -45,6 +47,12 @@ Class RailroadRock Extends Actor
 Private
 
 	Method Crash:Void(world:World)
+		SpawnDebris(world)
+		PushActorsForward(world)
+		world.RemoveLifecycleAware(Self)
+	End Method
+	
+	Method SpawnDebris:Void(world:World)
 		Local rockCenter:Float[] = GetBoxCenter()
 	
 		Local smallRock1:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] + 10, -Train.TRAIN_SPEED * 0.7)
@@ -55,7 +63,11 @@ Private
 		world.AddLifecycleAware(smallRock2)
 		world.AddLifecycleAware(smallRock3)
 		world.AddLifecycleAware(smallRock4)
-		
-		world.RemoveLifecycleAware(Self)	
-	End
+	End Method
+	
+	Method PushActorsForward:Void(world:World)
+		For Local actor:Actor = EachIn world.GetAllActors()
+			ActorEffects.PushActorForward(actor, Train.TRAIN_SPEED * 0.3)
+		Next
+	End Method
 End

@@ -72,6 +72,17 @@ Class World
 	Method RemoveDynamicActor:Void(actor:Actor)
 		dynamicActorsToRemove.AddLast(actor) ' will be considered next Update
 	End Method
+	
+	Method GetAllActors:List<Actor>()
+		Local actors:List<Actor> = New List<Actor>()
+		
+		actors.AddLast(mainSurvivor)
+		For Local actor:Actor = EachIn dynamicActors
+			actors.AddLast(actor)
+		Next
+		
+		Return actors
+	End Method
 		
 	Method Update:Void()
 		If (lifecycleAwaresToAdd.Count() > 0)

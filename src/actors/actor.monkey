@@ -14,7 +14,7 @@ Class Actor Extends LifecycleAware
 
 	Const HURT_LATERAL_SPEED:Float = 150.0
 	Const HURT_JUMP_SPEED:Float = -100.0
-
+	
 	Field behavior:Behavior
 	Field animator:Animator = New Animator()
 
@@ -216,7 +216,7 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method IsControllable:Bool()
-		Return IsAlive() And (attributes.state = State.DEFAULT_STATE Or attributes.state = State.RECOVERING)
+		Return IsAlive() And Not attributes.beingPushed And (attributes.state = State.DEFAULT_STATE Or attributes.state = State.RECOVERING)
 	End Method
 
 
@@ -226,11 +226,12 @@ Class Attributes
 
 	Field hp:Float = 1.0
 	Field state:Int = State.DEFAULT_STATE
+	Field beingPushed:Bool = False
 
 End Class
 
 Class State
 	Const DEFAULT_STATE:Int = 0
-	Const HURT:Int = 1
-	Const RECOVERING:Int = 2
+	Const HURT:Int = DEFAULT_STATE + 1
+	Const RECOVERING:Int = HURT + 1
 End Class

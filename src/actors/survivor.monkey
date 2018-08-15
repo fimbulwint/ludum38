@@ -153,7 +153,7 @@ Class Survivor Extends Actor
 					speedX = -BASE_LATERAL_SPEED
 				ElseIf(movingRight And (Not IsOnTrain() Or Not crouching))
 					speedX = BASE_LATERAL_SPEED
-				Else
+				ElseIf(IsOnTrain())
 					speedX = 0.0
 				EndIf
 
@@ -162,11 +162,9 @@ Class Survivor Extends Actor
 					Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
 				EndIf
 			Else
-				If (IsOnTrain())
+				If (IsOnTrain() And attributes.state = State.HURT)
 					attributes.state = State.RECOVERING
 					Timer.addTimer(New DefaultRecoveringTimeout(Self))
-				Else If (IsOnGround())
-					attributes.hp = 0.0
 				End If
 			End If
 		Else

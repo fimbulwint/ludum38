@@ -77,35 +77,37 @@ Class Mutant Extends Actor
 	
 	Method Move:Void(world:World)
 		If (IsAlive())
-			If (jumping)
-				If (IsOnTrain())
-					If (movingLeft) Then directionX = -1.0 Else directionX = 1.0
-					speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * directionX
-					speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
-				Else If (IsOnGround())	
-					speedX = -GROUND_LATERAL_SPEED
-					speedY = Rnd(GROUND_JUMP_SPEED_MIN, GROUND_JUMP_SPEED_MAX)
+			If (IsControllable())
+				If (jumping)
+					If (IsOnTrain())
+						If (movingLeft) Then directionX = -1.0 Else directionX = 1.0
+						speedX = Rnd(JUMP_LATERAL_SPEED_MIN, JUMP_LATERAL_SPEED_MAX) * directionX
+						speedY = Rnd(JUMP_SPEED_MIN, JUMP_SPEED_MAX)
+					Else If (IsOnGround())	
+						speedX = -GROUND_LATERAL_SPEED
+						speedY = Rnd(GROUND_JUMP_SPEED_MIN, GROUND_JUMP_SPEED_MAX)
+					End If
+				Else If (movingLeft)
+					If (IsOnTrain())
+						speedX = -BASE_LATERAL_SPEED
+						directionX = -1.0
+					Else If (IsOnGround())
+						speedX = -GROUND_LATERAL_SPEED
+						directionX = 1.0
+					End If
+				Else If (movingRight)
+					If (IsOnTrain())
+						speedX = BASE_LATERAL_SPEED
+						directionX = 1.0
+					Else If (IsOnGround())
+						speedX = GROUND_LATERAL_SPEED
+						directionX = 1.0
+					End If
+				Else If (IsOnTrain()) 
+					speedX = 0.0 ' why stop? should never happen
+				Else If (IsOnGround()) 
+					speedX = -Train.TRAIN_SPEED ' ciao!
 				End If
-			Else If (movingLeft)
-				If (IsOnTrain())
-					speedX = -BASE_LATERAL_SPEED
-					directionX = -1.0
-				Else If (IsOnGround())
-					speedX = -GROUND_LATERAL_SPEED
-					directionX = 1.0
-				End If
-			Else If (movingRight)
-				If (IsOnTrain())
-					speedX = BASE_LATERAL_SPEED
-					directionX = 1.0
-				Else If (IsOnGround())
-					speedX = GROUND_LATERAL_SPEED
-					directionX = 1.0
-				End If
-			Else If (IsOnTrain()) 
-				speedX = 0.0 ' why stop? should never happen
-			Else If (IsOnGround()) 
-				speedX = -Train.TRAIN_SPEED ' ciao!
 			End If
 		Else
 			' dead
