@@ -42,7 +42,7 @@ Private
 		Dj.instance.Play(Dj.SFX_RAILROAD_ROCK)
 		SpawnDebris(world)
 		PushActorsForward(world)
-		world.AddWorldEffect(New ScreenShake(SHAKE_FORCE))
+		world.AddWorldEffect(New ScreenShake(world, SHAKE_FORCE))
 		world.RemoveLifecycleAware(Self)
 	End Method
 	

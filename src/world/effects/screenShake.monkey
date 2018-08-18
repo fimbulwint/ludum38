@@ -1,8 +1,10 @@
 Strict
 
 Import mojo2
-Import world.world
 Import system.time
+Import utils.timers
+Import world.effects.timers
+Import world.world
 
 Class ScreenShake Extends WorldEffect
 
@@ -15,10 +17,11 @@ Class ScreenShake Extends WorldEffect
 	Field force:Float
 	Field deathValue:Float = 0.01
 
-	Method New(force:Float)
+	Method New(world:World, force:Float)
 		t0 = Time.instance.actTime
 		endTime = t0 + DECAY_TIME
 		initialForce = force
+		Timer.addTimer(New EffectRemovalTimer(DECAY_TIME, Self, world))
 	End Method
 	
 	Method ApplyTo:Void(canvas:Canvas)
@@ -29,7 +32,6 @@ Class ScreenShake Extends WorldEffect
 		Local time:Float = Time.instance.actTime
 		If (time > endTime)
 			force = 0.0
-			world.RemoveWorldEffect(Self)
 		Else
 			Local ti:Float = (time - t0) / DECAY_TIME
 			force = GetY(ti) * initialForce
