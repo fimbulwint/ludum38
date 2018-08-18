@@ -36,6 +36,7 @@ Class RailroadRock Extends Sprite
 Private
 
 	Method Crash:Void(world:World)
+		Dj.instance.Play(Dj.SFX_RAILROAD_ROCK)
 		SpawnDebris(world)
 		PushActorsForward(world)
 		world.RemoveLifecycleAware(Self)

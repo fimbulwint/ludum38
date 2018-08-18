@@ -19,7 +19,7 @@ Public
 	Const SFX_SURVIVOR_PUNCH:String = "monkey://data/survivor_punch.mp3"
 	Const SFX_SURVIVOR_KICK:String = "monkey://data/survivor_kick.mp3"
 	Const SFX_TRAIN:String = "monkey://data/train.mp3"
-	Const SFX_RAILROAD_ROCK:String = "monkey://data/railroad_rock.mp3"
+	Const SFX_RAILROAD_ROCK:String = "monkey://data/railroad_rock_crashing.mp3"
 	
 
 	Global instance:Dj = New Dj()
