@@ -4,6 +4,7 @@ Import sprites.sprite
 Import graphics.assets
 Import graphics.screen
 Import sound.dj
+Import world.effects.screenShake
 Import world.ground
 Import world.railroad
 Import world.train
@@ -13,6 +14,8 @@ Import actors.actorEffects
 Import world
 
 Class RailroadRock Extends Sprite
+
+	Const SHAKE_FORCE:Float = 10.0
 
 	Method New()
 		x = Screen.WIDTH
@@ -39,6 +42,7 @@ Private
 		Dj.instance.Play(Dj.SFX_RAILROAD_ROCK)
 		SpawnDebris(world)
 		PushActorsForward(world)
+		world.AddWorldEffect(New ScreenShake(SHAKE_FORCE))
 		world.RemoveLifecycleAware(Self)
 	End Method
 	

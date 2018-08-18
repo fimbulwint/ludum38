@@ -6,6 +6,7 @@ Import graphics.screen
 Import lifecycleaware
 Import mojo2
 Import world.background
+Import world.effects.worldEffect
 Import world.ground
 Import world.levelmarker
 Import world.spawners.mobspawner
@@ -21,7 +22,8 @@ Class World
 	Field lifecycleAwares:LifecycleAwares = New LifecycleAwares()
 	Field train:Train
 	Field mainSurvivor:Survivor
-	Field dynamicActors:List<Actor>
+	Field dynamicActors:List<Actor> = New List<Actor>()
+	Field worldEffects:List<WorldEffect> = New List<WorldEffect>()
 
 	Field mobSpawner:MobSpawner
 	Field rockSpawner:RockSpawner
@@ -30,6 +32,8 @@ Class World
 	Field lifecycleAwaresToAdd:LifecycleAwares = New LifecycleAwares()
 	Field lifecycleAwaresToRemove:LifecycleAwares = New LifecycleAwares()
 	Field dynamicActorsToRemove:List<Actor> = New List<Actor>()
+	Field worldEffectsToAdd:List<WorldEffect> = New List<WorldEffect>()
+	Field worldEffectsToRemove:List<WorldEffect> = New List<WorldEffect>()
 	
 	Method New()
 		worldMap = New WorldMap(Self)
@@ -43,7 +47,6 @@ Class World
 	Method InitActors:Void()
 		train = New Train()
 		mainSurvivor = New Survivor(Self)
-		dynamicActors = New List<Actor>()
 		
 		lifecycleAwares.AddLast(train)
 		lifecycleAwares.AddLast(mainSurvivor)
@@ -71,6 +74,14 @@ Class World
 	
 	Method RemoveDynamicActor:Void(actor:Actor)
 		dynamicActorsToRemove.AddLast(actor) ' will be considered next Update
+	End Method
+	
+	Method AddWorldEffect:Void(worldEffect:WorldEffect)
+		worldEffectsToAdd.AddLast(worldEffect) ' will be considered next Update
+	End Method
+	
+	Method RemoveWorldEffect:Void(worldEffect:WorldEffect)
+		worldEffectsToRemove.AddLast(worldEffect) ' will be considered next Update
 	End Method
 	
 	Method GetAllActors:List<Actor>()
@@ -103,10 +114,25 @@ Class World
 			End For
 			dynamicActorsToRemove.Clear()
 		End If
-		
+		If (worldEffectsToAdd.Count() > 0)
+			For Local effect:WorldEffect = EachIn worldEffectsToAdd
+				worldEffects.AddLast(effect)
+			End For
+			worldEffectsToAdd.Clear()
+		End If
+		If (worldEffectsToRemove.Count() > 0)
+			For Local effect:WorldEffect = EachIn worldEffectsToRemove
+				worldEffects.Remove(effect)
+			End For
+			worldEffectsToRemove.Clear()
+		End If
+				
 		For Local aware:LifecycleAware = EachIn lifecycleAwares
 			aware.Update(Self)
 		Next
+		For Local effect:WorldEffect = EachIn worldEffects
+			effect.Update(Self)
+		End For
 		
 		mobSpawner.Update(worldMap.level, worldMap.GetCurrentZone().type.id)
 		rockSpawner.Update()
@@ -115,7 +141,14 @@ Class World
 	Method Draw:Void(canvas:Canvas)
 		lifecycleAwares.Sort()
 		For Local aware:LifecycleAware = EachIn lifecycleAwares
+			canvas.PushMatrix()
+			if (aware.affectedByWorldEffects)
+				For Local effect:WorldEffect = EachIn worldEffects
+					effect.ApplyTo(canvas)
+				End For
+			End If
 			aware.Draw(canvas)
+			canvas.PopMatrix()
 		Next
 	End Method
 	

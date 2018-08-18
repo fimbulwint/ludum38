@@ -21,8 +21,9 @@ Class LevelMarker Extends LifecycleAware
 	
 	Method New(worldMap:WorldMap)
 		Self.worldMap = worldMap
+		Self.affectedByWorldEffects = False
 	End Method
-	
+
 	Method Update:Void(world:World)
 		Local delta:Float = Time.instance.lastFrame 
 		levelString = String(worldMap.level)

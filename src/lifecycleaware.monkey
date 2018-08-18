@@ -5,6 +5,7 @@ Import world.world
 
 Class LifecycleAware Abstract
 
+	Field affectedByWorldEffects:Bool = True
 	Field z:Float
 
 	Method Draw:Void(canvas:Canvas) Abstract

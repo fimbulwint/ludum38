@@ -8,6 +8,10 @@ Class Lifebar Extends LifecycleAware
 
  	Field survivorHealth:Float = 1.0
 
+	Method New()
+		Self.affectedByWorldEffects = False
+	End Method
+	
 	Method Update:Void(world:World)
 		survivorHealth = world.mainSurvivor.attributes.hp / Survivor.BASE_HP
 	End Method
