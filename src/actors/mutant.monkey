@@ -8,8 +8,8 @@ Import sound.dj
 
 Class Mutant Extends Actor
 
-	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
-	Const TYPE_FIRE:String ="FIRE_MUTANT"
+	Const MOUNTANTS:String = "MOUNTANTS"
+	Const ORANGUSAND:String = "ORANGUSAND"
 
 	Const BASE_HP:Float = 1.0
 	Const MUTANT_DAMAGE:Float = 1.0
@@ -49,11 +49,11 @@ Class Mutant Extends Actor
 		
 		Local colorShift:Float = Rnd(-0.2, 0.2)
 		Select(type)
-			Case TYPE_ROCKY
+			Case MOUNTANTS
 				r = 0.5 + colorShift
 				g = 0.5 + colorShift
 				b = 0.5 + colorShift
-			Case TYPE_FIRE
+			Case ORANGUSAND
 				r = 0.8 + colorShift
 				g = 0.2 + colorShift
 				b = 0.2 + colorShift
