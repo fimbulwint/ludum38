@@ -32,8 +32,6 @@ Class Actor Extends LifecycleAware
 	Field sizeX:Float = 1.0
 	Field sizeY:Float = 1.0
 	Field image:Image = Null
-	Field xShift:Float = 0.0
-	Field yShift:Float = 0.0
 	
 	' Controls
 	Field movingLeft:Bool
@@ -56,11 +54,6 @@ Class Actor Extends LifecycleAware
 	Field boxDown:Float
 	Field hitBoxes:List<HitBox> = New List<HitBox>()
 	Field collidingActors:List<Actor> = New List<Actor>()
-	
-	Method PostConstruct:Void()
-		xShift = boxLeft
-		yShift = boxUp
-	End Method
 	
 	Method Update:Void(world:World)
 		behavior.Update()
@@ -148,11 +141,11 @@ Class Actor Extends LifecycleAware
 	End Method
 	
 	Method GetHeightOnTopOfGround:Float()
-		Return Ground.GROUND_HEIGHT - GetBoxHeight() + yShift
+		Return Ground.GROUND_HEIGHT - GetBoxHeight() + boxUp
 	End Method
 	
 	Method GetHeightOnTopOfTrain:Float()
-		Return Train.TRAIN_HEIGHT - GetBoxHeight() + yShift
+		Return Train.TRAIN_HEIGHT - GetBoxHeight() + boxUp
 	End Method
 	
 	Method TakeDamage:Bool(damage:Int, fromX:Float)
@@ -175,9 +168,9 @@ Class Actor Extends LifecycleAware
 		Local boxWidth:Float = GetBoxWidth()
 		Local boxHeight:Float = GetBoxHeight()
 		If (crouching And IsOnTrain())
-			Return New HitBox([x - xShift, y - yShift + (boxHeight / 2)],[x - xShift + boxWidth, y - yShift + boxHeight])
+			Return New HitBox([x - boxLeft, y - boxUp + (boxHeight / 2)],[x - boxLeft + boxWidth, y - boxUp + boxHeight])
 		Else
-			Return New HitBox([x - xShift, y - yShift],[x - xShift + boxWidth, y - yShift + boxHeight])
+			Return New HitBox([x - boxLeft, y - boxUp],[x - boxLeft + boxWidth, y - boxUp + boxHeight])
 		EndIf
 	End Method
 	

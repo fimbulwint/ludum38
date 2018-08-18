@@ -59,7 +59,6 @@ Class Mutant Extends Actor
 				b = 0.2 + colorShift
 		End Select
 		
-		Super.PostConstruct()
 		SetRandomInitialPosition()
 	End Method
 
@@ -166,13 +165,13 @@ Private
 		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0) + Rnd(0.0, 100.0) * side
 		If (Rnd(1000.0) < 500.0)
 			' jumping
-			y = Train.TRAIN_HEIGHT - GetBoxHeight() + yShift + Rnd(-50.0, 50.0)
+			y = Train.TRAIN_HEIGHT - GetBoxHeight() + boxUp + Rnd(-50.0, 50.0)
 			directionX = -side
 			speedX = Rnd(INITIAL_JUMP_LATERAL_SPEED_MIN, INITIAL_JUMP_LATERAL_SPEED_MAX) * -side
 			speedY = Rnd(INITIAL_JUMP_SPEED_MIN, INITIAL_JUMP_SPEED_MAX)
 		Else
 			' running on ground
-			y = Ground.GROUND_HEIGHT - GetBoxHeight() + yShift
+			y = Ground.GROUND_HEIGHT - GetBoxHeight() + boxUp
 			speedX = GROUND_LATERAL_SPEED * -side
 			movingLeft = side = 1.0 ' HACK for now
 			movingRight = Not movingLeft
