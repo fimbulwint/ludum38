@@ -1,6 +1,6 @@
 Strict
 
-Import actors.actor
+Import sprites.sprite
 Import graphics.assets
 Import graphics.screen
 Import sound.dj
@@ -12,33 +12,22 @@ Import sprites.railroadSmallRock
 Import actors.actorEffects
 Import world
 
-' TODO: Not really an actor, but a lifecycle aware 
-Class RailroadRock Extends Actor
+Class RailroadRock Extends Sprite
 
 	Method New()
-		gravityBound = False
-		behavior = New EmptyBehavior()
-		
-		boxLeft = 0
-        boxRight = 60
-        boxUp = 80
-        boxDown = 0
 		x = Screen.WIDTH
+		y = Ground.GROUND_HEIGHT
 		z = Railroad.DEPTH
 
 		image = Assets.instance.graphics.Get(Assets.GFX_RAILROAD_ROCK)
-'		Dj.instance.Play(Dj.SFX_RAILROAD_ROCK, True)
-	Super.PostConstruct()
-	' After PostConstruct since GetHeightOnTopOfGround relies on it.
-	' Line should be moved up to x/z assignments again once we get rid of PostConstruct
-	y = GetHeightOnTopOfGround()
 	End Method
 	
 	Method Move:Void(world:World)
 		x -= Train.TRAIN_SPEED * Time.instance.getDeltaInSecs()
 	End Method
 	
-	Method ReactToResults:Void(world:World)
+	Method CorrectMovement:Void(world:World)
+		y = Ground.GROUND_HEIGHT
 		If (x <= Train.TRAIN_END)
 			Crash(world)
 		End
@@ -53,7 +42,7 @@ Private
 	End Method
 	
 	Method SpawnDebris:Void(world:World)
-		Local rockCenter:Float[] = GetBoxCenter()
+		Local rockCenter:Float[] = [x + (image.Width() / 2), y - (image.Height() / 2)]
 	
 		Local smallRock1:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] + 10, -Train.TRAIN_SPEED * 0.7)
 		Local smallRock2:RailroadSmallRock = New RailroadSmallRock(rockCenter[0], rockCenter[1] + 10, -Train.TRAIN_SPEED * 0.5)
