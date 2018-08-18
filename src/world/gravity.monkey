@@ -14,7 +14,7 @@ Class Gravity
 		If (actor.gravityBound And Not actor.IsOnTrain() And Not actor.IsOnGround())
 			actor.speedY += GRAVITY * Time.instance.getDeltaInSecs()
 			
-			If (actor.y + actor.GetBoxHeight() - actor.yShift > Ground.GROUND_HEIGHT)
+			If (actor.y + actor.GetBoxHeight() - actor.boxUp > Ground.GROUND_HEIGHT)
                 actor.y = actor.GetHeightOnTopOfGround()
 				actor.speedY = 0.0
 			EndIf

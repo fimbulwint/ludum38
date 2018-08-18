@@ -55,8 +55,6 @@ Class Survivor Extends Actor
 		boxUp = 33
 		boxDown = 24
 		
-		Super.PostConstruct()
-		
 		y = GetHeightOnTopOfTrain()
 	End Method
 	
@@ -86,19 +84,19 @@ Class Survivor Extends Actor
 		End
 	End
 	
-	Method GetPunchBox:HitBox(xShift:Float, xWidth:Float, yShift:Float, yWidth:Float)
+	Method GetPunchBox:HitBox(boxLeft:Float, xWidth:Float, boxUp:Float, yWidth:Float)
 		Local mainHitBox:HitBox = GetMainHitBox()
 		Local boxX1:Float
 		Local boxX2:Float
 		
 		If (directionX < 0.0)
-			boxX1 = mainHitBox.upperLeft[0] - xWidth + xShift
-			boxX2 = mainHitBox.upperLeft[0] + xShift
+			boxX1 = mainHitBox.upperLeft[0] - xWidth + boxLeft
+			boxX2 = mainHitBox.upperLeft[0] + boxLeft
 		Else
-			boxX1 = mainHitBox.lowerRight[0] - xShift
-			boxX2 = mainHitBox.lowerRight[0] + xWidth - xShift
+			boxX1 = mainHitBox.lowerRight[0] - boxLeft
+			boxX2 = mainHitBox.lowerRight[0] + xWidth - boxLeft
 		End
-		Return New HitBox([boxX1, mainHitBox.upperLeft[1] + yShift],[boxX2, mainHitBox.upperLeft[1] + yShift + yWidth])
+		Return New HitBox([boxX1, mainHitBox.upperLeft[1] + boxUp],[boxX2, mainHitBox.upperLeft[1] + boxUp + yWidth])
 	End
 	
 	Method GetKickBox:HitBox()

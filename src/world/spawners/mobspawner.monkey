@@ -35,11 +35,11 @@ Class MobSpawner
 		For Local i:Int = 1 To groupSize
 			Select (zone)
 				Case WorldMap.ZONE_MOUNTAINS
-					SpawnMutants(Mutant.TYPE_ROCKY)
+					SpawnMutants(Mutant.MOUNTANTS)
 				Case WorldMap.ZONE_DESERT
-					SpawnMutants(Mutant.TYPE_FIRE)
+					SpawnMutants(Mutant.ORANGUSAND)
 				Default 
-					SpawnMutants(Mutant.TYPE_ROCKY)
+					SpawnMutants(Mutant.MOUNTANTS)
 			End Select
 		End For
 	End Method

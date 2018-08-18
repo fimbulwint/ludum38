@@ -8,8 +8,8 @@ Import sound.dj
 
 Class Mutant Extends Actor
 
-	Const TYPE_ROCKY:String ="ROCKY_MUTANT"
-	Const TYPE_FIRE:String ="FIRE_MUTANT"
+	Const MOUNTANTS:String = "MOUNTANTS"
+	Const ORANGUSAND:String = "ORANGUSAND"
 
 	Const BASE_HP:Float = 1.0
 	Const MUTANT_DAMAGE:Float = 1.0
@@ -49,17 +49,16 @@ Class Mutant Extends Actor
 		
 		Local colorShift:Float = Rnd(-0.2, 0.2)
 		Select(type)
-			Case TYPE_ROCKY
+			Case MOUNTANTS
 				r = 0.5 + colorShift
 				g = 0.5 + colorShift
 				b = 0.5 + colorShift
-			Case TYPE_FIRE
+			Case ORANGUSAND
 				r = 0.8 + colorShift
 				g = 0.2 + colorShift
 				b = 0.2 + colorShift
 		End Select
 		
-		Super.PostConstruct()
 		SetRandomInitialPosition()
 	End Method
 
@@ -166,13 +165,13 @@ Private
 		x = (Screen.WIDTH / 2.0) + side * ((Screen.WIDTH / 2.0) + 100.0) + Rnd(0.0, 100.0) * side
 		If (Rnd(1000.0) < 500.0)
 			' jumping
-			y = Train.TRAIN_HEIGHT - GetBoxHeight() + yShift + Rnd(-50.0, 50.0)
+			y = Train.TRAIN_HEIGHT - GetBoxHeight() + boxUp + Rnd(-50.0, 50.0)
 			directionX = -side
 			speedX = Rnd(INITIAL_JUMP_LATERAL_SPEED_MIN, INITIAL_JUMP_LATERAL_SPEED_MAX) * -side
 			speedY = Rnd(INITIAL_JUMP_SPEED_MIN, INITIAL_JUMP_SPEED_MAX)
 		Else
 			' running on ground
-			y = Ground.GROUND_HEIGHT - GetBoxHeight() + yShift
+			y = Ground.GROUND_HEIGHT - GetBoxHeight() + boxUp
 			speedX = GROUND_LATERAL_SPEED * -side
 			movingLeft = side = 1.0 ' HACK for now
 			movingRight = Not movingLeft
