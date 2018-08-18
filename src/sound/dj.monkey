@@ -20,6 +20,7 @@ Public
 	Const SFX_SURVIVOR_KICK:String = "monkey://data/survivor_kick.mp3"
 	Const SFX_TRAIN:String = "monkey://data/train.mp3"
 	Const SFX_RAILROAD_ROCK:String = "monkey://data/railroad_rock_crashing.mp3"
+	Const SFX_TRAIN_HORN:String = "monkey://data/train_horn.mp3"
 	
 
 	Global instance:Dj = New Dj()
@@ -37,6 +38,7 @@ Public
 		sfx.Add(SFX_SURVIVOR_KICK, LoadSound(SFX_SURVIVOR_KICK))
 		sfx.Add(SFX_TRAIN, LoadSound(SFX_TRAIN))
 		sfx.Add(SFX_RAILROAD_ROCK, LoadSound(SFX_RAILROAD_ROCK))
+		sfx.Add(SFX_TRAIN_HORN, LoadSound(SFX_TRAIN_HORN))
 	End Method
 	
 	Method PlayMusic:Void(music:String)
