@@ -139,12 +139,13 @@ Class Survivor Extends Actor
 	
 	Method Move:Void(world:World)
 		If (IsOnGround())
-			If (IsAlive()) 
+			If (IsAlive())
+			    Self.attributes.state = State.DEFAULT_STATE
 				TakeDamage(BASE_HP + 1, 50000.0)
 			EndIf
-		EndIf
-
-		If (IsAlive())
+			speedX = -Train.TRAIN_SPEED
+			speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
+		ElseIf(IsAlive())
 			If (IsControllable())
 				If (IsOnTrain())
 					speedX = 0.0
@@ -162,18 +163,10 @@ Class Survivor Extends Actor
 					speedY = JUMP_SPEED
 					Dj.instance.Play(Dj.SFX_SURVIVOR_JUMP)
 				EndIf
-			Else
-				If (IsOnTrain() And attributes.state = State.HURT)
-					attributes.state = State.RECOVERING
-					Timer.addTimer(New DefaultRecoveringTimeout(Self))
-				End If
+			ElseIf (IsOnTrain() And attributes.state = State.HURT)
+				attributes.state = State.RECOVERING
+				Timer.addTimer(New DefaultRecoveringTimeout(Self))
 			End If
-		Else
-			' dead
-			If (IsOnGround())
-				speedX = -Train.TRAIN_SPEED
-				speedY = Rnd(Ground.GROUND_REBOUND_SPEED_MIN, Ground.GROUND_REBOUND_SPEED_MAX)
-			End If		
 		End If
 	End Method
 	
