@@ -66,7 +66,7 @@ Class Actor Extends LifecycleAware
 		
 		Local wasAboveTrain:Bool = IsDirectlyAboveTrain()
 		y += speedY * deltaInSecs
-		If (IsAlive() And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
+		If (CanStandOnTopOfTrain() And wasAboveTrain And IsDirectlyBelowTrain()) ' collide to train roof, first rushed version
 			y = GetHeightOnTopOfTrain()
 			speedY = 0.0
 		End If
@@ -138,6 +138,10 @@ Class Actor Extends LifecycleAware
 
 	Method IsDirectlyBelowTrain:Bool()
 		Return y > GetHeightOnTopOfTrain() And x > Train.TRAIN_START And x <= Train.TRAIN_END
+	End Method
+	
+	Method CanStandOnTopOfTrain:Bool()
+		Return IsAlive()
 	End Method
 	
 	Method GetHeightOnTopOfGround:Float()
