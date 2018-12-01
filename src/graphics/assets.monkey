@@ -8,6 +8,8 @@ Class Assets
 	Const GFX_TITLE:String = "monkey://data/title.png"
 	Const GFX_BACKGROUND:String = "monkey://data/background.png"
 	Const GFX_TRAIN:String = "monkey://data/train.png"
+	Const GFX_LOCOWHEEL_BIG:String = "monkey://data/locowheel_big.png"
+	Const GFX_LOCOWHEEL_SMALL:String = "monkey://data/locowheel_small.png"
 	Const GFX_RAILROAD_ROCK:String = "monkey://data/railroad_rock.png"
 	Const GFX_RAILROAD_SMALL_ROCK:String = "monkey://data/railroad_small_rock.png"
 	Const GFX_BD_MOUNTAINS_0101:String = "monkey://data/bd_mountains_0101.png"
@@ -51,6 +53,8 @@ Class Assets
 		graphics.Add(GFX_TITLE, Image.Load(GFX_TITLE, 0.0, 0.0))
 		graphics.Add(GFX_BACKGROUND, Image.Load(GFX_BACKGROUND, 0.0, 0.0))
 		graphics.Add(GFX_TRAIN, Image.Load(GFX_TRAIN, 0.0, 1.0))
+		graphics.Add(GFX_LOCOWHEEL_BIG, Image.Load(GFX_LOCOWHEEL_BIG, .5, .5))
+		graphics.Add(GFX_LOCOWHEEL_SMALL, Image.Load(GFX_LOCOWHEEL_SMALL, .5, .5))
 		graphics.Add(GFX_RAILROAD_ROCK, Image.Load(GFX_RAILROAD_ROCK, 0.0, 1.0))
 		graphics.Add(GFX_RAILROAD_SMALL_ROCK, Image.Load(GFX_RAILROAD_SMALL_ROCK, 0.5, 0.5))
 		graphics.Add(GFX_BD_MOUNTAINS_0101, Image.Load(GFX_BD_MOUNTAINS_0101, 0.0, 1.0))
